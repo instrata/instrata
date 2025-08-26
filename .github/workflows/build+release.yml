@@ -28,7 +28,7 @@ jobs:
           npm ci
 
       - name: Build (Tauri)
-        run: npx @tauri-apps/cli@latest tauri build
+        run: npm run tauri build
 
       - name: Upload Windows artifacts
         uses: actions/upload-artifact@v4
@@ -69,7 +69,7 @@ jobs:
         run: npm ci
 
       - name: Build (Tauri)
-        run: npx @tauri-apps/cli@latest tauri build
+        run: npm run tauri build
 
       - name: Upload Linux artifacts
         uses: actions/upload-artifact@v4
@@ -105,7 +105,7 @@ jobs:
         env:
           # Ensure we don't attempt signing/notarization
           TAURI_SIGNING_PRIVATE_KEY: ""
-        run: npx @tauri-apps/cli@latest tauri build
+        run: npm run tauri build
 
       - name: Upload macOS artifacts
         uses: actions/upload-artifact@v4
