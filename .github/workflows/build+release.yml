@@ -56,14 +56,18 @@ jobs:
           toolchain: stable
 
       - name: Install Linux dependencies
-        if: matrix.os == 'ubuntu-latest'
         run: |
           sudo apt-get update
           sudo apt-get install -y \
-            libgtk-3-dev \
-            libayatana-appindicator3-dev \
-            librsvg2-dev \
-            patchelf
+              libwebkit2gtk-4.1-dev \
+              build-essential \
+              curl \
+              wget \
+              file \
+              libxdo-dev \
+              libssl-dev \
+              libayatana-appindicator3-dev \
+              librsvg2-dev
 
       - name: Install frontend dependencies
         run: npm ci
