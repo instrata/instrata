@@ -12,9 +12,11 @@ onErrorCaptured((error: Error) => {
 </script>
 
 <template>
-  <Toaster class="pointer-events-auto" />
+  <Toaster rich-colors theme="dark" :visible-toasts="5" class="pointer-events-auto" />
 
-  <Suspense>
-    <App />
-  </Suspense>
+  <TooltipProvider :delay-duration="500">
+    <Suspense>
+      <App />
+    </Suspense>
+  </TooltipProvider>
 </template>
