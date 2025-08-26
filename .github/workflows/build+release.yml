@@ -41,10 +41,11 @@ jobs:
       - name: Install Linux dependencies
         run: |
           sudo apt-get update
+          # tauri
           sudo apt-get install -y \
-              \  # tauri
               libwebkit2gtk-4.1-dev build-essential libxdo-dev libssl-dev libayatana-appindicator3-dev librsvg2-dev \
-              \  # xcap
+          # xcap
+          sudo apt-get install -y \
               pkg-config libclang-dev libxcb1-dev libxrandr-dev libdbus-1-dev libpipewire-0.3-dev libwayland-dev libegl-dev
 
       - name: Install frontend dependencies
@@ -98,10 +99,11 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           sudo apt-get update
+          # tauri
           sudo apt-get install -y \
-              \  # tauri
               libwebkit2gtk-4.1-dev build-essential libxdo-dev libssl-dev libayatana-appindicator3-dev librsvg2-dev \
-              \  # xcap
+          # xcap
+          sudo apt-get install -y \
               pkg-config libclang-dev libxcb1-dev libxrandr-dev libdbus-1-dev libpipewire-0.3-dev libwayland-dev libegl-dev
 
       - name: Build (Tauri)
