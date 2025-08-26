@@ -6,40 +6,11 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write
+
 jobs:
-  build-windows:
-    runs-on: windows-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 24
-
-      - name: Setup Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1
-        with:
-          toolchain: stable
-
-      - name: Install frontend dependencies
-        run: |
-          npm ci
-
-      - name: Build (Tauri)
-        run: npm run tauri build
-
-      - name: Upload Windows artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: instrata-windows
-          path: |
-            src-tauri/target/release/bundle/msi/*.msi
-            src-tauri/target/release/bundle/nsis/*-setup.exe
-          if-no-files-found: error
-
-  build-linux:
+  preflight:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -49,13 +20,73 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 24
+          cache: npm
 
       - name: Setup Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
           toolchain: stable
 
+      - name: Cache Rust
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            src-tauri/target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-
+
+      - name: Install frontend dependencies
+        run: npm ci
+
+      - name: TypeScript check
+        run: npm run type-check
+
+      - name: Rust check
+        working-directory: src-tauri
+        run: cargo check --locked
+
+  build:
+    needs: preflight
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: true
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Setup Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          toolchain: stable
+
+      - name: Cache Rust
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            src-tauri/target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-
+
+      - name: Install frontend dependencies
+        run: npm ci
+
       - name: Install Linux dependencies
+        if: runner.os == 'Linux'
         run: |
           sudo apt-get update
           sudo apt-get install -y \
@@ -69,58 +100,26 @@ jobs:
               libayatana-appindicator3-dev \
               librsvg2-dev
 
-      - name: Install frontend dependencies
-        run: npm ci
-
       - name: Build (Tauri)
         run: npm run tauri build
+        env:
+          TAURI_SIGNING_PRIVATE_KEY: "" # avoid notarization on macOS
 
-      - name: Upload Linux artifacts
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: instrata-linux
+          name: instrata-${{ matrix.os }}
           path: |
+            src-tauri/target/release/bundle/msi/*.msi
+            src-tauri/target/release/bundle/nsis/*-setup.exe
             src-tauri/target/release/bundle/appimage/*.AppImage
             src-tauri/target/release/bundle/deb/*.deb
             src-tauri/target/release/bundle/rpm/*.rpm
-          if-no-files-found: error
-
-  build-macos:
-    runs-on: macos-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 24
-
-      - name: Setup Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1
-        with:
-          toolchain: stable
-
-      - name: Install frontend dependencies
-        run: |
-          npm ci
-
-      - name: Build (Tauri) - unsigned
-        env:
-          # Ensure we don't attempt signing/notarization
-          TAURI_SIGNING_PRIVATE_KEY: ""
-        run: npm run tauri build
-
-      - name: Upload macOS artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: instrata-macos
-          path: |
             src-tauri/target/release/bundle/dmg/*.dmg
           if-no-files-found: error
 
   release:
-    needs: [build-windows, build-linux, build-macos]
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Download artifacts
@@ -137,5 +136,4 @@ jobs:
           removeArtifacts: true
           replacesArtifacts: true
           token: ${{ secrets.GITHUB_TOKEN }}
-          artifacts: |
-            release-artifacts/**/*
+          artifacts: release-artifacts/**/*
