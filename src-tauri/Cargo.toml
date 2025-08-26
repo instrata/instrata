@@ -1,8 +1,8 @@
 [package]
 name = "instrata"
 version = "0.0.0"
-description = "A Tauri App"
-authors = ["you"]
+description = "Instrata is a tool for creating step-by-step guides from automatic screenshots.  It supports easy editing, annotations, and export to multiple formats."
+authors = ["instrata"]
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
@@ -18,8 +18,10 @@ crate-type = ["staticlib", "cdylib", "rlib"]
 tauri-build = { version = "2", features = [] }
 
 [dependencies]
-tauri = { version = "2", features = [] }
-tauri-plugin-opener = "2"
+tauri = { version = "2", features = [ "tray-icon" ] }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 
+[target.'cfg(not(any(target_os = "android", target_os = "ios")))'.dependencies]
+tauri-plugin-global-shortcut = "2"
+tauri-plugin-window-state = "2"
