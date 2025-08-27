@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import App from "./App.vue";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/sonner";
 import { onErrorCaptured } from "vue";
 import { toast } from "vue-sonner";
