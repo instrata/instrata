@@ -136,10 +136,7 @@ jobs:
       - name: Create GitHub Release
         uses: ncipollo/release-action@v1
         with:
-          tag: latest
-          name: "Instrata"
-          allowUpdates: true
-          removeArtifacts: true
-          replacesArtifacts: true
+          tag: ${{ github.sha }}
+          name: "Instrata ${{ github.sha }}"
           token: ${{ secrets.GITHUB_TOKEN }}
           artifacts: release-artifacts/**/*
