@@ -121,3 +121,63 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  .text-editor > div {
+    @apply p-0.5 w-full min-w-0 rounded-md border border-transparent
+        hover:border-input focus-within:border-input
+        placeholder:text-muted-foreground
+        selection:bg-primary selection:text-primary-foreground;
+  }
+
+  .text-editor p {
+    @apply text-foreground leading-relaxed;
+  }
+
+  .text-editor h1 {
+    @apply text-2xl font-bold text-foreground;
+  }
+  .text-editor h2 {
+    @apply text-xl font-semibold text-foreground;
+  }
+  .text-editor h3 {
+    @apply text-lg font-semibold text-foreground;
+  }
+
+  .text-editor ul {
+    @apply list-disc list-outside pl-6 text-foreground;
+  }
+  .text-editor ol {
+    @apply list-decimal list-outside pl-6 text-foreground;
+  }
+  .text-editor li {
+    @apply text-foreground;
+    display: list-item;
+  }
+
+  .text-editor blockquote {
+    @apply border-l-2 border-muted pl-4 italic text-muted-foreground;
+  }
+
+  .text-editor code {
+    @apply rounded bg-muted px-1 py-0.5 text-sm font-mono text-accent-foreground;
+  }
+  .text-editor pre {
+    @apply rounded-md bg-muted p-3 font-mono text-sm text-accent-foreground overflow-x-auto;
+  }
+
+  .text-editor a {
+    @apply underline hover:text-accent-foreground;
+  }
+
+  .text-editor strong {
+    @apply font-bold text-foreground;
+  }
+  .text-editor em {
+    @apply italic text-foreground;
+  }
+}
+
+.tiptap p.is-editor-empty:first-child::before {
+  @apply text-muted-foreground content-[attr(data-placeholder)] float-left h-0 pointer-events-none;
+}

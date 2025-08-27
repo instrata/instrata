@@ -1,16 +1,15 @@
 <script setup lang="ts">
-import { useAppSettings } from "@/composables/useAppSettings.ts";
+import { TextEditor } from "@/components/text-editor";
+import { ref } from "vue";
 
-const settings = useAppSettings();
+const textContent = ref("");
 </script>
 
 <template>
-  <main class="min-h-svh">
-    <h1>
-      Home
-    </h1>
-    <div>
-      {{ settings }}
+  <main class="min-h-svh max-w-5xl mx-auto py-10 space-y-2">
+    <TextEditor v-model="textContent" placeholder="Write something..." />
+    <div class="bg-secondary text-secondary-foreground">
+      {{ textContent }}
     </div>
   </main>
 </template>
