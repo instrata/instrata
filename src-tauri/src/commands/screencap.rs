@@ -1,6 +1,6 @@
-use xcap::Monitor;
 use base64::{engine::general_purpose, Engine as _};
-use image::{RgbImage, RgbaImage, DynamicImage};
+use image::{DynamicImage, RgbImage, RgbaImage};
+use xcap::Monitor;
 
 #[tauri::command]
 pub async fn capture_screen(index: usize) -> Result<String, String> {
@@ -20,7 +20,10 @@ pub async fn capture_screen(index: usize) -> Result<String, String> {
         // Encode image to PNG
         let mut png_bytes: Vec<u8> = Vec::new();
         rgb_image
-            .write_to(&mut std::io::Cursor::new(&mut png_bytes), image::ImageFormat::Jpeg)
+            .write_to(
+                &mut std::io::Cursor::new(&mut png_bytes),
+                image::ImageFormat::Jpeg,
+            )
             .map_err(|e| e.to_string())?;
 
         // Convert to base64
