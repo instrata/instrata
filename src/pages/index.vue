@@ -1,15 +1,18 @@
 <script setup lang="ts">
 import { IconInstrata } from "@/components/icons";
 import { Button } from "@/components/ui/button";
-import { invoke } from "@tauri-apps/api/core";
 import { ref } from "vue";
+import { captureScreen } from "@/api/commands.ts";
+import type { Project } from "@/types/data.ts";
 
-const images = ref<string[]>([]);
+const project = ref<Project>({
+  steps: [],
+});
 
 async function takeScreenshot() {
-  images.value.unshift(
-      await invoke<string>("capture_screen", { index: 0 })
-  );
+  project.value.steps.unshift({
+    screenshot: await captureScreen(),
+  });
 }
 </script>
 
@@ -22,6 +25,6 @@ async function takeScreenshot() {
       </Button>
     </div>
 
-    <img v-for="(imageSrc, i) in images" :key="i" :src="imageSrc" alt="" class="h-40" />
+    <img v-for="(step, i) in project.steps" :key="i" :src="step.screenshot" alt="" class="h-40" />
   </main>
 </template>
