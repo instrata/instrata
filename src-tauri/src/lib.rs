@@ -17,7 +17,8 @@ pub fn run() {
         .plugin(tauri_plugin_global_shortcut::Builder::new().build())
         .plugin(tauri_plugin_window_state::Builder::new().build())
         .invoke_handler(tauri::generate_handler![
-            commands::screencap::capture_screen
+            commands::screencap::capture_screen,
+            commands::templates::render_template,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
