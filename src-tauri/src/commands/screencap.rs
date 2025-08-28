@@ -22,14 +22,14 @@ pub async fn capture_screen(index: usize) -> Result<String, String> {
         rgb_image
             .write_to(
                 &mut std::io::Cursor::new(&mut png_bytes),
-                image::ImageFormat::Jpeg,
+                image::ImageFormat::Png,
             )
             .map_err(|e| e.to_string())?;
 
         // Convert to base64
         let b64 = general_purpose::STANDARD.encode(&png_bytes);
 
-        let data_url = format!("data:image/jpeg;base64,{}", b64);
+        let data_url = format!("data:image/png;base64,{}", b64);
 
         Ok(data_url)
     })

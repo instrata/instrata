@@ -8,6 +8,9 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { captureScreen } from "@/api/commands.ts";
 import { nanoid } from "nanoid";
+import { exportGuideToMarkdown } from "@/lib/export";
+import { TEMPLATE_MARKDOWN } from "@/templates";
+import { toast } from "vue-sonner";
 
 function freshGuide(): Guide {
   return {
@@ -33,6 +36,11 @@ async function handleTakeScreenshot() {
 async function handleReset() {
   guide.value = freshGuide();
 }
+
+async function handleExportToMarkdown() {
+  await exportGuideToMarkdown(TEMPLATE_MARKDOWN, guide.value);
+  toast.success("Guide successfully exported!");
+}
 </script>
 
 <template>
@@ -45,6 +53,9 @@ async function handleReset() {
       <Button variant="secondary" @click="handleReset">
         <LucideBrushCleaning />
         Clear Guide
+      </Button>
+      <Button variant="secondary" @click="handleExportToMarkdown">
+        Export to Markdown Archive
       </Button>
     </div>
     <Separator />
