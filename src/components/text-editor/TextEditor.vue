@@ -58,7 +58,7 @@ const editor = useEditor({
       visible: false,
     }),
     Placeholder.configure({
-      placeholder: props.placeholder,
+      placeholder: () => props.placeholder ?? "",
     }),
   ],
   onUpdate: ({ editor }) => {
