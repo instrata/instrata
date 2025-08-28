@@ -9,6 +9,9 @@ on:
 permissions:
   contents: write
 
+env:
+  APP_VERSION: 0.0.${{ github.run_number }}
+
 jobs:
   preflight:
     runs-on: ubuntu-latest
@@ -109,6 +112,7 @@ jobs:
       - name: Build (Tauri)
         run: npm run tauri build
         env:
+          TAURI_APP_VERSION: ${{ env.APP_VERSION }}
           TAURI_SIGNING_PRIVATE_KEY: "" # avoid notarization on macOS
 
       - name: Upload artifact
@@ -136,7 +140,7 @@ jobs:
       - name: Create GitHub Release
         uses: ncipollo/release-action@v1
         with:
-          tag: ${{ github.sha }}
-          name: "Instrata ${{ github.sha }}"
+          tag: v${{ env.APP_VERSION }}
+          name: "Instrata Build ${{ env.APP_VERSION }}"
           token: ${{ secrets.GITHUB_TOKEN }}
           artifacts: release-artifacts/**/*
