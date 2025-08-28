@@ -37,18 +37,18 @@ async function handleReset() {
 
 <template>
   <main class="min-h-svh max-w-5xl mx-auto py-10 space-y-2">
-    <div>
+    <div class="flex gap-2">
       <Button @click="handleTakeScreenshot">
         <LucideCamera />
         Take a Screenshot
       </Button>
-      <Button @click="handleReset">
+      <Button variant="secondary" @click="handleReset">
         <LucideBrushCleaning />
         Clear Guide
       </Button>
     </div>
     <Separator />
-    <Input v-model="guide.title" class="text-2xl" placeholder="Title..." />
+    <Input v-model="guide.title" placeholder="Title..." />
     <TextEditor v-model="guide.abstract" placeholder="Abstract..." />
     <template v-for="step in guide.steps" :key="step.id">
       <TextEditor v-model="step.pretext" placeholder="Pretext..." />
