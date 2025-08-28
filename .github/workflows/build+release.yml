@@ -142,5 +142,6 @@ jobs:
         with:
           tag: v${{ env.APP_VERSION }}
           name: "Instrata Build ${{ env.APP_VERSION }}"
+          generateReleaseNotes: true
           token: ${{ secrets.GITHUB_TOKEN }}
           artifacts: release-artifacts/**/*
