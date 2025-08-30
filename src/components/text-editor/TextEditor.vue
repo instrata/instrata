@@ -35,7 +35,6 @@ watch(modelValue, (value) => {
   const isSame = editor.value?.getHTML() === value;
   if (isSame) return;
 
-  console.log("watch");
   editor.value?.commands.setContent(value, { emitUpdate: false, parseOptions: { preserveWhitespace: true } });
 });
 

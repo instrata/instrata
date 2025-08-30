@@ -1,0 +1,30 @@
+#set page(paper: "a4")
+#set par(spacing: 1.5em)
+#show link: underline
+#set heading(numbering: "1.")
+
+#align(center)[
+  #set text(size: 20pt, weight: "bold")
+  {{ title }}
+]
+
+#v(1em)
+#align(center)[
+  #set text(size: 12pt, style: "italic")
+  {{ abstract }}
+]
+
+#v(2em)
+
+{% for step in steps %}
+{{ step.pretext }}
+#image("screenshots/{{ step.screenshotId }}.png")
+{{ step.posttext }}
+{% endfor %}
+
+#v(2em)
+
+#[
+  #set text(size: 12pt, style: "italic")
+  {{ footnote }}
+]

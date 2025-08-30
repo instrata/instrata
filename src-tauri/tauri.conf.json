@@ -18,18 +18,34 @@
       }
     ],
     "security": {
-      "csp": null
+      "csp": "default-src 'self'; img-src 'self' asset: https://asset.localhost",
+      "assetProtocol": {
+        "enable": true,
+        "scope": [
+          "$APPDATA/**"
+        ]
+      }
     }
   },
   "bundle": {
     "active": true,
     "targets": "all",
+    "homepage": "https://github.com/instrata/instrata#README",
+    "shortDescription": "Instrata is a tool for creating step-by-step guides from automatic screenshots.",
+    "longDescription": "Instrata helps users quickly document processes and workflows without manually capturing or organizing screenshots. It automatically captures relevant screenshots, allowing you to annotate, highlight, or blur content, and compile them into guides suitable for sharing, reporting, or internal documentation. This saves time and improves clarity when creating step-by-step instructions.",
+    "publisher": "Instrata",
+    "copyright": "© 2025 Instrata",
     "icon": [
       "icons/32x32.png",
       "icons/128x128.png",
       "icons/128x128@2x.png",
       "icons/icon.icns",
       "icons/icon.ico"
+    ],
+    "license": "GPL-3.0-or-later",
+    "licenseFile": "../LICENSE",
+    "resources": [
+      "templates/"
     ]
   }
 }

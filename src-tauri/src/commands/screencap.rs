@@ -1,15 +1,25 @@
-use base64::{engine::general_purpose, Engine as _};
 use image::{DynamicImage, RgbImage, RgbaImage};
+use tauri::Manager;
 use xcap::Monitor;
 
 #[tauri::command]
-pub async fn capture_screen(index: usize) -> Result<String, String> {
+pub async fn capture_screen(app_handle: tauri::AppHandle, guide_id: String, screen_index: usize) -> Result<String, String> {
     tokio::task::spawn_blocking(move || {
+        let screenshot_id = nanoid::nanoid!();
+
+        let file_path = app_handle.path()
+            .app_data_dir()
+            .map_err(|e| e.to_string())?
+            .join(guide_id)
+            .join(format!("{}.png", screenshot_id));
+        std::fs::create_dir_all(file_path.parent().unwrap())
+            .map_err(|e| e.to_string())?;
+
         // Get all monitors
         let monitors = Monitor::all().map_err(|e| e.to_string())?;
 
         // Select monitor
-        let monitor = monitors.get(index).ok_or("Invalid monitor index")?;
+        let monitor = monitors.get(screen_index).ok_or("Invalid monitor index")?;
 
         // Capture image
         let image: RgbaImage = monitor.capture_image().map_err(|e| e.to_string())?;
@@ -18,20 +28,11 @@ pub async fn capture_screen(index: usize) -> Result<String, String> {
         let rgb_image: RgbImage = DynamicImage::ImageRgba8(image).into_rgb8();
 
         // Encode image to PNG
-        let mut png_bytes: Vec<u8> = Vec::new();
         rgb_image
-            .write_to(
-                &mut std::io::Cursor::new(&mut png_bytes),
-                image::ImageFormat::Png,
-            )
+            .save(&file_path)
             .map_err(|e| e.to_string())?;
 
-        // Convert to base64
-        let b64 = general_purpose::STANDARD.encode(&png_bytes);
-
-        let data_url = format!("data:image/png;base64,{}", b64);
-
-        Ok(data_url)
+        Ok(screenshot_id)
     })
     .await
     .map_err(|e| e.to_string())?

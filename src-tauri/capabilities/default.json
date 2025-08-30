@@ -11,9 +11,9 @@
     "global-shortcut:allow-register",
     "global-shortcut:allow-unregister",
     "fs:default",
-    "fs:allow-appconfig-read",
-    "fs:allow-appconfig-write",
-    "fs:allow-appdata-read",
-    "fs:allow-appdata-write"
+    "fs:allow-appconfig-read-recursive",
+    "fs:allow-appconfig-write-recursive",
+    "fs:allow-appdata-read-recursive",
+    "fs:allow-appdata-write-recursive"
   ]
 }

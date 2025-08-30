@@ -1,0 +1,14 @@
+{
+  "displayName": "Default PDF Template",
+  "description": "The default template when exporting to PDF",
+  "author": "Instrata",
+  "formats": [
+    "pdf"
+  ],
+  "links": [
+    {
+      "social": "github",
+      "url": "https://github.com/instrata/instrata"
+    }
+  ]
+}

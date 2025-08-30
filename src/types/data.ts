@@ -3,13 +3,15 @@ export type Step = {
     id: string
     /** pre text */
     pretext: string
-    /** data-url of the screenshot */
-    screenshot: string
+    /** id of the screenshot */
+    screenshotId: string
     /** post text */
     posttext: string
 }
 
 export type Guide = {
+    /** unique guide identifier */
+    id: string
     /** title of the guide */
     title: string
     /** abstract for the guide */

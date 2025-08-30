@@ -2,6 +2,8 @@ import JSZip from "jszip";
 import type { Guide } from "@/types/data.ts";
 import { renderTemplate } from "@/api/commands.ts";
 import { startBlobDownload } from "@/lib/export/utils.ts";
+import { readFile } from "@tauri-apps/plugin-fs";
+import { appDataDir, join } from "@tauri-apps/api/path";
 
 
 type MarkdownTemplateVariables = {
@@ -22,12 +24,10 @@ export async function exportGuideToMarkdown(template: string, guide: Guide): Pro
 
     zip.folder("assets")
     for (const step of guide.steps) {
-        const dataUrl = step.screenshot;
+        const filePath = await join(await appDataDir(), guide.id, `${step.screenshotId}.png`);
+        const fileContent = await readFile(filePath);
 
-        const extension = /^data:\w+\/(\w+);/.exec(dataUrl)?.[1];
-        const imageContent = dataUrl.replace(/^data:\w+\/\w+;base64,/, "");
-
-        zip.file(`assets/${step.id}.${extension}`, imageContent, { base64: true });
+        zip.file(`assets/${step.screenshotId}.png`, fileContent, { binary: true });
     }
 
     const templateVariables: MarkdownTemplateVariables = {
