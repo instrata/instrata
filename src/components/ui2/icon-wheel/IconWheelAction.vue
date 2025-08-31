@@ -15,7 +15,9 @@ import { computed } from "vue";
 
 const rootContext = injectIconWheelRootContext();
 
-const props = defineProps<IconWheelActionProps>();
+const props = withDefaults(defineProps<IconWheelActionProps>(), {
+  as: 'button',
+});
 const { forwardRef } = useForwardExpose();
 
 const forwarded = useForwardProps(props);
@@ -31,7 +33,7 @@ const radiusInPixel = computed(() => {
   return px;
 })
 
-const openOffset = computed(() => {
+const selfOffset = computed(() => {
   const angleStep = 360 / (radiusInPixel.value / 8);
   const offset = -90;
   const indexDegrees = angleStep * props.index!;
@@ -40,23 +42,21 @@ const openOffset = computed(() => {
   const radian = (offset + finalDegrees) * (Math.PI / 180);
   return { x: Math.cos(radian), y: Math.sin(radian), indexDegrees, endDegrees };
 });
-
-const selfOffset = computed(() => {
-  return rootContext.open.value
-    ? openOffset.value
-    : { x: 0, y: 0 };
-})
 </script>
 
 <template>
   <Primitive
       :data-state="rootContext.open.value ? 'open' : 'closed'"
-      class="z-10 row-[1] col-[1] transition-transform ease-in-out rounded-full border border-input p-2 shadow-md flex items-center justify-center bg-secondary text-secondary-foreground origin-(--icon-wheel-actions-transform-origin)
-data-[state=closed]:pointer-events-none data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95"
+      class="z-10 row-[1] col-[1] flex items-center justify-center rounded-full bg-input text-foreground hover:bg-input/90 p-2 border border-background shadow-md cursor-pointer
+transition-[translate,scale] will-change-[translate,scale] delay-0 duration-300 ease-in-out disabled:pointer-events-none disabled:text-muted-foreground
+data-[state=closed]:pointer-events-none
+data-[state=closed]:[--dist:0] data-[state=closed]:scale-0
+data-[state=closed]:group-hover/icon-wheel:scale-50 data-[state=closed]:group-hover/icon-wheel:[--dist:0.5] data-[state=closed]:group-hover/icon-wheel:delay-100
+data-[state=open]::scale-100 data-[state=open]:[--dist:1]"
       :style="{
-        '--translate-x': `calc(${selfOffset.x} * ${rootContext.radius})`,
-        '--translate-y': `calc(${selfOffset.y} * ${rootContext.radius})`,
-        transform: `translate(var(--translate-x), var(--translate-y))`,
+        '--translate-x': `calc(${selfOffset.x} * var(--dist) * ${rootContext.radius})`,
+        '--translate-y': `calc(${selfOffset.y} * var(--dist) * ${rootContext.radius})`,
+        translate: `var(--translate-x) var(--translate-y)`,
       }"
       v-bind="forwarded"
       :ref="forwardRef"
