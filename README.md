@@ -4,16 +4,16 @@
 
 ![Instrata UI Placeholder](./README.assets/ui-screenshot.png)
 
+[![Build & Release](https://github.com/instrata/instrata/actions/workflows/build+release.yml/badge.svg)](https://github.com/instrata/instrata/actions/workflows/build+release.yml)
 [![CodeQL](https://github.com/instrata/instrata/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/instrata/instrata/actions/workflows/github-code-scanning/codeql)
-[![Repo Size](https://img.shields.io/github/repo-size/instrata/instrata.svg)](https://github.com/yourusername/instrata)
-[![Code Size](https://img.shields.io/github/languages/code-size/instrata/instrata.svg)](https://github.com/yourusername/instrata)
+[![Repo Size](https://img.shields.io/github/repo-size/instrata/instrata.svg)](https://github.com/instrata/instrata)
+[![Code Size](https://img.shields.io/github/languages/code-size/instrata/instrata.svg)](https://github.com/instrata/instrata)
 [![License](https://img.shields.io/github/license/instrata/instrata.svg)](LICENSE)
-
-<!-- [![Auto-Build](PLACEHOLDER)] -->
 
 ## Why Instrata
 
-Instrata helps users quickly document processes and workflows without manually capturing or organizing screenshots. It automatically captures relevant screenshots, allowing you to annotate, highlight, or blur content, and compile them into guides suitable for sharing, reporting, or internal documentation. This saves time and improves clarity when creating step-by-step instructions.
+Instrata is built for anyone who needs fast, clean documentation of workflows.  
+It helps you quickly capture, organize, and share processes without manually taking and sorting screenshots. Screens are captured automatically, then you can annotate, highlight, or blur content and export guides in multiple formats. This saves time and improves clarity when creating step-by-step documentation.
 
 ## Key Features
 
@@ -28,22 +28,39 @@ Instrata helps users quickly document processes and workflows without manually c
 
 Download the latest release for your platform from [GitHub Releases](https://github.com/instrata/instrata/releases).
 
-**Linux:** AppImage, `.deb`, `.rpm`  
+**Linux:** `.AppImage`, `.deb`, `.rpm`  
 **Windows:** `.msi` or `-setup.exe`  
-**MacOS:** currently not distributed due to lack of testing
+**MacOS:** `.dmg`
+
+> [!WARNING] ⚠️ Note on installation warnings:  
+> Instrata is an open-source project and does not have the resources to sign binaries.  
+> This means that on **Windows** or **macOS** you may see warnings when running the installer or application for the first time.  
+> These warnings are expected and do not indicate malware. You can choose to proceed with the installation if you trust the source (the official Instrata GitHub releases).
+
+### Installation Notes Linux
+
+```bash
+# Debian / Ubuntu
+sudo dpkg -i instrata-x.y.z.deb
+
+# Fedora / RHEL
+sudo rpm -i instrata-x.y.z.rpm
+
+# AppImage (any distro)
+chmod +x instrata-x.y.z.AppImage
+./instrata-x.y.z.AppImage
+```
+
+### Installation Notes macOS
+For **macOS**, open the `.dmg`, then drag **Instrata** into Applications.
 
 ## Samples
 
 Instrata comes with sample guides to help you get started quickly. Check the [sample guides directory](README.assets/sample-guides) for ready-to-use examples and inspiration.
 
-## Roadmap
-
-- [ ] Enhanced annotation tools (arrows, shapes, stickers)
-- [ ] Hotkey customization
-- [ ] Export to animated GIF, WebP, or video
-- [ ] Advanced OCR integration
-- [ ] Collaboration via project import/export
-- [ ] MacOS testing and official binary releases
+<!--
+![Sample Guide Placeholder](./README.assets/sample-preview.png)
+-->
 
 ## Contributing
 
@@ -58,4 +75,5 @@ All contributions help make Instrata more stable, feature-rich, and user-friendl
 
 ## License
 
-This project is licensed under **GPL-3.0**. See [LICENSE](LICENSE) for details.
+This project is licensed under **GPL-3.0**. See [LICENSE](LICENSE) for details.  
+GPL-3.0 ensures contributions remain free and open. Compatible with most free/open-source licenses.
