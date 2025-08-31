@@ -32,7 +32,7 @@ Download the latest release for your platform from [GitHub Releases](https://git
 **Windows:** `.msi` or `-setup.exe`  
 **MacOS:** `.dmg`
 
-> [!WARNING] ⚠️ Note on installation warnings:  
+> [!IMPORTANT]
 > Instrata is an open-source project and does not have the resources to sign binaries.  
 > This means that on **Windows** or **macOS** you may see warnings when running the installer or application for the first time.  
 > These warnings are expected and do not indicate malware. You can choose to proceed with the installation if you trust the source (the official Instrata GitHub releases).
