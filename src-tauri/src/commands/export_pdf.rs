@@ -49,8 +49,10 @@ pub async fn export_pdf(app_handle: tauri::AppHandle, template_id: String, guide
         .app_data_dir()
         .map_err(|e| e.to_string())?
         .join(guide_id);
-    copy_dir_recursive(&screenshots_dir, workdir.path().join("screenshots").as_path())
-        .map_err(|e| e.to_string())?;
+    if screenshots_dir.is_dir() {
+        copy_dir_recursive(&screenshots_dir, workdir.path().join("screenshots").as_path())
+            .map_err(|e| e.to_string())?;
+    }
 
     let pdf_bytes = run_typst_compile(workdir.path())
         .await?;
