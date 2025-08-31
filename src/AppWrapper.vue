@@ -4,12 +4,15 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/sonner";
 import { onErrorCaptured } from "vue";
 import { toast } from "vue-sonner";
+import { useColorMode } from "@vueuse/core";
 
 onErrorCaptured((error: Error) => {
   toast.error("Fatal error occurred.", {
     description: `${error.name}: ${error.message}`,
   });
 });
+
+useColorMode({ writeDefaults: false });
 </script>
 
 <template>
