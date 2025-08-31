@@ -3,28 +3,36 @@
 #show link: underline
 #set heading(numbering: "1.")
 
+{%- if title %}
 #align(center)[
   #set text(size: 20pt, weight: "bold")
   {{ title }}
 ]
-
 #v(1em)
+{% endif -%}
+
+{%- if abstract %}
 #align(center)[
   #set text(size: 12pt, style: "italic")
   {{ abstract }}
 ]
-
 #v(2em)
+{% endif -%}
 
-{% for step in steps %}
-{{ step.pretext }}
-#image("screenshots/{{ step.screenshotId }}.png")
-{{ step.posttext }}
-{% endfor %}
+{%- for node in nodes %}
+{%- if node.type == "text" %}
+{{ node.text }}
+{% elif node.type == "image" %}
+#image("screenshots/{{ node.screenshotId }}.png")
+{% else %}
+> ERROR: Unknown Node
+{% endif -%}
+{% endfor -%}
 
+{%- if footnote %}
 #v(2em)
-
 #[
   #set text(size: 12pt, style: "italic")
   {{ footnote }}
 ]
+{% endif -%}

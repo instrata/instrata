@@ -1,13 +1,23 @@
 export const TEMPLATE_MARKDOWN = `
+{%- if title %}
 # {{ title }}
+{% endif -%}
 
+{%- if abstract %}
 {{ abstract }}
+{% endif -%}
 
-{% for step in steps %}
-{{ step.pretext }}
-![step.id]({{ step.screenshotPath }})
-{{ step.posttext }}
-{% endfor %}
+{%- for node in nodes %}
+{%- if node.type == "text" %}
+{{ node.text }}
+{% elif node.type == "image" %}
+![](screenshots/{{ node.screenshotId }}.png)
+{% else %}
+> ERROR: Unknown Node
+{% endif -%}
+{% endfor -%}
 
+{%- if footnote %}
 {{ footnote }}
+{% endif -%}
 `.trimStart();
