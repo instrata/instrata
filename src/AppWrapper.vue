@@ -12,11 +12,11 @@ onErrorCaptured((error: Error) => {
   });
 });
 
-useColorMode({ writeDefaults: false });
+const colorMode = useColorMode({ writeDefaults: false });
 </script>
 
 <template>
-  <Toaster rich-colors theme="dark" :visible-toasts="5" class="pointer-events-auto" />
+  <Toaster rich-colors :theme="colorMode === 'light' ? 'light' : 'dark'" :visible-toasts="5" class="pointer-events-auto" />
 
   <TooltipProvider :delay-duration="500">
     <Suspense>
