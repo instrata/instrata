@@ -7,11 +7,11 @@ import {
 } from "lucide-vue-next";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Screenshot } from "@/components/screenshot";
 import { TextEditor } from "@/components/app/text-editor";
 import { provideAppContext } from "@/components/app/app-context.ts";
 import InsertNodeIconWheel from "@/components/app/InsertNodeIconWheel.vue";
 import { TakeScreenshotButton, ExportToMarkdownButton, ExportToPdfButton } from "@/components/app/controls/";
+import AutoNode from "@/components/app/nodes/AutoNode.vue";
 
 function freshGuide(): Guide {
   return {
@@ -52,12 +52,7 @@ async function handleReset() {
       <div class="grid place-items-center">
         <InsertNodeIconWheel :before="node.id" />
       </div>
-      <template v-if="node.type === 'text'">
-        <TextEditor v-model="node.text" placeholder="Write something..." />
-      </template>
-      <template v-else-if="node.type === 'image'">
-        <Screenshot :guide-id="guide.id" :screenshot-id="node.screenshotId" />
-      </template>
+      <AutoNode :node="node" />
     </template>
     <div class="grid place-items-center">
       <InsertNodeIconWheel />
