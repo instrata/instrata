@@ -34,6 +34,7 @@ onMounted(() => {
       :aria-state="rootContext.open.value ? 'open' : 'closed'"
       :as="as"
       :as-child="props.asChild"
+      :data-state="rootContext.open.value ? 'open' : 'closed'"
       @click="rootContext.open.value = !rootContext.open.value"
       class="z-20 row-[1] col-[1] flex items-center justify-center rounded-full bg-input text-foreground hover:bg-input/90 p-2 border border-background cursor-pointer"
   >

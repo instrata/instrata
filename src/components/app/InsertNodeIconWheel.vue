@@ -45,8 +45,8 @@ async function handleUploadImage() {
 
 <template>
   <IconWheelRoot>
-    <IconWheelTrigger>
-      <LucidePlus />
+    <IconWheelTrigger class="group/trigger">
+      <LucidePlus class="group-data-[state=open]/trigger:rotate-45 transition-[rotate]" />
     </IconWheelTrigger>
     <IconWheelActions>
       <IconWheelAction @click="handleInsertTextNode">
