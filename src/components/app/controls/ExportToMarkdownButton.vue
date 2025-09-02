@@ -4,13 +4,14 @@ import { exportGuideToMarkdown } from "@/lib/export";
 import { TEMPLATE_MARKDOWN } from "@/templates";
 import { Button } from "@/components/ui/button";
 import { injectAppContext } from "@/components/app/app-context.ts";
+import { toRaw } from "vue";
 
 const appContext = injectAppContext();
 
 async function handleExportToMarkdown() {
   const toastId = toast.loading("Exporting to markdown archive");
   try {
-    await exportGuideToMarkdown(TEMPLATE_MARKDOWN, appContext.guide.value);
+    await exportGuideToMarkdown(TEMPLATE_MARKDOWN, toRaw(appContext.guide.value));
     toast.success("Guide successfully exported!", { id: toastId });
   } catch (error) {
     console.error(error);

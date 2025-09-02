@@ -4,9 +4,11 @@ import { renderTemplate } from "@/api/commands.ts";
 import { startBlobDownload } from "@/lib/export/utils.ts";
 import { readFile } from "@tauri-apps/plugin-fs";
 import { appDataDir, join } from "@tauri-apps/api/path";
+import { htmlConverter } from "@/lib/html-conv";
+import { MARKDOWN_ESCAPES, MARKDOWN_RULES } from "@/lib/html-conv/rules";
 
 
-export async function exportGuideToMarkdown(template: string, guide: Guide): Promise<void> {
+export async function exportGuideToMarkdown(templateId: string, guide: Guide): Promise<void> {
     const zip = new JSZip();
 
     zip.folder("screenshots")
@@ -19,7 +21,22 @@ export async function exportGuideToMarkdown(template: string, guide: Guide): Pro
         zip.file(`screenshots/${node.screenshotId}.png`, fileContent, { binary: true });
     }
 
-    const rendered = await renderTemplate(template, guide);
+    const htmlToMarkdown = (html: string) => htmlConverter(html, {
+        escapes: MARKDOWN_ESCAPES,
+        rules: MARKDOWN_RULES,
+    });
+
+    const rendered = await renderTemplate(templateId, {
+        title: htmlToMarkdown(guide.title),
+        abstract: htmlToMarkdown(guide.abstract),
+        nodes: structuredClone(guide.nodes).map(node => {
+            if (node.type === "text") {
+                node.text = htmlToMarkdown(node.text);
+            }
+            return node;
+        }),
+        footnote: htmlToMarkdown(guide.footnote),
+    });
 
     zip.file("README.md", rendered);
 

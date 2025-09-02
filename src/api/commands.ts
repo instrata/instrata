@@ -11,8 +11,8 @@ export async function renderTemplate(template: string, values: Record<string, un
 }
 
 
-export async function exportPdf(templateId: string, params: Record<string, unknown>): Promise<Blob> {
-    const pdf_bytes = await invoke<number[]>("export_pdf", { templateId, guideId: params.id, params });
+export async function exportPdf(templateId: string, guideId: string, params: Record<string, unknown>): Promise<Blob> {
+    const pdf_bytes = await invoke<number[]>("export_pdf", { templateId, guideId, params });
     const buffer = new Uint8Array(pdf_bytes);
     return new Blob([buffer], { type: "application/pdf" });
 }

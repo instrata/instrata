@@ -1,17 +1,16 @@
 <script setup lang="ts">
 import { toast } from "vue-sonner";
-import { exportPdf } from "@/api/commands.ts";
-import { startBlobDownload } from "@/lib/export/utils.ts";
 import { Button } from "@/components/ui/button";
 import { injectAppContext } from "@/components/app/app-context.ts";
+import { exportGuideToPdf } from "@/lib/export";
+import { toRaw } from "vue";
 
 const appContext = injectAppContext();
 
 async function handleExportToPdf() {
   const toastId = toast.loading("Exporting to pdf");
   try {
-    const pdfBlob = await exportPdf("typst", appContext.guide.value);
-    startBlobDownload(pdfBlob, "guide.pdf");
+    await exportGuideToPdf("typst", toRaw(appContext.guide.value));
     toast.success("Guide successfully exported!", { id: toastId });
   } catch (error) {
     console.error(error);
