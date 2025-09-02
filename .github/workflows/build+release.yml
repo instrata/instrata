@@ -149,7 +149,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 24
-          cache: npm
 
       - name: Generate updater.json
         run: node scripts/generate-updater.cjs

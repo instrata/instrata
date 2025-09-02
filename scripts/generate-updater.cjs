@@ -33,11 +33,15 @@ const updater = {
             signature: readSignature(`instrata-ubuntu-latest`, `appimage`, `instrata_${version}_amd64.AppImage.sig`),
             url: `${baseUrl}/instrata_${version}_amd64.AppImage`
         },
-        "darwin-x86_64": {
-            signature: readSignature(`instrata-macos-latest`, `dmg`, `instrata_${version}_aarch64.dmg.sig`),
-            url: `${baseUrl}/instrata_${version}_aarch64.dmg`
-        }
-    }
+        "darwin-aarch64": {
+            signature: readSignature(`instrata-macos-latest`, `macos`, `instrata_${version}_aarch64.app.tar.gz.sig`),
+            url: `${baseUrl}/instrata_${version}_aarch64.app.tar.gz`
+        },
+        // "darwin-x86_64": {
+        //     signature: readSignature(`instrata-macos-latest`, `macos`, `instrata_${version}_x86_64.app.tar.gz.sig`),
+        //     url: `${baseUrl}/instrata_${version}_x86_64.app.tar.gz`
+        // },
+    },
 };
 
 const outPath = path.join(__dirname, "..", "release-artifacts", "updater.json");
