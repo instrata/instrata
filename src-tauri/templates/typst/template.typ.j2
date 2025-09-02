@@ -1,7 +1,8 @@
 #set page(paper: "a4")
 #set par(spacing: 1.5em)
 #show link: underline
-#set heading(numbering: "1.")
+#set heading(bookmarked: true, numbering: "1.")
+#show raw.where(block: true): it => block(fill: luma(95%), radius: 4pt, width: 100%, inset: 4pt, it)
 
 {%- if title %}
 #align(center)[
