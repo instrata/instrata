@@ -3,17 +3,21 @@ use tauri::Manager;
 use xcap::Monitor;
 
 #[tauri::command]
-pub async fn capture_screen(app_handle: tauri::AppHandle, guide_id: String, screen_index: usize) -> Result<String, String> {
+pub async fn capture_screen(
+    app_handle: tauri::AppHandle,
+    guide_id: String,
+    screen_index: usize,
+) -> Result<String, String> {
     tokio::task::spawn_blocking(move || {
         let screenshot_id = nanoid::nanoid!();
 
-        let file_path = app_handle.path()
+        let file_path = app_handle
+            .path()
             .app_data_dir()
             .map_err(|e| e.to_string())?
             .join(guide_id)
             .join(format!("{}.png", screenshot_id));
-        std::fs::create_dir_all(file_path.parent().unwrap())
-            .map_err(|e| e.to_string())?;
+        std::fs::create_dir_all(file_path.parent().unwrap()).map_err(|e| e.to_string())?;
 
         // Get all monitors
         let monitors = Monitor::all().map_err(|e| e.to_string())?;
@@ -28,9 +32,7 @@ pub async fn capture_screen(app_handle: tauri::AppHandle, guide_id: String, scre
         let rgb_image: RgbImage = DynamicImage::ImageRgba8(image).into_rgb8();
 
         // Encode image to PNG
-        rgb_image
-            .save(&file_path)
-            .map_err(|e| e.to_string())?;
+        rgb_image.save(&file_path).map_err(|e| e.to_string())?;
 
         Ok(screenshot_id)
     })

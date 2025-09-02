@@ -3,7 +3,12 @@ use tauri::Manager;
 use tera::Context;
 
 #[tauri::command]
-pub async fn export_pdf(app_handle: tauri::AppHandle, template_id: String, guide_id: String, params: serde_json::Value) -> Result<Vec<u8>, String> {
+pub async fn export_pdf(
+    app_handle: tauri::AppHandle,
+    template_id: String,
+    guide_id: String,
+    params: serde_json::Value,
+) -> Result<Vec<u8>, String> {
     let mut template_dir = app_handle
         .path()
         .app_config_dir()
@@ -35,8 +40,7 @@ pub async fn export_pdf(app_handle: tauri::AppHandle, template_id: String, guide
         .tempdir()
         .map_err(|e| e.to_string())?;
 
-    std::fs::write(workdir.path().join("main.typ"), &rendered)
-        .map_err(|e| e.to_string())?;
+    std::fs::write(workdir.path().join("main.typ"), &rendered).map_err(|e| e.to_string())?;
 
     let assets_dir = template_dir.join("assets");
     if assets_dir.is_dir() {
@@ -50,16 +54,17 @@ pub async fn export_pdf(app_handle: tauri::AppHandle, template_id: String, guide
         .map_err(|e| e.to_string())?
         .join(guide_id);
     if screenshots_dir.is_dir() {
-        copy_dir_recursive(&screenshots_dir, workdir.path().join("screenshots").as_path())
-            .map_err(|e| e.to_string())?;
+        copy_dir_recursive(
+            &screenshots_dir,
+            workdir.path().join("screenshots").as_path(),
+        )
+        .map_err(|e| e.to_string())?;
     }
 
-    let pdf_bytes = run_typst_compile(workdir.path())
-        .await?;
+    let pdf_bytes = run_typst_compile(workdir.path()).await?;
 
     Ok(pdf_bytes)
 }
-
 
 fn copy_dir_recursive(source_dir: &Path, dest_dir: &Path) -> Result<(), std::io::Error> {
     std::fs::create_dir_all(&dest_dir)?;
@@ -79,12 +84,10 @@ fn copy_dir_recursive(source_dir: &Path, dest_dir: &Path) -> Result<(), std::io:
     Ok(())
 }
 
-
 fn setup_tera() -> tera::Tera {
     let tera = tera::Tera::default();
     tera
 }
-
 
 fn serde_to_tera_context(values: serde_json::Value) -> tera::Context {
     let mut context = Context::new();
@@ -96,10 +99,9 @@ fn serde_to_tera_context(values: serde_json::Value) -> tera::Context {
     context
 }
 
-
 async fn run_typst_compile(root_dir: &Path) -> Result<Vec<u8>, String> {
-    let template_source = std::fs::read_to_string(&root_dir.join("main.typ"))
-        .expect("Could not read typst template");
+    let template_source =
+        std::fs::read_to_string(&root_dir.join("main.typ")).expect("Could not read typst template");
 
     let template = typst_as_lib::TypstEngine::builder()
         .main_file(template_source)
@@ -107,14 +109,10 @@ async fn run_typst_compile(root_dir: &Path) -> Result<Vec<u8>, String> {
         .search_fonts_with(typst_as_lib::typst_kit_options::TypstKitFontOptions::default())
         .build();
 
-    let doc = template
-        .compile()
-        .output
-        .map_err(|e| e.to_string())?;
+    let doc = template.compile().output.map_err(|e| e.to_string())?;
 
     let options = Default::default();
-    let pdf_bytes = typst_pdf::pdf(&doc, &options)
-        .expect("failed to export to pdf");
+    let pdf_bytes = typst_pdf::pdf(&doc, &options).expect("failed to export to pdf");
 
     Ok(pdf_bytes)
 }

@@ -1,4 +1,3 @@
-
 #[tauri::command]
 pub async fn render_template(
     template: String,
@@ -21,7 +20,6 @@ pub async fn render_template(
     .await
     .map_err(|e| e.to_string())?
 }
-
 
 fn setup_tera() -> tera::Tera {
     let tera = tera::Tera::default();
