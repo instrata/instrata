@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import type { Guide } from "@/types/data.ts";
-import { Input } from "@/components/ui/input";
 import {
   LucideBrushCleaning,
 } from "lucide-vue-next";
@@ -46,7 +45,7 @@ async function handleReset() {
       <ExportToPdfButton />
     </div>
     <Separator />
-    <Input v-model="guide.title" placeholder="Title..." />
+    <TextEditor v-model="guide.title" placeholder="Title..." class="text-2xl" />
     <TextEditor v-model="guide.abstract" placeholder="Abstract..." />
     <template v-for="node in guide.nodes" :key="node.id">
       <div class="grid place-items-center">

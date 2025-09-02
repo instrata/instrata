@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { EditorContent, useEditor } from "@tiptap/vue-3";
 import StarterKit from "@tiptap/starter-kit";
-import { ref, watch } from "vue";
+import { type HTMLAttributes, ref, watch } from "vue";
 import {
   LucideBold, LucideBraces, LucideCode,
   LucideItalic, LucideLink,
@@ -27,6 +27,7 @@ declare module "@tiptap/core" {
 }
 
 const props = defineProps<{
+  class?: HTMLAttributes['class'],
   placeholder?: string
 }>();
 const modelValue = defineModel<string>({ required: true });
@@ -75,7 +76,7 @@ const editor = useEditor({
 <template>
   <Popover :open="hasFocus">
     <PopoverAnchor as-child>
-      <EditorContent :editor="editor" class="text-editor" />
+      <EditorContent :editor="editor" class="text-editor" :class="props.class" />
     </PopoverAnchor>
     <PopoverContent
         side="top" align="start"
