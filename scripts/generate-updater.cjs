@@ -10,7 +10,7 @@ if (!version || !repo) {
 }
 
 const baseUrl = `https://github.com/${repo}/releases/download/v${version}`;
-const artefactsDir = path.join(__dirname, "..", "release-artefacts");
+const artefactsDir = path.join(__dirname, "..", "release-artifacts");
 
 function readSignature(...parts) {
     const sigPath = path.join(artefactsDir, ...parts);
@@ -34,8 +34,8 @@ const updater = {
             url: `${baseUrl}/instrata_${version}_amd64.AppImage`
         },
         "darwin-aarch64": {
-            signature: readSignature(`instrata-macos-latest`, `macos`, `instrata_${version}_aarch64.app.tar.gz.sig`),
-            url: `${baseUrl}/instrata_${version}_aarch64.app.tar.gz`
+            signature: readSignature(`instrata-macos-latest`, `macos`, `instrata.app.tar.gz.sig`),
+            url: `${baseUrl}/instrata.app.tar.gz`
         },
         // "darwin-x86_64": {
         //     signature: readSignature(`instrata-macos-latest`, `macos`, `instrata_${version}_x86_64.app.tar.gz.sig`),

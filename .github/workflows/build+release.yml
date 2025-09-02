@@ -91,7 +91,7 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
             src-tauri/target
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          key: ${{ runner.os }}-cargo-${{ hashFiles('src-tauri/Cargo.lock') }}
           restore-keys: |
             ${{ runner.os }}-cargo-
 
@@ -131,10 +131,17 @@ jobs:
             src-tauri/target/release/bundle/deb/*.deb
             src-tauri/target/release/bundle/rpm/*.rpm
             src-tauri/target/release/bundle/dmg/*.dmg
-            src-tauri/target/release/bundle/macos/*.app
             src-tauri/target/release/bundle/macos/*.app.tar.gz
             src-tauri/target/release/bundle/*/*.sig
           if-no-files-found: error
+
+      - name: Bundle Cleanup
+        run: |
+          if [ "${{ runner.os }}" == "Windows" ]; then
+            Remove-Item -Force -Recursive .\src-tauri\target\release\bundle
+          else
+            rm -rf src-tauri/target/release/bundle
+          fi
 
   release:
     needs: build
@@ -177,6 +184,5 @@ jobs:
             release-artifacts/instrata-linux-latest/deb/*.deb
             release-artifacts/instrata-linux-latest/rpm/*.rpm
             release-artifacts/instrata-macos-latest/dmg/*.dmg
-            release-artifacts/instrata-macos-latest/macos/*.app
             release-artifacts/instrata-macos-latest/macos/*.app.tar.gz
             release-artifacts/updater.json
