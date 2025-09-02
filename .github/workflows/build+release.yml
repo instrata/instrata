@@ -110,7 +110,7 @@ jobs:
               pkg-config libclang-dev libxcb1-dev libxrandr-dev libdbus-1-dev libpipewire-0.3-dev libwayland-dev libegl-dev libgbm-dev
 
       - name: Update Tauri Version
-        run: node scripts/update-tauri-version.js
+        run: node scripts/update-tauri-version.cjs
         env:
           VERSION: ${{ env.APP_VERSION }}
 
@@ -145,8 +145,14 @@ jobs:
         with:
           path: release-artifacts
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
       - name: Generate updater.json
-        run: node scripts/generate-updater.js
+        run: node scripts/generate-updater.cjs
         env:
           VERSION: ${{ env.APP_VERSION }}
           REPO: ${{ github.repository }}
