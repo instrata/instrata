@@ -20,7 +20,6 @@ export const ESCAPES: EscapeRule[] = [
     [/\)/g, "\\)"],
     [/\$/g, "\\$"],
     [/@/g, "\\@"],
-    [/^ /g, "\\ "],
 ];
 
 export const RULES: ConverterRule[] = [
@@ -122,14 +121,14 @@ export const RULES: ConverterRule[] = [
         filter: ["em", "i"],
         replacement: (content) => {
             if (!content.trim()) return "";
-            return `_${content}_`;
+            return `#emph[${content}]`;
         },
     },
     {
         filter: ["strong", "b"],
         replacement: (content) => {
             if (!content.trim()) return "";
-            return `*${content}*`;
+            return `#strong[${content}]`;
         },
     },
     {
@@ -139,16 +138,8 @@ export const RULES: ConverterRule[] = [
             return node.nodeName === "CODE" && !isCodeBlock;
         },
         replacement: (content) => {
-            if (!content) return "";
-            content = content.replace(/\r?\n|\r/g, " ");
-
-            const extraSpace = /^`|^ .*?[^ ].* $|`$/.test(content) ? " " : "";
-            const delimiterLength = Array.from(content.matchAll(/`+/g)).reduce((length, match) => {
-                return Math.max(length, match[0].length + 1);
-            }, 1);
-            const delimiter = repeat("`", delimiterLength);
-
-            return `${delimiter}${extraSpace}${content}${extraSpace}${delimiter}`;
+            content = content.replace(/"/g, "\\\"");
+            return `#raw("${content}", block: false)`;
         },
     },
     {
