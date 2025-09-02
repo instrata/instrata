@@ -50,14 +50,16 @@ const selfOffset = computed(() => {
       class="z-10 row-[1] col-[1] flex items-center justify-center rounded-full bg-input text-foreground hover:bg-input/90 p-2 border border-background shadow-md cursor-pointer
 transition-[translate,scale] will-change-[translate,scale] delay-0 duration-300 ease-in-out disabled:pointer-events-none disabled:text-muted-foreground
 data-[state=closed]:pointer-events-none
-data-[state=closed]:[--dist:0] data-[state=closed]:scale-0
-data-[state=closed]:group-hover/icon-wheel:scale-50 data-[state=closed]:group-hover/icon-wheel:[--dist:0.5] data-[state=closed]:group-hover/icon-wheel:delay-100
-data-[state=open]::scale-100 data-[state=open]:[--dist:1]"
+data-[state=closed]:[--dist:0] data-[state=closed]:scale-0 data-[state=closed]:delay-100
+data-[state=closed]:group-hover/icon-wheel:scale-50 data-[state=closed]:group-hover/icon-wheel:[--dist:0.5]
+data-[state=open]::scale-100 data-[state=open]:[--dist:1] data-[state=open]:delay-[var(--open-delay)]"
       :style="{
         '--translate-x': `calc(${selfOffset.x} * var(--dist) * ${rootContext.radius})`,
         '--translate-y': `calc(${selfOffset.y} * var(--dist) * ${rootContext.radius})`,
         translate: `var(--translate-x) var(--translate-y)`,
+        '--open-delay': `${50*index!}ms`
       }"
+      :tabindex="rootContext.open.value ? '0' : '-1'"
       v-bind="forwarded"
       :ref="forwardRef"
   >
