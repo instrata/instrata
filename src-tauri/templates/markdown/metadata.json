@@ -1,0 +1,14 @@
+{
+  "displayName": "Default Markdown Template",
+  "description": "The default template when exporting to Markdown",
+  "author": "Instrata",
+  "formats": [
+    "markdown"
+  ],
+  "links": [
+    {
+      "social": "github",
+      "url": "https://github.com/instrata/instrata"
+    }
+  ]
+}

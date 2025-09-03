@@ -5,7 +5,6 @@ import { htmlConverter } from "@/lib/html-conv";
 import { TYPST_ESCAPES, TYPST_RULES } from "@/lib/html-conv/rules";
 
 export async function exportGuideToPdf(templateId: string, guide: Guide): Promise<void>  {
-
     const htmlToTypst = (html: string) => htmlConverter(html, {
         escapes: TYPST_ESCAPES,
         rules: TYPST_RULES,
