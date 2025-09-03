@@ -5,12 +5,14 @@ import { onMounted } from "vue";
 const { checkForUpdate } = useUpdaterToasts();
 
 onMounted(async () => {
-  try {
-    await checkForUpdate();
-  } catch (error) {
-    console.log(error);
+  if (import.meta.env.PROD) {
+    try {
+      await checkForUpdate();
+    } catch (error) {
+      console.log(error);
+    }
   }
-})
+});
 </script>
 
 <template>
