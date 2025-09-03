@@ -95,6 +95,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-cargo-
 
+      # todo: remove later on
+      - name: Bundle Cleanup
+        run: |
+          node -e "const fs=require('fs');fs.rmSync('src-tauri/target/release/bundle',{recursive:true,force:true});"
+
       - name: Install Frontend Dependencies
         run: npm ci
 
@@ -137,11 +142,7 @@ jobs:
 
       - name: Bundle Cleanup
         run: |
-          if [ "${{ runner.os }}" == "Windows" ]; then
-            Remove-Item -Force -Recursive .\src-tauri\target\release\bundle
-          else
-            rm -rf src-tauri/target/release/bundle
-          fi
+          node -e "const fs=require('fs');fs.rmSync('src-tauri/target/release/bundle',{recursive:true,force:true});"
 
   release:
     needs: build
