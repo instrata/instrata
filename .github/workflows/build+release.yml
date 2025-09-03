@@ -95,11 +95,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-cargo-
 
-      # todo: remove later on
-      - name: Bundle Cleanup
-        run: |
-          node -e "const fs=require('fs');fs.rmSync('src-tauri/target/release/bundle',{recursive:true,force:true});"
-
       - name: Install Frontend Dependencies
         run: npm ci
 
@@ -181,9 +176,9 @@ jobs:
           artifacts: |
             release-artifacts/instrata-windows-latest/msi/*.msi
             release-artifacts/instrata-windows-latest/nsis/*-setup.exe
-            release-artifacts/instrata-linux-latest/appimage/*.AppImage
-            release-artifacts/instrata-linux-latest/deb/*.deb
-            release-artifacts/instrata-linux-latest/rpm/*.rpm
+            release-artifacts/instrata-ubuntu-latest/appimage/*.AppImage
+            release-artifacts/instrata-ubuntu-latest/deb/*.deb
+            release-artifacts/instrata-ubuntu-latest/rpm/*.rpm
             release-artifacts/instrata-macos-latest/dmg/*.dmg
             release-artifacts/instrata-macos-latest/macos/*.app.tar.gz
             release-artifacts/updater.json
