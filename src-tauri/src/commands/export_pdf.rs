@@ -1,6 +1,6 @@
 use std::path::Path;
 use tauri::Manager;
-use tera::Context;
+use crate::commands::utils;
 
 #[tauri::command]
 pub async fn export_pdf(
@@ -9,28 +9,26 @@ pub async fn export_pdf(
     guide_id: String,
     params: serde_json::Value,
 ) -> Result<Vec<u8>, String> {
-    let mut template_dir = app_handle
-        .path()
-        .app_config_dir()
-        .map_err(|e| e.to_string())?
-        .join(&template_id);
-    if !template_dir.is_dir() {
-        template_dir = app_handle
-            .path()
-            .resource_dir()
-            .map_err(|e| e.to_string())?
-            .join("templates")
-            .join(&template_id);
-    }
-    if !template_dir.is_dir() {
-        return Err(String::from("template not found"));
-    }
+    tokio::task::spawn_blocking(move || {
+        blocking_export_pdf(app_handle, template_id, guide_id, params)
+    })
+    .await
+    .map_err(|e| e.to_string())?
+}
+
+fn blocking_export_pdf(
+    app_handle: tauri::AppHandle,
+    template_id: String,
+    guide_id: String,
+    params: serde_json::Value,
+) -> Result<Vec<u8>, String> {
+    let template_dir = utils::resolve_template_dir(&app_handle, &template_id)?;
 
     let template_src = std::fs::read_to_string(&template_dir.join("template.typ.j2"))
         .map_err(|e| e.to_string())?;
 
-    let context = serde_to_tera_context(params);
-    let rendered: String = setup_tera()
+    let context = utils::serde_to_tera_context(params);
+    let rendered: String = tera::Tera::default()
         .render_str(&template_src, &context)
         .map_err(|e| e.to_string())?;
 
@@ -61,7 +59,7 @@ pub async fn export_pdf(
         .map_err(|e| e.to_string())?;
     }
 
-    let pdf_bytes = run_typst_compile(workdir.path()).await?;
+    let pdf_bytes = run_typst_compile(workdir.path())?;
 
     Ok(pdf_bytes)
 }
@@ -84,24 +82,9 @@ fn copy_dir_recursive(source_dir: &Path, dest_dir: &Path) -> Result<(), std::io:
     Ok(())
 }
 
-fn setup_tera() -> tera::Tera {
-    let tera = tera::Tera::default();
-    tera
-}
-
-fn serde_to_tera_context(values: serde_json::Value) -> tera::Context {
-    let mut context = Context::new();
-    if let Some(obj) = values.as_object() {
-        for (k, v) in obj {
-            context.insert(k, v);
-        }
-    }
-    context
-}
-
-async fn run_typst_compile(root_dir: &Path) -> Result<Vec<u8>, String> {
-    let template_source =
-        std::fs::read_to_string(&root_dir.join("main.typ")).expect("Could not read typst template");
+fn run_typst_compile(root_dir: &Path) -> Result<Vec<u8>, String> {
+    let template_source = std::fs::read_to_string(&root_dir.join("main.typ"))
+            .map_err(|e| e.to_string())?;
 
     let template = typst_as_lib::TypstEngine::builder()
         .main_file(template_source)

@@ -1,7 +1,7 @@
 use std::io::Write;
 use std::path::{Path, PathBuf};
 use tauri::Manager;
-use tera::Context;
+use crate::commands::utils;
 
 #[tauri::command]
 pub async fn export_markdown(
@@ -10,36 +10,34 @@ pub async fn export_markdown(
     guide_id: String,
     params: serde_json::Value,
 ) -> Result<Vec<u8>, String> {
-    let mut template_dir = app_handle
-        .path()
-        .app_config_dir()
-        .map_err(|e| e.to_string())?
-        .join(&template_id);
-    if !template_dir.is_dir() {
-        template_dir = app_handle
-            .path()
-            .resource_dir()
-            .map_err(|e| e.to_string())?
-            .join("templates")
-            .join(&template_id);
-    }
-    if !template_dir.is_dir() {
-        return Err(String::from("template not found"));
-    }
+    tokio::task::spawn_blocking(move || {
+        blocking_export_markdown(app_handle, template_id, guide_id, params)
+    })
+    .await
+    .map_err(|e| e.to_string())?
+}
+
+fn blocking_export_markdown(
+    app_handle: tauri::AppHandle,
+    template_id: String,
+    guide_id: String,
+    params: serde_json::Value,
+) -> Result<Vec<u8>, String> {
+    let template_dir = utils::resolve_template_dir(&app_handle, &template_id)?;
 
     let template_src = std::fs::read_to_string(&template_dir.join("template.md.j2"))
         .map_err(|e| e.to_string())?;
 
-    let context = serde_to_tera_context(params);
-    let rendered: String = setup_tera()
+    let context = utils::serde_to_tera_context(params);
+    let rendered: String = tera::Tera::default()
         .render_str(&template_src, &context)
         .map_err(|e| e.to_string())?;
 
     let mut buffer = std::io::Cursor::new(Vec::new());
     let mut zip = zip::ZipWriter::new(&mut buffer);
-    let options = zip::write::SimpleFileOptions::default().compression_method(zip::CompressionMethod::Stored);
 
-    zip.start_file("README.md", options).map_err(|e| e.to_string())?;
+    zip.start_file("README.md", zip::write::SimpleFileOptions::default())
+        .map_err(|e| e.to_string())?;
     zip.write_all(rendered.as_bytes()).map_err(|e| e.to_string())?;
 
     let assets_dir = template_dir.join("assets");
@@ -84,19 +82,4 @@ fn write_dir_recursive<W: std::io::Write + std::io::Seek>(
     }
 
     Ok(())
-}
-
-fn setup_tera() -> tera::Tera {
-    let tera = tera::Tera::default();
-    tera
-}
-
-fn serde_to_tera_context(values: serde_json::Value) -> tera::Context {
-    let mut context = Context::new();
-    if let Some(obj) = values.as_object() {
-        for (k, v) in obj {
-            context.insert(k, v);
-        }
-    }
-    context
 }
