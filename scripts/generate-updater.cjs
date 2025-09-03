@@ -24,6 +24,7 @@ function readSignature(...parts) {
 
 const updater = {
     version,
+    pub_date: new Date().toISOString(),
     platforms: {
         "windows-x86_64": {
             signature: readSignature(`instrata-windows-latest`, `nsis`, `instrata_${version}_x64-setup.exe.sig`),
