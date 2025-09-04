@@ -1,6 +1,6 @@
 import type { Guide } from "@/types/data.ts";
 import { appDataDir, join } from "@tauri-apps/api/path";
-import { mkdir, readDir, readTextFile, remove, writeTextFile } from "@tauri-apps/plugin-fs";
+import { exists, mkdir, readDir, readTextFile, remove, writeTextFile } from "@tauri-apps/plugin-fs";
 import { nanoid } from "nanoid";
 
 
@@ -13,6 +13,12 @@ export async function listGuidesIds(): Promise<string[]> {
     return (await readDir(rootDir))
         .filter(e => e.isDirectory)
         .map(e => e.name);
+}
+
+export async function existsGuide(guideId: string): Promise<boolean> {
+    const rootDir = await getGuidesRoot();
+    const guideDir = await join(rootDir, guideId);
+    return await exists(guideDir);
 }
 
 export async function createNewGuide(): Promise<Guide> {

@@ -9,9 +9,22 @@ import { provideAppContext } from "@/components/app/app-context.ts";
 import InsertNodeIconWheel from "@/components/app/InsertNodeIconWheel.vue";
 import { TakeScreenshotButton, ExportToMarkdownButton, ExportToPdfButton } from "@/components/app/controls/";
 import AutoNode from "@/components/app/nodes/AutoNode.vue";
-import { loadGuide, saveGuide } from "@/api/storage/guides.ts";
+import { existsGuide, loadGuide, saveGuide } from "@/api/storage/guides.ts";
 import { useRoute } from "vue-router";
 import { watchThrottled } from "@vueuse/core";
+import { toast } from "vue-sonner";
+
+definePage({
+  beforeEnter: async (to, _from, next) => {
+    const guideId = (to.params as { guideId: string }).guideId;
+    if (!await existsGuide(guideId)) {
+      toast.error(`Tried to open guide '${guideId}' which does not exist`);
+      return false;
+    }
+
+    return next();
+  },
+});
 
 const route = useRoute("/(app)/app/[guideId]");
 
