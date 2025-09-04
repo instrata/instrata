@@ -28,7 +28,6 @@ export function htmlConverter(input: string, options: ConverterOptions): string 
     if (input === "") return "";
 
     const rootNode: HTMLElement = new DOMParser().parseFromString(input, "text/html").documentElement;
-    console.log({ rootNode });
     return processor(rootNode, options);
 }
 

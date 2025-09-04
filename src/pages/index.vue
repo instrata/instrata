@@ -1,61 +1,32 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import type { Guide } from "@/types/data.ts";
-import {
-  LucideBrushCleaning,
-} from "lucide-vue-next";
+import { useGuideIds } from "@/composables/storage/useGuideIds.ts";
+import { GuideCard } from "@/components/pages/home";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { TextEditor } from "@/components/app/text-editor";
-import { provideAppContext } from "@/components/app/app-context.ts";
-import InsertNodeIconWheel from "@/components/app/InsertNodeIconWheel.vue";
-import { TakeScreenshotButton, ExportToMarkdownButton, ExportToPdfButton } from "@/components/app/controls/";
-import AutoNode from "@/components/app/nodes/AutoNode.vue";
+import { LucidePlus } from "lucide-vue-next";
+import { createNewGuide } from "@/api/storage/guides.ts";
+import { useRouter } from "vue-router";
 
-function freshGuide(): Guide {
-  return {
-    id: "dev",
-    title: "",
-    abstract: "",
-    nodes: [],
-    footnote: "",
-  }
-}
+const router = useRouter();
+const { guideIds } = useGuideIds();
 
-const guide = ref<Guide>(freshGuide());
-
-provideAppContext({
-  guide: guide,
-});
-
-async function handleReset() {
-  guide.value = freshGuide();
+async function handleNewGuide() {
+  const guide = await createNewGuide();
+  await router.push({ name: "/(app)/app/[guideId]", params: { guideId: guide.id } });
 }
 </script>
 
 <template>
   <main class="min-h-svh max-w-5xl mx-auto p-2 space-y-2">
-    <div class="flex gap-2">
-      <TakeScreenshotButton />
-      <Button variant="secondary" @click="handleReset">
-        <LucideBrushCleaning />
-        Clear Guide
+    <div class="flex justify-end">
+      <Button variant="secondary" @click="handleNewGuide">
+        <LucidePlus />
+        New Guide
       </Button>
-      <ExportToMarkdownButton />
-      <ExportToPdfButton />
     </div>
-    <Separator />
-    <TextEditor v-model="guide.title" placeholder="Title..." class="text-2xl" />
-    <TextEditor v-model="guide.abstract" placeholder="Abstract..." />
-    <template v-for="node in guide.nodes" :key="node.id">
-      <div class="grid place-items-center">
-        <InsertNodeIconWheel :before="node.id" />
-      </div>
-      <AutoNode :node="node" />
-    </template>
-    <div class="grid place-items-center">
-      <InsertNodeIconWheel />
+    <div class="grid grid-cols-[repeat(auto-fill,minmax(min(300px,100%),1fr))] gap-4">
+      <template v-for="guideId in guideIds" :key="guideId">
+        <GuideCard :guide-id="guideId" class="size-full" />
+      </template>
     </div>
-    <TextEditor v-model="guide.footnote" placeholder="Footnote..." />
   </main>
 </template>

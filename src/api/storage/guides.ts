@@ -4,19 +4,18 @@ import { mkdir, readDir, readTextFile, remove, writeTextFile } from "@tauri-apps
 import { nanoid } from "nanoid";
 
 
-async function getGuidesRoot(): Promise<string> {
+export async function getGuidesRoot(): Promise<string> {
     return await join(await appDataDir(), "guides");
 }
 
-
-export async function listGuides(): Promise<string[]> {
+export async function listGuidesIds(): Promise<string[]> {
     const rootDir = await getGuidesRoot();
     return (await readDir(rootDir))
         .filter(e => e.isDirectory)
         .map(e => e.name);
 }
 
-export async function createGuide(): Promise<Guide> {
+export async function createNewGuide(): Promise<Guide> {
     const guide: Guide = {
         id: nanoid(),
         title: "",
