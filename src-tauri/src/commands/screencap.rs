@@ -26,7 +26,9 @@ fn blocking_capture_screen(
         .path()
         .app_data_dir()
         .map_err(|e| e.to_string())?
+        .join("guides")
         .join(guide_id)
+        .join("screenshots")
         .join(format!("{}.png", screenshot_id));
     std::fs::create_dir_all(file_path.parent().unwrap()).map_err(|e| e.to_string())?;
 

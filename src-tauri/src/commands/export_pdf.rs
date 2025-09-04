@@ -50,7 +50,9 @@ fn blocking_export_pdf(
         .path()
         .app_data_dir()
         .map_err(|e| e.to_string())?
-        .join(guide_id);
+        .join("guides")
+        .join(guide_id)
+        .join("screenshots");
     if screenshots_dir.is_dir() {
         copy_dir_recursive(
             &screenshots_dir,

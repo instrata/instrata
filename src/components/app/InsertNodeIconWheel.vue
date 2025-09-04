@@ -4,7 +4,7 @@ import { IconWheelAction, IconWheelActions, IconWheelRoot, IconWheelTrigger } fr
 import { injectAppContext } from "@/components/app/app-context.ts";
 import type { ImageNode, Node, TextNode } from "@/types/data.ts";
 import { nanoid } from "nanoid";
-import { captureScreen } from "@/api/commands.ts";
+import { captureScreen } from "@/api/commands";
 
 const props = defineProps<{
   before?: string

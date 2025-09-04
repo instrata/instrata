@@ -12,7 +12,7 @@ const props = defineProps<{
 const appContext = injectAppContext();
 
 const imageUrl = computedAsync(async () => {
-  const filePath = await join(await appDataDir(), appContext.guide.value.id, `${props.node.screenshotId}.png`);
+  const filePath = await join(await appDataDir(), "guides", appContext.guide.value.id, "screenshots", `${props.node.screenshotId}.png`);
   return convertFileSrc(filePath);
 });
 </script>

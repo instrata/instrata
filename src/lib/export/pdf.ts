@@ -1,5 +1,5 @@
 import type { Guide } from "@/types/data.ts";
-import { exportPdf } from "@/api/commands.ts";
+import { exportPdf } from "@/api/commands";
 import { startBlobDownload } from "@/lib/export/utils.ts";
 import { htmlConverter } from "@/lib/html-conv";
 import { TYPST_ESCAPES, TYPST_RULES } from "@/lib/html-conv/rules";
@@ -8,7 +8,7 @@ export async function exportGuideToPdf(templateId: string, guide: Guide): Promis
     const htmlToTypst = (html: string) => htmlConverter(html, {
         escapes: TYPST_ESCAPES,
         rules: TYPST_RULES,
-    });
+    }).trim();
 
     const templateParameters = {
         title: htmlToTypst(guide.title),

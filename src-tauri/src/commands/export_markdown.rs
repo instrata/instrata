@@ -50,7 +50,9 @@ fn blocking_export_markdown(
         .path()
         .app_data_dir()
         .map_err(|e| e.to_string())?
-        .join(guide_id);
+        .join("guides")
+        .join(guide_id)
+        .join("screenshots");
     if screenshots_dir.is_dir() {
         write_dir_recursive(&mut zip, &screenshots_dir, PathBuf::from("screenshots").as_path())
             .map_err(|e| e.to_string())?;

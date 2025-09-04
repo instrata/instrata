@@ -1,5 +1,5 @@
 import type { Guide } from "@/types/data.ts";
-import { exportMarkdown } from "@/api/commands.ts";
+import { exportMarkdown } from "@/api/commands";
 import { startBlobDownload } from "@/lib/export/utils.ts";
 import { htmlConverter } from "@/lib/html-conv";
 import { MARKDOWN_ESCAPES, MARKDOWN_RULES } from "@/lib/html-conv/rules";
@@ -9,7 +9,7 @@ export async function exportGuideToMarkdown(templateId: string, guide: Guide): P
     const htmlToMarkdown = (html: string) => htmlConverter(html, {
         escapes: MARKDOWN_ESCAPES,
         rules: MARKDOWN_RULES,
-    });
+    }).trim();
 
     const params = {
         title: htmlToMarkdown(guide.title),

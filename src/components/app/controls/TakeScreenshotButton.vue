@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Button } from "@/components/ui/button";
 import { LucideCamera } from "lucide-vue-next";
-import { captureScreen } from "@/api/commands.ts";
+import { captureScreen } from "@/api/commands";
 import { nanoid } from "nanoid";
 import { injectAppContext } from "@/components/app/app-context.ts";
 import type { ImageNode } from "@/types/data.ts";
