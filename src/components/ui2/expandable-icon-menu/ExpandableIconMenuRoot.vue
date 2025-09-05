@@ -63,7 +63,7 @@ provideExpandableMenuRootContext({
       ref="root"
       role="menu"
       :data-state="open ? 'open' : 'closed'"
-      class="group/expandable-icon-menu bg-background text-foreground rounded-md flex flex-col p-0.5"
+      class="group/expandable-icon-menu bg-background text-foreground border border-border rounded-md flex flex-col p-0.5"
   >
     <slot
         :open="open"
