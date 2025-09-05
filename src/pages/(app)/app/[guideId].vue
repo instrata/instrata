@@ -13,6 +13,7 @@ import { existsGuide, loadGuide, saveGuide } from "@/api/storage/guides.ts";
 import { useRoute } from "vue-router";
 import { watchThrottled } from "@vueuse/core";
 import { toast } from "vue-sonner";
+import { NodeActions } from "@/components/app/node-actions";
 
 definePage({
   beforeEnter: async (to, _from, next) => {
@@ -58,7 +59,13 @@ provideAppContext({
       <TextEditor v-model="guide.abstract" placeholder="Abstract..." />
       <template v-for="node in guide.nodes" :key="node.id">
         <InsertNodeHiddenFlexMenu :before="node.id" />
-        <AutoNode :node="node" />
+        <div class="group/node relative">
+          <AutoNode :node="node" />
+          <NodeActions :node-id="node.id" class="absolute top-0 right-0
+opacity-0 pointer-events-none transition-opacity delay-100
+group-hover/node:pointer-events-auto group-hover/node:opacity-100
+data-[state=open]:pointer-events-auto data-[state=open]:opacity-100" />
+        </div>
       </template>
       <InsertNodeHiddenFlexMenu />
     </div>
