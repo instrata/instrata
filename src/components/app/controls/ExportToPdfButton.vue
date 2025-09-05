@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { injectAppContext } from "@/components/app/app-context.ts";
 import { exportGuideToPdf } from "@/lib/export";
 import { toRaw } from "vue";
+import { IconPdfFile } from "@/components/icons";
 
 const appContext = injectAppContext();
 
@@ -21,6 +22,7 @@ async function handleExportToPdf() {
 
 <template>
   <Button variant="secondary" @click="handleExportToPdf">
+    <IconPdfFile />
     Export to PDF
   </Button>
 </template>
