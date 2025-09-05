@@ -71,7 +71,10 @@ onClickOutside(actionsElement, () => {
 </script>
 
 <template>
-  <div class="group/icon-wheel isolate grid place-items-center">
+  <div
+      role="menu"
+      class="group/icon-wheel isolate grid place-items-center"
+  >
     <slot
         :open="open"
         :close="close"
