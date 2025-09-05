@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { TextEditor } from "@/components/app/text-editor";
 import { provideAppContext } from "@/components/app/app-context.ts";
-import InsertNodeIconWheel from "@/components/app/InsertNodeIconWheel.vue";
+import InsertNodeHiddenFlexMenu from "@/components/app/InsertNodeHiddenFlexMenu.vue";
 import { TakeScreenshotButton, ExportToMarkdownButton, ExportToPdfButton } from "@/components/app/controls/";
 import AutoNode from "@/components/app/nodes/AutoNode.vue";
 import { existsGuide, loadGuide, saveGuide } from "@/api/storage/guides.ts";
@@ -54,15 +54,13 @@ provideAppContext({
     </div>
     <Separator />
     <TextEditor v-model="guide.title" placeholder="Title..." class="text-2xl" />
-    <TextEditor v-model="guide.abstract" placeholder="Abstract..." />
-    <template v-for="node in guide.nodes" :key="node.id">
-      <div class="grid place-items-center">
-        <InsertNodeIconWheel :before="node.id" />
-      </div>
-      <AutoNode :node="node" />
-    </template>
-    <div class="grid place-items-center">
-      <InsertNodeIconWheel />
+    <div class="space-y-1">
+      <TextEditor v-model="guide.abstract" placeholder="Abstract..." />
+      <template v-for="node in guide.nodes" :key="node.id">
+        <InsertNodeHiddenFlexMenu :before="node.id" />
+        <AutoNode :node="node" />
+      </template>
+      <InsertNodeHiddenFlexMenu />
     </div>
     <TextEditor v-model="guide.footnote" placeholder="Footnote..." />
   </main>
