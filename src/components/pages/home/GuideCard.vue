@@ -3,10 +3,10 @@ import { computedAsync } from "@vueuse/core";
 import { deleteGuide, loadGuide } from "@/api/storage/guides.ts";
 import { appDataDir, join } from "@tauri-apps/api/path";
 import { convertFileSrc } from "@tauri-apps/api/core";
-import { LucideBookImage, LucideTrash2 } from "lucide-vue-next";
-import { Button } from "@/components/ui/button";
+import { LucideBookImage, LucideMenu, LucideTrash2, LucideX } from "lucide-vue-next";
 import { computed } from "vue";
 import { useGuideIds } from "@/composables/storage/useGuideIds.ts";
+import { ExpandableIconMenuRoot, ExpandableIconMenuTrigger, ExpandableIconMenuContent, ExpandableIconMenuAction } from "@/components/ui2/expandable-icon-menu";
 
 const props = defineProps<{
   guideId: string
@@ -46,8 +46,16 @@ async function handleDelete() {
         {{ cleanTitle || guideId }}
       </div>
     </router-link>
-    <Button variant="secondary" size="icon" @click="handleDelete" class="absolute top-0 right-0 hover:text-destructive">
-      <LucideTrash2 />
-    </Button>
+    <ExpandableIconMenuRoot v-slot="{ open }" class="absolute top-0 right-0">
+      <ExpandableIconMenuTrigger>
+        <LucideX v-if="open" />
+        <LucideMenu v-else />
+      </ExpandableIconMenuTrigger>
+      <ExpandableIconMenuContent>
+        <ExpandableIconMenuAction @click="handleDelete" class="hover:text-destructive">
+          <LucideTrash2 />
+        </ExpandableIconMenuAction>
+      </ExpandableIconMenuContent>
+    </ExpandableIconMenuRoot>
   </div>
 </template>
