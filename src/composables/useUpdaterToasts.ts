@@ -86,7 +86,7 @@ export function useUpdaterToasts() {
         }
 
         toast.info("Update ready to install", {
-            description: "Version ${update.value.version} is downloaded. Click Install to proceed.",
+            description: `Version ${update.value.version} is downloaded. Click Install to proceed.`,
             id: toastId,
             dismissible: false,
             duration: Infinity,

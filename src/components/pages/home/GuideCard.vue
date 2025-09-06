@@ -3,7 +3,7 @@ import { computedAsync } from "@vueuse/core";
 import { deleteGuide, loadGuide } from "@/api/storage/guides.ts";
 import { appDataDir, join } from "@tauri-apps/api/path";
 import { convertFileSrc } from "@tauri-apps/api/core";
-import { LucideBookImage, LucideMenu, LucideTrash2, LucideX } from "lucide-vue-next";
+import { LucideBookImage, LucideEllipsisVertical, LucideTrash2, LucideX } from "lucide-vue-next";
 import { computed } from "vue";
 import { useGuideIds } from "@/composables/storage/useGuideIds.ts";
 import { ExpandableIconMenuRoot, ExpandableIconMenuTrigger, ExpandableIconMenuContent, ExpandableIconMenuAction } from "@/components/ui2/expandable-icon-menu";
@@ -49,7 +49,7 @@ async function handleDelete() {
     <ExpandableIconMenuRoot v-slot="{ open }" class="absolute top-0 right-0">
       <ExpandableIconMenuTrigger>
         <LucideX v-if="open" />
-        <LucideMenu v-else />
+        <LucideEllipsisVertical v-else />
       </ExpandableIconMenuTrigger>
       <ExpandableIconMenuContent>
         <ExpandableIconMenuAction @click="handleDelete" class="hover:text-destructive">
