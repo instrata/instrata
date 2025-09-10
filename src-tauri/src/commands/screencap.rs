@@ -8,11 +8,9 @@ pub async fn capture_screen(
     guide_id: String,
     screen_index: usize,
 ) -> Result<String, String> {
-    tokio::task::spawn_blocking(move || {
-        blocking_capture_screen(app_handle, guide_id, screen_index)
-    })
-    .await
-    .map_err(|e| e.to_string())?
+    tokio::task::spawn_blocking(move || blocking_capture_screen(app_handle, guide_id, screen_index))
+        .await
+        .map_err(|e| e.to_string())?
 }
 
 fn blocking_capture_screen(

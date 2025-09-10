@@ -1,6 +1,6 @@
+use crate::commands::utils;
 use std::path::Path;
 use tauri::Manager;
-use crate::commands::utils;
 
 #[tauri::command]
 pub async fn export_pdf(
@@ -85,8 +85,8 @@ fn copy_dir_recursive(source_dir: &Path, dest_dir: &Path) -> Result<(), std::io:
 }
 
 fn run_typst_compile(root_dir: &Path) -> Result<Vec<u8>, String> {
-    let template_source = std::fs::read_to_string(&root_dir.join("main.typ"))
-            .map_err(|e| e.to_string())?;
+    let template_source =
+        std::fs::read_to_string(&root_dir.join("main.typ")).map_err(|e| e.to_string())?;
 
     let template = typst_as_lib::TypstEngine::builder()
         .main_file(template_source)
