@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computedAsync } from "@vueuse/core";
-import { deleteGuide, loadGuide } from "@/api/storage/guides.ts";
+import { deleteGuide } from "@/api/storage/guides.ts";
 import { appDataDir, join } from "@tauri-apps/api/path";
 import { convertFileSrc } from "@tauri-apps/api/core";
 import { LucideBookCopy, LucideBookImage, LucideEllipsisVertical, LucideTrash2, LucideX } from "lucide-vue-next";
@@ -8,7 +8,6 @@ import { useGuideIds } from "@/composables/storage/useGuideIds.ts";
 import { ExpandableIconMenuRoot, ExpandableIconMenuTrigger, ExpandableIconMenuContent, ExpandableIconMenuAction } from "@/components/ui2/expandable-icon-menu";
 import type { Guide, GuideInfo } from "@/types/data.ts";
 import { htmlToText } from "@/lib/utils.ts";
-import { Button } from "@/components/ui/button";
 
 const props = defineProps<{
   guide: Guide
