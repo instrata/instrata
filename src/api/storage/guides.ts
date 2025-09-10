@@ -1,6 +1,6 @@
-import type { Guide } from "@/types/data.ts";
+import type { Guide, GuideInfo } from "@/types/data.ts";
 import { appDataDir, join } from "@tauri-apps/api/path";
-import { exists, mkdir, readDir, readTextFile, remove, writeTextFile } from "@tauri-apps/plugin-fs";
+import { exists, mkdir, readDir, readTextFile, remove, stat, writeTextFile } from "@tauri-apps/plugin-fs";
 import { nanoid } from "nanoid";
 
 
@@ -43,6 +43,16 @@ export async function loadGuide(guideId: string): Promise<Guide> {
     const guideDataFile = await join(rootDir, guideId, "data.json");
     const jsonString = await readTextFile(guideDataFile);
     return JSON.parse(jsonString);
+}
+
+export async function loadGuideInfo(guideId: string): Promise<GuideInfo> {
+    const rootDir = await getGuidesRoot();
+    const guideDataFile = await join(rootDir, guideId, "data.json");
+    const fileInfo = await stat(guideDataFile);
+    return {
+        mtime: fileInfo.mtime,
+        birthTime: fileInfo.birthtime,
+    };
 }
 
 export async function saveGuide(guide: Guide): Promise<void> {

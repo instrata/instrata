@@ -49,7 +49,7 @@ export function useUpdaterToasts() {
                 duration: Infinity,
                 description: () => {
                     const modelValue = (100 * downloaded / contentLength);
-                    return !isNaN(modelValue) ? h(Progress, { modelValue }) : null;
+                    return !isNaN(modelValue) ? h(Progress, { modelValue, class: "w-full" }) : null;
                 },
             });
         }
@@ -68,7 +68,6 @@ export function useUpdaterToasts() {
                     case "Progress":
                         downloaded += event.data.chunkLength;
                         progressToast();
-                        console.log(`Download progress: ${downloaded}/${contentLength}`);
                         break;
                     case "Finished":
                         console.log("Download finished");

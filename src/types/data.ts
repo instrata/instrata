@@ -11,6 +11,11 @@ export type Guide = {
     footnote: string
 }
 
+export type GuideInfo = {
+    mtime: Date | null
+    birthTime: Date | null
+}
+
 export type Node = TextNode | ImageNode;
 
 export type TextNode = {

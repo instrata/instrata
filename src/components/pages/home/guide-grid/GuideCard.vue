@@ -3,47 +3,42 @@ import { computedAsync } from "@vueuse/core";
 import { deleteGuide, loadGuide } from "@/api/storage/guides.ts";
 import { appDataDir, join } from "@tauri-apps/api/path";
 import { convertFileSrc } from "@tauri-apps/api/core";
-import { LucideBookImage, LucideEllipsisVertical, LucideTrash2, LucideX } from "lucide-vue-next";
-import { computed } from "vue";
+import { LucideBookCopy, LucideBookImage, LucideEllipsisVertical, LucideTrash2, LucideX } from "lucide-vue-next";
 import { useGuideIds } from "@/composables/storage/useGuideIds.ts";
 import { ExpandableIconMenuRoot, ExpandableIconMenuTrigger, ExpandableIconMenuContent, ExpandableIconMenuAction } from "@/components/ui2/expandable-icon-menu";
+import type { Guide, GuideInfo } from "@/types/data.ts";
+import { htmlToText } from "@/lib/utils.ts";
+import { Button } from "@/components/ui/button";
 
 const props = defineProps<{
-  guideId: string
+  guide: Guide
+  info: GuideInfo
 }>();
 
 const { refresh: refreshGuideIds } = useGuideIds();
-const guide = computedAsync(async () => await loadGuide(props.guideId));
-
-const cleanTitle = computed(() => {
-  if (!guide.value) return undefined;
-  const doc = new DOMParser().parseFromString(guide.value.title, "text/html");
-  return doc.documentElement.textContent;
-});
 
 const previewScreenshotSrc = computedAsync(async () => {
-  if (!guide.value) return undefined;
-  const imageNode = guide.value.nodes.find(node => node.type === "image");
+  const imageNode = props.guide.nodes.find(node => node.type === "image");
   if (!imageNode) return null;
-  const filePath = await join(await appDataDir(), "guides", props.guideId, "screenshots", `${imageNode.screenshotId}.png`);
+  const filePath = await join(await appDataDir(), "guides", props.guide.id, "screenshots", `${imageNode.screenshotId}.png`);
   return convertFileSrc(filePath);
 });
 
 async function handleDelete() {
-  await deleteGuide(props.guideId);
+  await deleteGuide(props.guide.id);
   await refreshGuideIds()
 }
 </script>
 
 <template>
-  <div v-if="guide" class="relative aspect-video border border-input rounded-lg overflow-hidden isolate group/guide-card">
-    <router-link :to="{ name: '/(app)/app/[guideId]', params: { guideId: guideId } }" class="size-full">
+  <div class="relative aspect-video border border-input rounded-lg overflow-hidden isolate group/guide-card">
+    <router-link :to="{ name: '/(app)/app/[guideId]', params: { guideId: guide.id } }" class="size-full">
       <img v-if="previewScreenshotSrc" :src="previewScreenshotSrc" alt="preview" class="size-full object-cover group-hover/guide-card:scale-105 transition-[scale]" />
       <div v-else class="size-full grid place-items-center">
         <LucideBookImage class="group-hover/guide-card:scale-105 transition-[scale]" />
       </div>
-      <div class="absolute inset-x-0 bottom-0 px-1 bg-gradient-to-t from-75% from-secondary/50 line-clamp-2 font-bold break-words">
-        {{ cleanTitle || guideId }}
+      <div class="absolute inset-x-0 bottom-0 px-1 bg-gradient-to-t from-90% from-background/75 text-foreground line-clamp-2 font-bold break-words">
+        {{ htmlToText(guide.title) || guide.id }}
       </div>
     </router-link>
     <ExpandableIconMenuRoot v-slot="{ open }" class="absolute top-0 right-0">
@@ -52,7 +47,10 @@ async function handleDelete() {
         <LucideEllipsisVertical v-else />
       </ExpandableIconMenuTrigger>
       <ExpandableIconMenuContent>
-        <ExpandableIconMenuAction @click="handleDelete" class="hover:text-destructive">
+        <ExpandableIconMenuAction title="Duplicate Guide">
+          <LucideBookCopy />
+        </ExpandableIconMenuAction>
+        <ExpandableIconMenuAction @click="handleDelete" class="hover:text-destructive" title="Delete Guide">
           <LucideTrash2 />
         </ExpandableIconMenuAction>
       </ExpandableIconMenuContent>
