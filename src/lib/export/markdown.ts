@@ -25,5 +25,5 @@ export async function exportGuideToMarkdown(templateId: string, guide: Guide): P
 
     const zipBlob = await exportMarkdown(templateId, guide.id, params);
 
-    startBlobDownload(zipBlob, "guide.zip");
+    await startBlobDownload(zipBlob, "guide.zip");
 }

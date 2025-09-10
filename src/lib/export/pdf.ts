@@ -24,5 +24,5 @@ export async function exportGuideToPdf(templateId: string, guide: Guide): Promis
 
     const pdfBlob = await exportPdf(templateId, guide.id, templateParameters);
 
-    startBlobDownload(pdfBlob, "guide.pdf");
+    await startBlobDownload(pdfBlob, "guide.pdf");
 }

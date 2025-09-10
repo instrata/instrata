@@ -10,10 +10,12 @@
     "core:app:allow-default-window-icon",
     "global-shortcut:allow-register",
     "global-shortcut:allow-unregister",
+    "opener:default",
     "fs:default",
     "fs:allow-appconfig-read-recursive",
     "fs:allow-appconfig-write-recursive",
     "fs:allow-appdata-read-recursive",
-    "fs:allow-appdata-write-recursive"
+    "fs:allow-appdata-write-recursive",
+    "fs:allow-download-write"
   ]
 }
