@@ -1,8 +1,8 @@
 <script setup lang="ts">
-
 import { LucideSettings } from "lucide-vue-next";
 import { IconInstrata } from "@/components/icons";
 import { Button } from "@/components/ui/button";
+import { SettingsDialog } from "@/components/pages/settings";
 </script>
 
 <template>
@@ -12,9 +12,11 @@ import { Button } from "@/components/ui/button";
       Instrata
     </span>
     <div class="grow" />
-    <Button variant="ghost" size="sm">
-      <LucideSettings />
-      Settings
-    </Button>
+    <SettingsDialog>
+      <Button variant="ghost" size="sm">
+        <LucideSettings />
+        Settings
+      </Button>
+    </SettingsDialog>
   </header>
 </template>
