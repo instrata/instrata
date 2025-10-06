@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 
 const APP_VERSION = await getVersion();
 
-const BUT_REPORT_LINK = "https://github.com/instrata/instrata/issues/new?template=bug-report.yaml"
+const BUG_REPORT_LINK = "https://github.com/instrata/instrata/issues/new?template=bug-report.yaml"
 const FEATURE_REQUEST_LINK = "https://github.com/instrata/instrata/issues/new?template=feature-request.yaml"
 </script>
 
@@ -46,7 +46,7 @@ const FEATURE_REQUEST_LINK = "https://github.com/instrata/instrata/issues/new?te
   </div>
   <div class="mt-auto" />
   <div class="grid grid-cols-2 place-content-center px-8 gap-8">
-    <a class="aspect-video" :href="BUT_REPORT_LINK" target="_blank" rel="noopener noreferrer">
+    <a class="aspect-video" :href="BUG_REPORT_LINK" target="_blank" rel="noopener noreferrer">
       <Button variant="ghost" size="none" class="size-full flex-col p-2">
         <LucideBug class="size-8" />
         Report a Bug

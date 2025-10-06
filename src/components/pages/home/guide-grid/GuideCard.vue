@@ -30,7 +30,7 @@ async function handleDelete() {
 </script>
 
 <template>
-  <div class="relative aspect-video border border-input rounded-lg overflow-hidden isolate group/guide-card">
+  <div class="relative aspect-video border border-input rounded-lg shadow-md overflow-hidden isolate group/guide-card">
     <router-link :to="{ name: '/(app)/app/[guideId]', params: { guideId: guide.id } }" class="size-full">
       <img v-if="previewScreenshotSrc" :src="previewScreenshotSrc" alt="preview" class="size-full object-cover group-hover/guide-card:scale-105 transition-[scale]" />
       <div v-else class="size-full grid place-items-center">
@@ -40,7 +40,7 @@ async function handleDelete() {
         {{ htmlToText(guide.title) || guide.id }}
       </div>
     </router-link>
-    <ExpandableIconMenuRoot v-slot="{ open }" class="absolute top-0 right-0">
+    <ExpandableIconMenuRoot v-slot="{ open }" class="absolute top-0 right-0 shadow-sm">
       <ExpandableIconMenuTrigger>
         <LucideX v-if="open" />
         <LucideEllipsisVertical v-else />
