@@ -1,9 +1,13 @@
 <script setup lang="ts">
 import { IconInstrata } from "@/components/icons";
 import { getVersion } from "@tauri-apps/api/app";
-import { LucideExternalLink } from "lucide-vue-next";
+import { LucideBug, LucideExternalLink, LucideLightbulb } from "lucide-vue-next";
+import { Button } from "@/components/ui/button";
 
 const APP_VERSION = await getVersion();
+
+const BUT_REPORT_LINK = "https://github.com/instrata/instrata/issues/new?template=bug-report.yaml"
+const FEATURE_REQUEST_LINK = "https://github.com/instrata/instrata/issues/new?template=feature-request.yaml"
 </script>
 
 <template>
@@ -41,7 +45,22 @@ const APP_VERSION = await getVersion();
     </div>
   </div>
   <div class="mt-auto" />
-  <div class="text-muted-foreground text-xs text-center">
+  <div class="grid grid-cols-2 place-content-center px-8 gap-8">
+    <a class="aspect-video" :href="BUT_REPORT_LINK" target="_blank" rel="noopener noreferrer">
+      <Button variant="ghost" size="none" class="size-full flex-col p-2">
+        <LucideBug class="size-8" />
+        Report a Bug
+      </Button>
+    </a>
+    <a class="aspect-video" :href="FEATURE_REQUEST_LINK" target="_blank" rel="noopener noreferrer">
+      <Button variant="ghost" size="none" class="size-full flex-col p-2">
+        <LucideLightbulb class="size-8" />
+        Suggest a Feature
+      </Button>
+    </a>
+  </div>
+  <div class="mt-auto" />
+  <div class="text-muted-foreground text-xs text-center select-none">
     Copyright &copy; {{ new Date().getFullYear() }} Instrata
   </div>
 </template>

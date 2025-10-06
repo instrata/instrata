@@ -20,7 +20,7 @@ async function handleTakeScreenshot() {
 </script>
 
 <template>
-  <Button @click="handleTakeScreenshot">
+  <Button variant="secondary" @click="handleTakeScreenshot">
     <LucideCamera />
     Take a Screenshot
   </Button>

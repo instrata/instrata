@@ -28,7 +28,7 @@ async function handleNewGuide() {
         </Button>
       </span>
     </div>
-    <Button variant="outline">
+    <Button variant="outline" disabled>
       <LucideImport />
       Import Guide
     </Button>

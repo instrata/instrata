@@ -32,7 +32,7 @@ async function handleDelete() {
         <LucideEye />
       </Button>
     </router-link>
-    <Button variant="ghost" size="icon" title="Duplicate Guide">
+    <Button variant="ghost" size="icon" disabled title="Duplicate Guide">
       <LucideBookCopy />
     </Button>
     <Button variant="ghost" size="icon" @click="handleDelete" title="Delete Guide">

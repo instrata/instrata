@@ -46,7 +46,7 @@ async function handleDelete() {
         <LucideEllipsisVertical v-else />
       </ExpandableIconMenuTrigger>
       <ExpandableIconMenuContent>
-        <ExpandableIconMenuAction title="Duplicate Guide">
+        <ExpandableIconMenuAction disabled title="Duplicate Guide">
           <LucideBookCopy />
         </ExpandableIconMenuAction>
         <ExpandableIconMenuAction @click="handleDelete" class="hover:text-destructive" title="Delete Guide">

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import type { Guide } from "@/types/data.ts";
-import { LucideHome } from "lucide-vue-next";
+import { LucideHome, LucideSettings } from "lucide-vue-next";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { TextEditor } from "@/components/app/text-editor";
@@ -14,6 +14,7 @@ import { useRoute } from "vue-router";
 import { watchThrottled } from "@vueuse/core";
 import { toast } from "vue-sonner";
 import { NodeActions } from "@/components/app/node-actions";
+import { SettingsDialog } from "@/components/pages/settings";
 
 definePage({
   beforeEnter: async (to, _from, next) => {
@@ -42,16 +43,23 @@ provideAppContext({
 
 <template>
   <main class="min-h-svh max-w-5xl mx-auto p-2 space-y-2">
-    <div class="flex gap-2">
+    <div class="flex gap-4">
+      <TakeScreenshotButton />
+      <ExportToMarkdownButton />
+      <ExportToPdfButton />
+      <div class="flex-1" />
       <router-link :to="{ name: '/' }">
-        <Button variant="secondary">
+        <Button variant="ghost">
           <LucideHome />
           Home
         </Button>
       </router-link>
-      <TakeScreenshotButton />
-      <ExportToMarkdownButton />
-      <ExportToPdfButton />
+      <SettingsDialog>
+        <Button variant="ghost">
+          <LucideSettings />
+          Settings
+        </Button>
+      </SettingsDialog>
     </div>
     <Separator />
     <TextEditor v-model="guide.title" placeholder="Title..." class="text-2xl" />

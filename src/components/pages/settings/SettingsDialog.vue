@@ -101,7 +101,7 @@ const activeMenu = computed(() => menus.find(menu => menu.id === activeMenuId.va
                       <div>
                         <component v-if="menuItem.icon" :is="menuItem.icon" />
                         <div v-else class="size-4"  />
-                        <span>
+                        <span class="select-none">
                           {{ menuItem.label }}
                         </span>
                       </div>
@@ -117,11 +117,11 @@ const activeMenu = computed(() => menus.find(menu => menu.id === activeMenuId.va
             <div class="flex items-center gap-2 px-4">
               <Breadcrumb>
                 <BreadcrumbList>
-                  <BreadcrumbItem class="hidden md:block">
+                  <BreadcrumbItem class="hidden select-none md:block">
                     Settings
                   </BreadcrumbItem>
                   <BreadcrumbSeparator class="hidden md:block" />
-                  <BreadcrumbItem>
+                  <BreadcrumbItem class="select-none">
                     <BreadcrumbPage>
                       {{ activeMenu?.label }}
                     </BreadcrumbPage>
