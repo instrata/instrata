@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import type { TemplateMeta } from "@/api/storage/templates.ts";
 import { Badge } from "@/components/ui/badge";
-import { LucideExternalLink, LucideFileCode } from "lucide-vue-next";
+import { LucideFileCode } from "lucide-vue-next";
+import { ExternalLink } from "@/components/ui2/external-link";
 
 defineProps<{
   metadata: TemplateMeta,
@@ -39,9 +40,11 @@ defineProps<{
     </div>
     <div v-if="metadata.links?.length" class="flex flex-col justify-center items-start gap-2">
       <template v-for="link in metadata.links" :key="link">
-        <a :href="link.url" target="_blank" rel="noopener noreferrer" :title="link.tooltip ?? link.social" class="bg-secondary p-0.5 rounded-full">
-          <img :src="`https://cdn.simpleicons.org/${link.social}`" :alt="link.tooltip ?? link.social" class="size-4 dark:invert" />
-        </a>
+        <ExternalLink :href="link.url" :title="link.tooltip ?? link.social">
+          <div class="bg-secondary p-0.5 rounded-full cursor-pointer">
+            <img :src="`https://cdn.simpleicons.org/${link.social}`" :alt="link.tooltip ?? link.social" class="size-4 dark:invert" />
+          </div>
+        </ExternalLink>
       </template>
     </div>
   </div>
