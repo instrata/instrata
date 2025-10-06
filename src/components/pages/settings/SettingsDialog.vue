@@ -130,7 +130,7 @@ const activeMenu = computed(() => menus.find(menu => menu.id === activeMenuId.va
               </Breadcrumb>
             </div>
           </header>
-          <div class="flex flex-1 flex-col gap-4 overflow-y-auto p-4 pt-0">
+          <div class="flex flex-1 flex-col gap-4 overflow-y-auto p-4 pt-0 break-all">
             <component v-if="activeMenu" :is="activeMenu.component" />
           </div>
         </main>
