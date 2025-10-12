@@ -1,6 +1,6 @@
 import type { Guide, GuideInfo } from "@/types/data.ts";
 import { appDataDir, join } from "@tauri-apps/api/path";
-import { exists, mkdir, readDir, readTextFile, remove, stat, writeTextFile } from "@tauri-apps/plugin-fs";
+import {copyFile, exists, mkdir, readDir, readTextFile, remove, stat, writeTextFile} from "@tauri-apps/plugin-fs";
 import { nanoid } from "nanoid";
 
 
@@ -38,6 +38,45 @@ export async function createNewGuide(): Promise<Guide> {
     await writeTextFile(await join(guideDir, "data.json"), jsonString, { createNew: true });
     await mkdir(await join(guideDir, "screenshots"));
     return guide;
+}
+
+export async function cloneGuide(source: Guide): Promise<Guide> {
+    const guide: Guide = {
+        ...source,
+        id: nanoid(),
+    };
+
+    const rootDir = await getGuidesRoot();
+    const sourceDir = await join(rootDir, source.id);
+    const guideDir = await join(rootDir, guide.id);
+
+    await mkdir(guideDir, { recursive: true });
+    await cloneDirectory(sourceDir, guideDir);
+
+    const jsonString = JSON.stringify(guide, null, 2);
+    await writeTextFile(await join(guideDir, "data.json"), jsonString);
+
+    await mkdir(await join(guideDir, "screenshots"), { recursive: true });
+
+    return guide;
+}
+
+async function cloneDirectory(src: string, dest: string): Promise<void> {
+    for (const entry of await readDir(src)) {
+        if (entry.isFile) {
+            const srcFile = await join(src, entry.name);
+            const destFile = await join(dest, entry.name);
+            await copyFile(srcFile, destFile);
+        } else if (entry.isDirectory) {
+            const srcDir = await join(src, entry.name);
+            const mode = (await stat(srcDir)).mode ?? undefined;
+            const destDir = await join(dest, entry.name);
+            await mkdir(destDir, { mode });
+            await cloneDirectory(srcDir, destDir);
+        } else {
+            console.error(`unable to clone '${entry.name}' from '${src}' as its type is unsupported`);
+        }
+    }
 }
 
 export async function loadGuide(guideId: string): Promise<Guide> {

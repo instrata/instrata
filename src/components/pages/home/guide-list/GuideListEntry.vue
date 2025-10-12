@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { deleteGuide } from "@/api/storage/guides.ts";
+import {cloneGuide, deleteGuide} from "@/api/storage/guides.ts";
 import {
   LucideBookCopy,
   LucideEye,
@@ -16,9 +16,14 @@ const props = defineProps<{
 }>();
 const { refresh: refreshGuideIds } = useGuideIds();
 
+async function handleClone() {
+  await cloneGuide(props.guide);
+  await refreshGuideIds();
+}
+
 async function handleDelete() {
   await deleteGuide(props.guide.id);
-  await refreshGuideIds()
+  await refreshGuideIds();
 }
 </script>
 
@@ -32,7 +37,7 @@ async function handleDelete() {
         <LucideEye />
       </Button>
     </router-link>
-    <Button variant="ghost" size="icon" disabled title="Duplicate Guide">
+    <Button variant="ghost" size="icon" @click="handleClone" title="Duplicate Guide">
       <LucideBookCopy />
     </Button>
     <Button variant="ghost" size="icon" @click="handleDelete" title="Delete Guide">

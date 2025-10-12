@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computedAsync } from "@vueuse/core";
-import { deleteGuide } from "@/api/storage/guides.ts";
+import {cloneGuide, deleteGuide} from "@/api/storage/guides.ts";
 import { appDataDir, join } from "@tauri-apps/api/path";
 import { convertFileSrc } from "@tauri-apps/api/core";
 import { LucideBookCopy, LucideBookImage, LucideEllipsisVertical, LucideTrash2, LucideX } from "lucide-vue-next";
@@ -23,9 +23,14 @@ const previewScreenshotSrc = computedAsync(async () => {
   return convertFileSrc(filePath);
 });
 
+async function handleClone() {
+  await cloneGuide(props.guide);
+  await refreshGuideIds();
+}
+
 async function handleDelete() {
   await deleteGuide(props.guide.id);
-  await refreshGuideIds()
+  await refreshGuideIds();
 }
 </script>
 
@@ -46,7 +51,7 @@ async function handleDelete() {
         <LucideEllipsisVertical v-else />
       </ExpandableIconMenuTrigger>
       <ExpandableIconMenuContent>
-        <ExpandableIconMenuAction disabled title="Duplicate Guide">
+        <ExpandableIconMenuAction @click="handleClone" title="Duplicate Guide">
           <LucideBookCopy />
         </ExpandableIconMenuAction>
         <ExpandableIconMenuAction @click="handleDelete" class="hover:text-destructive" title="Delete Guide">
