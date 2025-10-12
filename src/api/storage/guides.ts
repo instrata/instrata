@@ -5,7 +5,9 @@ import { nanoid } from "nanoid";
 
 
 export async function getGuidesRoot(): Promise<string> {
-    return await join(await appDataDir(), "guides");
+    const dir = await join(await appDataDir(), "guides");
+    if (!await exists(dir)) await mkdir(dir, { recursive: true });
+    return dir;
 }
 
 export async function listGuidesIds(): Promise<string[]> {
