@@ -2,7 +2,7 @@
 import { type Component, computed, ref } from "vue";
 import { Dialog, DialogTrigger, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { LucideBrush, LucideCommand, LucideFileCode, LucideInfo, LucideSettings } from "lucide-vue-next";
+import {LucideBrush, LucideCommand, LucideFileCode, LucideInfo, LucideLanguages, LucideSettings} from "lucide-vue-next";
 import {
   Sidebar,
   SidebarContent,
@@ -14,7 +14,7 @@ import {
 import {
   SettingsMenuAbout,
   SettingsMenuAppearance,
-  SettingsMenuKeybindings,
+  SettingsMenuKeybindings, SettingsMenuLanguages,
   SettingsMenuTemplates
 } from "@/components/pages/settings/menus";
 import {
@@ -24,15 +24,18 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator
 } from "@/components/ui/breadcrumb";
+import { useI18n } from "vue-i18n";
 
 defineOptions({
   inheritAttrs: false,
 });
 
+const { t } = useI18n();
+
 type SettingsMenu = {
   id: string
   icon?: Component
-  label: string
+  label: () => string
   component: Component
 }
 
@@ -40,25 +43,31 @@ const menus: SettingsMenu[] = [
   {
     id: "appearance",
     icon: LucideBrush,
-    label: "Appearance",
+    label: () => t('settings.appearance.label'),
     component: SettingsMenuAppearance,
+  },
+  {
+    id: "languages",
+    icon: LucideLanguages,
+    label: () => t('settings.languages.label'),
+    component: SettingsMenuLanguages,
   },
   {
     id: "keybindings",
     icon: LucideCommand,
-    label: "Keybindings",
+    label: () => t('settings.keybindings.label'),
     component: SettingsMenuKeybindings,
   },
   {
     id: "templates",
     icon: LucideFileCode,
-    label: "Templates",
+    label: () => t('settings.templates.label'),
     component: SettingsMenuTemplates,
   },
   {
     id: "about",
     icon: LucideInfo,
-    label: "About",
+    label: () => t('settings.about.label'),
     component: SettingsMenuAbout,
   }
 ];
@@ -102,7 +111,7 @@ const activeMenu = computed(() => menus.find(menu => menu.id === activeMenuId.va
                         <component v-if="menuItem.icon" :is="menuItem.icon" />
                         <div v-else class="size-4"  />
                         <span class="select-none">
-                          {{ menuItem.label }}
+                          {{ menuItem.label() }}
                         </span>
                       </div>
                     </SidebarMenuButton>
@@ -123,7 +132,7 @@ const activeMenu = computed(() => menus.find(menu => menu.id === activeMenuId.va
                   <BreadcrumbSeparator class="hidden md:block" />
                   <BreadcrumbItem class="select-none">
                     <BreadcrumbPage>
-                      {{ activeMenu?.label }}
+                      {{ activeMenu?.label() }}
                     </BreadcrumbPage>
                   </BreadcrumbItem>
                 </BreadcrumbList>

@@ -57,6 +57,9 @@ jobs:
       - name: TypeScript check
         run: npm run type-check
 
+      - name: i18n check
+        run: npm run i18n-check
+
       - name: Rust check
         working-directory: src-tauri
         run: cargo check --locked

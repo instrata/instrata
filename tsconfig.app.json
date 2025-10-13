@@ -18,5 +18,5 @@
       ]
     }
   },
-  "include": ["typed-router.d.ts", "src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"]
+  "include": ["typed-router.d.ts", "typed-i18n.d.ts", "src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"]
 }

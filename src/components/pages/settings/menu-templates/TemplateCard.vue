@@ -3,6 +3,9 @@ import type { TemplateMeta } from "@/api/storage/templates.ts";
 import { Badge } from "@/components/ui/badge";
 import { LucideFileCode } from "lucide-vue-next";
 import { ExternalLink } from "@/components/ui2/external-link";
+import { Icon, type IconifyIcon } from "@iconify/vue";
+import { getIconData } from "@iconify/utils";
+import { icons as SOCIAL_ICONS } from "@iconify-json/simple-icons";
 
 defineProps<{
   metadata: TemplateMeta,
@@ -42,7 +45,7 @@ defineProps<{
       <template v-for="link in metadata.links" :key="link">
         <ExternalLink :href="link.url" :title="link.tooltip ?? link.social">
           <div class="bg-secondary p-0.5 rounded-full cursor-pointer">
-            <img :src="`https://cdn.simpleicons.org/${link.social}`" :alt="link.tooltip ?? link.social" class="size-4 dark:invert" />
+            <Icon :icon="getIconData(SOCIAL_ICONS, link.social) as IconifyIcon" :title="link.tooltip ?? link.social" class="size-5" />
           </div>
         </ExternalLink>
       </template>

@@ -3,6 +3,8 @@ import { defineConfig } from "vite";
 import Vue from "@vitejs/plugin-vue";
 import VueRouter from "unplugin-vue-router/vite";
 import TailwindCSS from "@tailwindcss/vite";
+import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite';
+import YamlDtsPlugin from "./scripts/vite-plugin-yaml-dts";
 
 const host = process.env.TAURI_DEV_HOST;
 
@@ -11,7 +13,14 @@ export default defineConfig(async () => ({
   plugins: [
       VueRouter(),
       Vue(),
+      VueI18nPlugin({
+          include: ["src/locales/*"],
+      }),
       TailwindCSS(),
+      YamlDtsPlugin({
+          source: "src/locales/en.yaml",
+          output: "typed-i18n.d.ts",
+      }),
   ],
 resolve: {
     alias: {
