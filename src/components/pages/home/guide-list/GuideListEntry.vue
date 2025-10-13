@@ -2,7 +2,7 @@
 import {cloneGuide, deleteGuide} from "@/api/storage/guides.ts";
 import {
   LucideBookCopy,
-  LucideEye,
+  LucideEye, LucideFolderDown,
   LucideTrash2,
 } from "lucide-vue-next";
 import { useGuideIds } from "@/composables/storage/useGuideIds.ts";
@@ -39,6 +39,9 @@ async function handleDelete() {
     </router-link>
     <Button variant="ghost" size="icon" @click="handleClone" title="Duplicate Guide">
       <LucideBookCopy />
+    </Button>
+    <Button variant="ghost" size="icon" disabled title="Export Guide">
+      <LucideFolderDown />
     </Button>
     <Button variant="ghost" size="icon" @click="handleDelete" title="Delete Guide">
       <LucideTrash2 />

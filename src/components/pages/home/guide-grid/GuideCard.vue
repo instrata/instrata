@@ -3,7 +3,14 @@ import { computedAsync } from "@vueuse/core";
 import {cloneGuide, deleteGuide} from "@/api/storage/guides.ts";
 import { appDataDir, join } from "@tauri-apps/api/path";
 import { convertFileSrc } from "@tauri-apps/api/core";
-import { LucideBookCopy, LucideBookImage, LucideEllipsisVertical, LucideTrash2, LucideX } from "lucide-vue-next";
+import {
+  LucideBookCopy,
+  LucideBookImage,
+  LucideEllipsisVertical,
+  LucideFolderDown,
+  LucideTrash2,
+  LucideX
+} from "lucide-vue-next";
 import { useGuideIds } from "@/composables/storage/useGuideIds.ts";
 import { ExpandableIconMenuRoot, ExpandableIconMenuTrigger, ExpandableIconMenuContent, ExpandableIconMenuAction } from "@/components/ui2/expandable-icon-menu";
 import type { Guide, GuideInfo } from "@/types/data.ts";
@@ -53,6 +60,9 @@ async function handleDelete() {
       <ExpandableIconMenuContent>
         <ExpandableIconMenuAction @click="handleClone" title="Duplicate Guide">
           <LucideBookCopy />
+        </ExpandableIconMenuAction>
+        <ExpandableIconMenuAction disabled title="Export Guide">
+          <LucideFolderDown />
         </ExpandableIconMenuAction>
         <ExpandableIconMenuAction @click="handleDelete" class="hover:text-destructive" title="Delete Guide">
           <LucideTrash2 />
