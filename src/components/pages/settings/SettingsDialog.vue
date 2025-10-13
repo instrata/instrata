@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { type Component, computed, ref } from "vue";
-import { Dialog, DialogTrigger, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import {LucideBrush, LucideCommand, LucideFileCode, LucideInfo, LucideLanguages, LucideSettings} from "lucide-vue-next";
 import {
@@ -84,17 +84,11 @@ const activeMenu = computed(() => menus.find(menu => menu.id === activeMenuId.va
       <slot>
         <Button variant="ghost" size="sm">
           <LucideSettings />
-          Settings
+          {{ $t('settings.label') }}
         </Button>
       </slot>
     </DialogTrigger>
     <DialogContent class="overflow-hidden p-0 md:max-h-[500px] md:max-w-[700px] lg:max-w-[800px]">
-      <DialogTitle class="sr-only">
-        Settings
-      </DialogTitle>
-      <DialogDescription class="sr-only">
-        Customize your settings here.
-      </DialogDescription>
       <SidebarProvider class="items-start">
         <Sidebar collapsible="none" class="hidden md:flex">
           <SidebarContent>
@@ -127,7 +121,7 @@ const activeMenu = computed(() => menus.find(menu => menu.id === activeMenuId.va
               <Breadcrumb>
                 <BreadcrumbList>
                   <BreadcrumbItem class="hidden select-none md:block">
-                    Settings
+                    {{ $t('settings.label') }}
                   </BreadcrumbItem>
                   <BreadcrumbSeparator class="hidden md:block" />
                   <BreadcrumbItem class="select-none">

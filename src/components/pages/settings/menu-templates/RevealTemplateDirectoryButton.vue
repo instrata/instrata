@@ -15,7 +15,7 @@ async function openTemplateDirectory() {
 </script>
 
 <template>
-  <Button variant="outline" size="sm" @click="openTemplateDirectory" title="Open template directory">
+  <Button variant="outline" size="sm" @click="openTemplateDirectory" :title="$t('settings.templates.open_directory_tooltip')">
     <LucideFolderInput />
   </Button>
 </template>

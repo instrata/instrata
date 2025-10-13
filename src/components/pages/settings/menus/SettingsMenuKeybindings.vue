@@ -3,5 +3,5 @@
 </script>
 
 <template>
-  Keybindings
+  {{ $t('common.not_implemented') }}
 </template>

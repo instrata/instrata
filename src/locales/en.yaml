@@ -1,4 +1,30 @@
+instrata: "Instrata"
+common:
+  not_implemented: "Not implemented yet"
 settings:
+  label: "Settings"
+  appearance:
+    label: "Appearance"
+    theme:
+      label: "Color theme"
+      system: "System"
+      light: "Light"
+      dark: "Dark"
   languages:
     label: "Languages"
     locale: "English"
+  keybindings:
+    label: "Hotkeys"
+  templates:
+    label: "Templates"
+    open_directory_tooltip: "Open template directory"
+    card:
+      by: "by"
+  about:
+    label: "About"
+    version: "Version:"
+    organization: "Organization:"
+    repository: "Repository:"
+    report_bug: "Report a Bug!"
+    suggest_feature: "Suggest a Feature!"
+    copyright: "Copyright © {year} Instrata"

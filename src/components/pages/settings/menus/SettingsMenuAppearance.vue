@@ -9,7 +9,7 @@ const colorMode = useColorMode();
 <template>
   <div class="flex items-center gap-4">
     <span class="mr-auto">
-      Color Theme
+      {{ $t('settings.appearance.theme.label') }}
     </span>
     <Select v-model="colorMode">
       <SelectTrigger size="sm" class="inline-flex">
@@ -18,15 +18,15 @@ const colorMode = useColorMode();
       <SelectContent>
         <SelectItem value="system">
           <LucideSunMoon />
-          System
+          {{ $t('settings.appearance.theme.system') }}
         </SelectItem>
         <SelectItem value="light">
           <LucideSun />
-          Light
+          {{ $t('settings.appearance.theme.light') }}
         </SelectItem>
         <SelectItem value="dark">
           <LucideMoon />
-          Dark
+          {{ $t('settings.appearance.theme.dark') }}
         </SelectItem>
       </SelectContent>
     </Select>

@@ -38,7 +38,7 @@ defineProps<{
       </div>
 
       <div v-if="metadata.author" class="text-xs text-muted-foreground break-words">
-        by {{ metadata.author }}
+        {{ $t('settings.templates.card.by') }} {{ metadata.author }}
       </div>
     </div>
     <div v-if="metadata.links?.length" class="flex flex-col justify-center items-start gap-2">

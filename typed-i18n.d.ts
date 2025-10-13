@@ -9,10 +9,46 @@ export {}
 
 declare module "vue-i18n" {
   export interface DefineLocaleMessage {
+    instrata: string
+    components: {
+
+    }
+    common: {
+      not_implemented: string
+    }
     settings: {
+      label: string
+      appearance: {
+        label: string
+        theme: {
+          label: string
+          system: string
+          light: string
+          dark: string
+        }
+      }
       languages: {
         label: string
         locale: string
+      }
+      keybindings: {
+        label: string
+      }
+      templates: {
+        label: string
+        open_directory_tooltip: string
+        card: {
+          by: string
+        }
+      }
+      about: {
+        label: string
+        version: string
+        organization: string
+        repository: string
+        report_bug: string
+        suggest_feature: string
+        copyright: string
       }
     }
   }
