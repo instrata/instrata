@@ -25,6 +25,15 @@ jobs:
           node-version: 24
           cache: npm
 
+      - name: Install frontend dependencies
+        run: npm clean-install
+
+      - name: TypeScript check
+        run: npm run type-check
+
+      - name: i18n check
+        run: npm run i18n-check
+
       - name: Setup Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
@@ -50,15 +59,6 @@ jobs:
           # xcap
           sudo apt-get install -y \
               pkg-config libclang-dev libxcb1-dev libxrandr-dev libdbus-1-dev libpipewire-0.3-dev libwayland-dev libegl-dev libgbm-dev
-
-      - name: Install frontend dependencies
-        run: npm ci
-
-      - name: TypeScript check
-        run: npm run type-check
-
-      - name: i18n check
-        run: npm run i18n-check
 
       - name: Rust check
         working-directory: src-tauri
@@ -87,6 +87,9 @@ jobs:
         with:
           toolchain: stable
 
+      - name: Install Frontend Dependencies
+        run: npm clean-install
+
       - name: Cache Rust
         uses: actions/cache@v4
         with:
@@ -97,9 +100,6 @@ jobs:
           key: ${{ runner.os }}-cargo-${{ hashFiles('src-tauri/Cargo.lock') }}
           restore-keys: |
             ${{ runner.os }}-cargo-
-
-      - name: Install Frontend Dependencies
-        run: npm ci
 
       - name: Install Linux Dependencies
         if: runner.os == 'Linux'
