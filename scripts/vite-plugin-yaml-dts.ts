@@ -24,7 +24,7 @@ export default function yamlDtsPlugin(options: Options): Plugin {
             return (
                 "{\n" +
                 Object.entries(obj)
-                    .map(([key, value]) => `${space}  ${key}: ${yamlToTs(value, indent+1)}`)
+                    .map(([key, value]) => `${space}  ${JSON.stringify(key)}: ${yamlToTs(value, indent+1)}`)
                     .join("\n") +
                 `\n${space}}`
             )
