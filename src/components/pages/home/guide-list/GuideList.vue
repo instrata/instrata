@@ -8,7 +8,7 @@ const { guidesAndInfos } = injectHomeContext();
 <template>
   <div class="grid grid-cols-[1fr_auto] gap-x-2 gap-y-1">
     <template v-for="[guide, info] in guidesAndInfos" :key="guide.id">
-      <GuideListEntry :guide="guide" :info="info" class="size-full" />
+      <GuideListEntry :guide="guide" :info="info" />
     </template>
   </div>
 </template>

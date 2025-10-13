@@ -73,7 +73,7 @@ const menus: SettingsMenu[] = [
 ];
 
 const open = ref(false);
-const activeMenuId = ref<string>(menus[0].id);
+const activeMenuId = ref<string>(menus[0]!.id);
 
 const activeMenu = computed(() => menus.find(menu => menu.id === activeMenuId.value));
 </script>

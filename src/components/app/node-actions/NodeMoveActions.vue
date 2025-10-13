@@ -14,14 +14,14 @@ function handleMoveUp() {
   const newIndex = nodeIndex.value - 1;
   const oldIndex = nodeIndex.value;
   [appContext.guide.value.nodes[oldIndex], appContext.guide.value.nodes[newIndex]]
-      = [appContext.guide.value.nodes[newIndex], appContext.guide.value.nodes[oldIndex]];
+      = [appContext.guide.value.nodes[newIndex]!, appContext.guide.value.nodes[oldIndex]!];
 }
 
 function handleMoveDown() {
   const oldIndex = nodeIndex.value;
   const newIndex = nodeIndex.value + 1;
   [appContext.guide.value.nodes[oldIndex], appContext.guide.value.nodes[newIndex]]
-      = [appContext.guide.value.nodes[newIndex], appContext.guide.value.nodes[oldIndex]];
+      = [appContext.guide.value.nodes[newIndex]!, appContext.guide.value.nodes[oldIndex]!];
 }
 </script>
 
