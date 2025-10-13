@@ -49,13 +49,13 @@ const FEATURE_REQUEST_LINK = "https://github.com/instrata/instrata/issues/new?te
     <a class="aspect-video" :href="BUG_REPORT_LINK" target="_blank" rel="noopener noreferrer">
       <Button variant="ghost" size="none" class="size-full flex-col p-2">
         <LucideBug class="size-8" />
-        {{ $t('settings.about.report_bug') }}
+        {{ $t('settings.about.report-bug') }}
       </Button>
     </a>
     <a class="aspect-video" :href="FEATURE_REQUEST_LINK" target="_blank" rel="noopener noreferrer">
       <Button variant="ghost" size="none" class="size-full flex-col p-2">
         <LucideLightbulb class="size-8" />
-        {{ $t('settings.about.suggest_feature') }}
+        {{ $t('settings.about.suggest-feature') }}
       </Button>
     </a>
   </div>

@@ -1,6 +1,19 @@
 instrata: "Instrata"
 common:
-  not_implemented: "Noch nicht implementiert"
+  not-implemented: "Noch nicht implementiert"
+home:
+  search-for-guides: "Nach Anleitungen suchen..."
+  clear-search: "Suche leeren"
+  import-guide: "Anleitung Importieren"
+  new-guide: "Neue Anleitung"
+  your-guides: "Deine Anleitungen"
+  display-as-list: "Anleitungen als Liste anzeigen"
+  display-as-grid: "Anleitungen als Gitter anzeigen"
+  card-actions:
+    view: "Anleitung ansehen"
+    duplicate: "Anleitung duplizieren"
+    export: "Anleitung exportieren"
+    delete: "Anleitung löschen"
 settings:
   label: "Einstellungen"
   appearance:
@@ -17,7 +30,7 @@ settings:
     label: "Hotkeys"
   templates:
     label: "Vorlagen"
-    open_directory_tooltip: "Vorlagenverzeichnis öffnen"
+    open-directory-tooltip: "Vorlagenverzeichnis öffnen"
     card:
       by: "von"
   about:
@@ -25,6 +38,6 @@ settings:
     version: "Version:"
     organization: "Organization:"
     repository: "Repository:"
-    report_bug: "Fehler melden!"
-    suggest_feature: "Funktion vorschlagen!"
+    report-bug: "Fehler melden!"
+    suggest-feature: "Funktion vorschlagen!"
     copyright: "Copyright © {year} Instrata"

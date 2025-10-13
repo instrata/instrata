@@ -1,6 +1,19 @@
 instrata: "Instrata"
 common:
-  not_implemented: "Not implemented yet"
+  not-implemented: "Not implemented yet"
+home:
+  search-for-guides: "Search for guides..."
+  clear-search: "Clear Search"
+  import-guide: "Import Guide"
+  new-guide: "New Guide"
+  your-guides: "Your Guides"
+  display-as-list: "Display Guides as List"
+  display-as-grid: "Display Guides as Grid"
+  card-actions:
+    view: "View Guide"
+    duplicate: "Duplicate Guide"
+    export: "Export Guide"
+    delete: "Delete Guide"
 settings:
   label: "Settings"
   appearance:
@@ -17,7 +30,7 @@ settings:
     label: "Hotkeys"
   templates:
     label: "Templates"
-    open_directory_tooltip: "Open template directory"
+    open-directory-tooltip: "Open template directory"
     card:
       by: "by"
   about:
@@ -25,6 +38,6 @@ settings:
     version: "Version:"
     organization: "Organization:"
     repository: "Repository:"
-    report_bug: "Report a Bug!"
-    suggest_feature: "Suggest a Feature!"
+    report-bug: "Report a Bug!"
+    suggest-feature: "Suggest a Feature!"
     copyright: "Copyright © {year} Instrata"

@@ -21,20 +21,20 @@ async function handleNewGuide() {
       <span class="absolute start-0 inset-y-0 flex items-center justify-center px-2">
         <LucideSearch class="size-6 text-muted-foreground" />
       </span>
-      <Input v-model="searchString" type="text" placeholder="Search for guides..." class="px-10" />
+      <Input v-model="searchString" type="text" :placeholder="$t('home.search-for-guides')" class="px-10" />
       <span class="absolute end-0 inset-y-0 flex items-center justify-center pr-0.5">
-        <Button variant="ghost" size="icon" @click="searchString = ''" class="size-8" title="Clear Search">
+        <Button variant="ghost" size="icon" @click="searchString = ''" class="size-8" :title="$t('home.clear-search')">
           <LucideX />
         </Button>
       </span>
     </div>
     <Button variant="outline" disabled>
       <LucideImport />
-      Import Guide
+      {{ $t('home.import-guide') }}
     </Button>
     <Button variant="outline" @click="handleNewGuide">
       <LucidePlus />
-      New Guide
+      {{ $t('home.new-guide') }}
     </Button>
   </div>
 </template>

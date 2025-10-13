@@ -9,13 +9,13 @@ import { SettingsDialog } from "@/components/pages/settings";
   <header class="flex items-center">
     <span class="flex items-center justify-center gap-1 font-mono text-lg font-black select-none">
       <IconInstrata />
-      Instrata
+      {{ $t('instrata') }}
     </span>
     <div class="grow" />
     <SettingsDialog>
       <Button variant="ghost" size="sm">
         <LucideSettings />
-        Settings
+        {{ $t('settings.label') }}
       </Button>
     </SettingsDialog>
   </header>

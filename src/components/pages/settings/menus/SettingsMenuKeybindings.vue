@@ -3,5 +3,5 @@
 </script>
 
 <template>
-  {{ $t('common.not_implemented') }}
+  {{ $t('common.not-implemented') }}
 </template>

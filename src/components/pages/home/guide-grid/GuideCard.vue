@@ -58,13 +58,13 @@ async function handleDelete() {
         <LucideEllipsisVertical v-else />
       </ExpandableIconMenuTrigger>
       <ExpandableIconMenuContent>
-        <ExpandableIconMenuAction @click="handleClone" title="Duplicate Guide">
+        <ExpandableIconMenuAction @click="handleClone" :title="$t('home.card-actions.duplicate')">
           <LucideBookCopy />
         </ExpandableIconMenuAction>
-        <ExpandableIconMenuAction disabled title="Export Guide">
+        <ExpandableIconMenuAction disabled :title="$t('home.card-actions.export')">
           <LucideFolderDown />
         </ExpandableIconMenuAction>
-        <ExpandableIconMenuAction @click="handleDelete" class="hover:text-destructive" title="Delete Guide">
+        <ExpandableIconMenuAction @click="handleDelete" class="hover:text-destructive" :title="$t('home.card-actions.delete')">
           <LucideTrash2 />
         </ExpandableIconMenuAction>
       </ExpandableIconMenuContent>

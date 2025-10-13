@@ -9,14 +9,14 @@ const { displayMode } = injectHomeContext();
 <template>
   <div class="flex items-center gap-4">
     <div class="font-bold text-lg">
-      Your Guides
+      {{ $t('home.your-guides') }}
     </div>
     <div class="grow" />
     <ToggleGroup v-model="displayMode" variant="outline">
-      <ToggleGroupItem value="list" title="Display Guides as List">
+      <ToggleGroupItem value="list" :title="$t('home.display-as-list')">
         <LucideList />
       </ToggleGroupItem>
-      <ToggleGroupItem value="grid" title="Display Guides as Grid">
+      <ToggleGroupItem value="grid" :title="$t('home.display-as-grid')">
         <LucideGrid2x2 />
       </ToggleGroupItem>
     </ToggleGroup>

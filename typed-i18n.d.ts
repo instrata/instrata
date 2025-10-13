@@ -9,46 +9,58 @@ export {}
 
 declare module "vue-i18n" {
   export interface DefineLocaleMessage {
-    instrata: string
-    components: {
-
+    "instrata": string
+    "common": {
+      "not-implemented": string
     }
-    common: {
-      not_implemented: string
+    "home": {
+      "search-for-guides": string
+      "clear-search": string
+      "import-guide": string
+      "new-guide": string
+      "your-guides": string
+      "display-as-list": string
+      "display-as-grid": string
+      "card-actions": {
+        "view": string
+        "duplicate": string
+        "export": string
+        "delete": string
+      }
     }
-    settings: {
-      label: string
-      appearance: {
-        label: string
-        theme: {
-          label: string
-          system: string
-          light: string
-          dark: string
+    "settings": {
+      "label": string
+      "appearance": {
+        "label": string
+        "theme": {
+          "label": string
+          "system": string
+          "light": string
+          "dark": string
         }
       }
-      languages: {
-        label: string
-        locale: string
+      "languages": {
+        "label": string
+        "locale": string
       }
-      keybindings: {
-        label: string
+      "keybindings": {
+        "label": string
       }
-      templates: {
-        label: string
-        open_directory_tooltip: string
-        card: {
-          by: string
+      "templates": {
+        "label": string
+        "open-directory-tooltip": string
+        "card": {
+          "by": string
         }
       }
-      about: {
-        label: string
-        version: string
-        organization: string
-        repository: string
-        report_bug: string
-        suggest_feature: string
-        copyright: string
+      "about": {
+        "label": string
+        "version": string
+        "organization": string
+        "repository": string
+        "report-bug": string
+        "suggest-feature": string
+        "copyright": string
       }
     }
   }

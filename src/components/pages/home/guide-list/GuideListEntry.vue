@@ -33,17 +33,17 @@ async function handleDelete() {
   </router-link>
   <div class="flex items-center justify-center gap-1">
     <router-link tabindex="-1" :to="{ name: '/(app)/app/[guideId]', params: { guideId: guide.id } }" class="size-full">
-      <Button variant="ghost" size="icon" title="View Guide">
+      <Button variant="ghost" size="icon" :title="$t('home.card-actions.view')">
         <LucideEye />
       </Button>
     </router-link>
-    <Button variant="ghost" size="icon" @click="handleClone" title="Duplicate Guide">
+    <Button variant="ghost" size="icon" @click="handleClone" :title="$t('home.card-actions.duplicate')">
       <LucideBookCopy />
     </Button>
-    <Button variant="ghost" size="icon" disabled title="Export Guide">
+    <Button variant="ghost" size="icon" disabled :title="$t('home.card-actions.export')">
       <LucideFolderDown />
     </Button>
-    <Button variant="ghost" size="icon" @click="handleDelete" title="Delete Guide">
+    <Button variant="ghost" size="icon" @click="handleDelete" :title="$t('home.card-actions.delete')">
       <LucideTrash2 />
     </Button>
   </div>
