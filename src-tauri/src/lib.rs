@@ -23,6 +23,7 @@ pub fn run() {
             commands::export_markdown::export_markdown,
             commands::export_pdf::export_pdf,
             commands::screencap::capture_screen,
+            commands::runtime_info::get_runtime_info,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
