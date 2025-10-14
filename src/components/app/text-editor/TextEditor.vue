@@ -88,24 +88,28 @@ const editor = useEditor({
       <Toggle
           :model-value="editor?.isActive('bold')"
           @click="editor?.chain().focus().toggleBold().run()"
+          :title="$t('app.text-editor.toggle-bold')"
       >
         <LucideBold />
       </Toggle>
       <Toggle
           :model-value="editor?.isActive('italic')"
           @click="editor?.chain().focus().toggleItalic().run()"
+          :title="$t('app.text-editor.toggle-italic')"
       >
         <LucideItalic />
       </Toggle>
       <Toggle
           :model-value="editor?.isActive('link')"
           @click="editor?.chain().focus().toggleLink().run()"
+          :title="$t('app.text-editor.toggle-hyperref')"
       >
         <LucideLink />
       </Toggle>
       <Toggle
           :model-value="editor?.isActive('code')"
           @click="editor?.chain().focus().toggleCode().run()"
+          :title="$t('app.text-editor.toggle-code')"
       >
         <LucideCode />
       </Toggle>
@@ -113,24 +117,28 @@ const editor = useEditor({
       <Toggle
           :model-value="editor?.isActive('codeblock')"
           @click="editor?.chain().focus().toggleCodeBlock().run()"
+          :title="$t('app.text-editor.toggle-code-block')"
       >
         <LucideBraces />
       </Toggle>
       <Toggle
           :model-value="editor?.isActive('blockquote')"
           @click="editor?.chain().focus().toggleBlockquote().run()"
+          :title="$t('app.text-editor.toggle-blockquote')"
       >
         <LucideQuote />
       </Toggle>
       <Toggle
           :model-value="editor?.isActive('bulletList')"
           @click="editor?.chain().focus().toggleBulletList().run()"
+          :title="$t('app.text-editor.toggle-unordered-list')"
       >
         <LucideList />
       </Toggle>
       <Toggle
           :model-value="editor?.isActive('orderedList')"
           @click="editor?.chain().focus().toggleOrderedList().run()"
+          :title="$t('app.text-editor.toggle-ordered-list')"
       >
         <LucideListOrdered />
       </Toggle>
@@ -140,6 +148,7 @@ const editor = useEditor({
           :disabled="!editor?.can().undo()"
           @mousedown.prevent
           @click="editor?.chain().focus().undo().run()"
+          :title="$t('app.text-editor.undo')"
       >
         <LucideUndo />
       </Toggle>
@@ -148,6 +157,7 @@ const editor = useEditor({
           :disabled="!editor?.can().redo()"
           @mousedown.prevent
           @click="editor?.chain().focus().redo().run()"
+          :title="$t('app.text-editor.redo')"
       >
         <LucideRedo />
       </Toggle>
@@ -155,6 +165,7 @@ const editor = useEditor({
           :aria-pressed="false" :data-state="false" role="button"
           @mousedown.prevent
           @click="editor?.chain().focus().unsetAllMarks().run()"
+          :title="$t('app.text-editor.clear-formatting')"
       >
         <LucideRemoveFormatting />
       </Toggle>
@@ -162,6 +173,7 @@ const editor = useEditor({
       <Toggle
           :model-value="editor?.storage.invisibleCharacters.visibility()"
           @click="editor?.chain().focus().toggleInvisibleCharacters().run()"
+          :title="$t('app.text-editor.toggle-formatting-marks')"
       >
         <LucidePilcrow />
       </Toggle>

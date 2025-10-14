@@ -23,6 +23,6 @@ async function handleExportToMarkdown() {
 <template>
   <Button variant="secondary" @click="handleExportToMarkdown">
     <IconMarkdown />
-    Export to Markdown Archive
+    {{ $t('app.header.export-markdown') }}
   </Button>
 </template>

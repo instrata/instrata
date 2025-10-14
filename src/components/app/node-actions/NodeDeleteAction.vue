@@ -17,7 +17,7 @@ function handleDelete() {
 </script>
 
 <template>
-  <ExpandableIconMenuAction @click="handleDelete" class="hover:text-destructive">
+  <ExpandableIconMenuAction @click="handleDelete" class="hover:text-destructive" :title="$t('app.node-menu.delete')">
     <LucideTrash2 />
   </ExpandableIconMenuAction>
 </template>

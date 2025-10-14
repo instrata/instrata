@@ -51,20 +51,27 @@ provideAppContext({
       <router-link :to="{ name: '/' }">
         <Button variant="ghost">
           <LucideHome />
-          Home
+          {{ $t('app.header.home') }}
         </Button>
       </router-link>
       <SettingsDialog>
         <Button variant="ghost">
           <LucideSettings />
-          Settings
+          {{ $t('settings.label') }}
         </Button>
       </SettingsDialog>
     </div>
     <Separator />
-    <TextEditor v-model="guide.title" placeholder="Title..." class="text-2xl" />
+    <TextEditor
+        v-model="guide.title"
+        class="text-2xl"
+        :placeholder="$t('app.placeholder.title')"
+    />
     <div class="space-y-1">
-      <TextEditor v-model="guide.abstract" placeholder="Abstract..." />
+      <TextEditor
+          v-model="guide.abstract"
+          :placeholder="$t('app.placeholder.abstract')"
+      />
       <template v-for="node in guide.nodes" :key="node.id">
         <InsertNodeHiddenFlexMenu :before="node.id" />
         <div class="group/node relative">
@@ -77,6 +84,9 @@ data-[state=open]:pointer-events-auto data-[state=open]:opacity-100" />
       </template>
       <InsertNodeHiddenFlexMenu />
     </div>
-    <TextEditor v-model="guide.footnote" placeholder="Footnote..." />
+    <TextEditor
+        v-model="guide.footnote"
+        :placeholder="$t('app.placeholder.footnote')"
+    />
   </main>
 </template>

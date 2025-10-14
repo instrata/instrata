@@ -9,6 +9,8 @@ const appContext = injectAppContext();
 const rootContext = injectNodeActionsContext();
 
 const nodeIndex = computed(() => appContext.guide.value.nodes.findIndex(node => node.id === rootContext.nodeId));
+const canMoveUp = computed(() => nodeIndex.value > 0);
+const canMoveDown = computed(() => nodeIndex.value < (appContext.guide.value.nodes.length-1));
 
 function handleMoveUp() {
   const newIndex = nodeIndex.value - 1;
@@ -26,10 +28,10 @@ function handleMoveDown() {
 </script>
 
 <template>
-  <ExpandableIconMenuAction :disabled="nodeIndex <= 0" @click="handleMoveUp">
+  <ExpandableIconMenuAction :disabled="!canMoveUp" @click="handleMoveUp" :title="$t('app.node-menu.move-up')">
     <LucideChevronUp />
   </ExpandableIconMenuAction>
-  <ExpandableIconMenuAction :disabled="nodeIndex >= (appContext.guide.value.nodes.length-1)" @click="handleMoveDown">
+  <ExpandableIconMenuAction :disabled="!canMoveDown" @click="handleMoveDown" :title="$t('app.node-menu.move-down')">
     <LucideChevronDown />
   </ExpandableIconMenuAction>
 </template>

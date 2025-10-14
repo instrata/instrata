@@ -28,6 +28,38 @@ declare module "vue-i18n" {
         "delete": string
       }
     }
+    "app": {
+      "header": {
+        "home": string
+        "take-screenshot": string
+        "export-markdown": string
+        "export-pdf": string
+      }
+      "placeholder": {
+        "title": string
+        "abstract": string
+        "footnote": string
+      }
+      "node-menu": {
+        "move-up": string
+        "move-down": string
+        "delete": string
+      }
+      "text-editor": {
+        "toggle-bold": string
+        "toggle-italic": string
+        "toggle-hyperref": string
+        "toggle-code": string
+        "toggle-code-block": string
+        "toggle-blockquote": string
+        "toggle-unordered-list": string
+        "toggle-ordered-list": string
+        "undo": string
+        "redo": string
+        "clear-formatting": string
+        "toggle-formatting-marks": string
+      }
+    }
     "settings": {
       "label": string
       "appearance": {

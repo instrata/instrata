@@ -14,6 +14,33 @@ home:
     duplicate: "Duplicate Guide"
     export: "Export Guide"
     delete: "Delete Guide"
+app:
+  header:
+    home: "Home"
+    take-screenshot: "Take a Screenshot"
+    export-markdown: "Export to Markdown Archive"
+    export-pdf: "Export to PDF"
+  placeholder:
+    title: "Title..."
+    abstract: "Abstract..."
+    footnote: "Footnote..."
+  node-menu:
+    move-up: "Move Up"
+    move-down: "Move Down"
+    delete: "Delete"
+  text-editor:
+    toggle-bold: "Toggle Bold"
+    toggle-italic: "Toggle Italic"
+    toggle-hyperref: "Toggle Hyperref"
+    toggle-code: "Toggle Code"
+    toggle-code-block: "Toggle Code Block"
+    toggle-blockquote: "Toggle Blockquote"
+    toggle-unordered-list: "Toggle Unordered List"
+    toggle-ordered-list: "Toggle Ordered List"
+    undo: "Undo"
+    redo: "Redo"
+    clear-formatting: "Clear Formatting"
+    toggle-formatting-marks: "Toggle Formatting Marks"
 settings:
   label: "Settings"
   appearance:

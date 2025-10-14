@@ -23,6 +23,6 @@ async function handleExportToPdf() {
 <template>
   <Button variant="secondary" @click="handleExportToPdf">
     <IconPdfFile />
-    Export to PDF
+    {{ $t('app.header.export-pdf') }}
   </Button>
 </template>

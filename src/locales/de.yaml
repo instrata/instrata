@@ -14,6 +14,33 @@ home:
     duplicate: "Anleitung duplizieren"
     export: "Anleitung exportieren"
     delete: "Anleitung löschen"
+app:
+  header:
+    home: "Startseite"
+    take-screenshot: "Screenshot machen"
+    export-markdown: "Exportieren als Markdown Archiv"
+    export-pdf: "Exportieren als PDF"
+  placeholder:
+    title: "Titel..."
+    abstract: "Zusammenfassung..."
+    footnote: "Fußnote..."
+  node-menu:
+    move-up: "Nach oben"
+    move-down: "Nach unten"
+    delete: "Löschen"
+  text-editor:
+    toggle-bold: "Fettdruck umschalten"
+    toggle-italic: "Kursivschift umschalten"
+    toggle-hyperref: "Hyperref umschalten"
+    toggle-code: "Code umschalten"
+    toggle-code-block: "Code-Block umschalten"
+    toggle-blockquote: "Blockzitat umschalten"
+    toggle-unordered-list: "Ungeordnete Liste umschalten"
+    toggle-ordered-list: "Geordnete Liste umschalten"
+    undo: "Rückgängig"
+    redo: "Wiederherstellen"
+    clear-formatting: "Formatierung löschen"
+    toggle-formatting-marks: "Formatierungszeichen umschalten"
 settings:
   label: "Einstellungen"
   appearance:
