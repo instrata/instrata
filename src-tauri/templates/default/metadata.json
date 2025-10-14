@@ -1,6 +1,12 @@
 {
-  "displayName": "Default Template",
-  "description": "The default template when exporting. Clean and simple.",
+  "displayName": {
+    "en": "Default Template",
+    "de": "Standardvorlage"
+  },
+  "description": {
+    "en": "The default template when exporting. Clean and simple.",
+    "de": "Die Standardvorlage beim Exportieren. Übersichtlich und einfach."
+  },
   "author": "Instrata",
   "formats": [
     "markdown",
