@@ -11,7 +11,7 @@ const appContext = injectAppContext();
 async function handleExportToPdf() {
   const toastId = toast.loading("Exporting to pdf");
   try {
-    await exportGuideToPdf("typst", toRaw(appContext.guide.value));
+    await exportGuideToPdf("default", toRaw(appContext.guide.value));
     toast.success("Guide successfully exported!", { id: toastId });
   } catch (error) {
     console.error(error);

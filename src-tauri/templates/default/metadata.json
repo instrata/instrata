@@ -1,9 +1,10 @@
 {
-  "displayName": "Default Markdown Template",
-  "description": "The default template when exporting to Markdown",
+  "displayName": "Default Template",
+  "description": "The default template when exporting. Clean and simple.",
   "author": "Instrata",
   "formats": [
-    "markdown"
+    "markdown",
+    "pdf"
   ],
   "links": [
     {

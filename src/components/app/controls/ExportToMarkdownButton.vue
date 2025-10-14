@@ -11,7 +11,7 @@ const appContext = injectAppContext();
 async function handleExportToMarkdown() {
   const toastId = toast.loading("Exporting to markdown archive");
   try {
-    await exportGuideToMarkdown("markdown", toRaw(appContext.guide.value));
+    await exportGuideToMarkdown("default", toRaw(appContext.guide.value));
     toast.success("Guide successfully exported!", { id: toastId });
   } catch (error) {
     console.error(error);
