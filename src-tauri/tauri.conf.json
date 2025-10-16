@@ -14,7 +14,9 @@
       {
         "title": "Instrata",
         "width": 800,
-        "height": 600
+        "height": 600,
+        "minWidth": 768,
+        "minHeight": 512
       }
     ],
     "security": {
