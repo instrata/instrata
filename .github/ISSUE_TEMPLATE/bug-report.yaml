@@ -1,0 +1,89 @@
+name: Bug Report
+description: File a detailed bug report
+title: "[BUG]: "
+labels:
+  - bug
+type: Bug
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Bug Report
+        Please describe the issue clearly and include steps to reproduce it. The more detail you provide, the faster it can be fixed.
+
+  - type: input
+    id: os
+    attributes:
+      label: Operating System
+      description: Your current OS and version.
+      placeholder: "Windows 11 / Ubuntu 24.04"
+
+  - type: input
+    id: app-version
+    attributes:
+      label: App Version
+      description: Version number (found under *Settings → About*).
+      placeholder: "v0.0.418"
+
+  - type: textarea
+    id: short-description
+    attributes:
+      label: Short Description
+      description: Briefly summarize what the issue is.
+      placeholder: "Screenshot not captured after mouse click."
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: List all steps to trigger the issue.
+      value: |
+        1. 
+        2. 
+        3.
+      render: shell
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What did you expect to happen?
+      placeholder: "Screenshot should be saved and previewed."
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior
+      description: What actually happened?
+      placeholder: "No screenshot saved; console shows error."
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots / Recordings
+      description: Attach any visuals that help explain the issue.
+      placeholder: "Drag and drop image or video here."
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs or Console Output
+      description: Paste relevant console or backend logs if available.
+      render: shell
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Any other information that might help reproduce or understand the problem.
+      placeholder: "Happens only when multiple monitors are active."
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Submission Checklist
+      options:
+        - label: I have searched existing issues to avoid duplicates.
+          required: true
+        - label: I can provide more information or help test a fix.

@@ -1,0 +1,56 @@
+name: Feature Request
+description: Suggest a new feature or improvement
+title: "[FEATURE]: "
+labels:
+  - enhancement
+type: Feature
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Feature Request
+        Use this form to propose new features or improvements for Instrata. Be as specific and clear as possible.
+
+  - type: input
+    id: title
+    attributes:
+      label: Feature Title
+      description: Short and descriptive name for your request.
+      placeholder: "Add blur tool for screenshots"
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or Motivation
+      description: Describe the problem this feature would solve or why it’s needed.
+      placeholder: "Currently there is no way to hide sensitive information in captured images."
+
+  - type: textarea
+    id: proposed-solution
+    attributes:
+      label: Proposed Solution
+      description: Describe how you think this feature should work.
+      placeholder: "Add a blur option in the image editor toolbar, next to highlight."
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Mention any other ways you tried to solve the problem.
+      placeholder: "Manually edited screenshots in an external image editor."
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Include sketches, references, or related issues if relevant.
+      placeholder: "See #42 for related UI improvements."
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Submission Checklist
+      options:
+        - label: I have searched existing issues to ensure this feature hasn’t been requested before.
+          required: true
