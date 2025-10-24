@@ -1,8 +1,15 @@
 <script setup lang="ts">
-import { type Component, computed, ref } from "vue";
+import { type Component, computed, ref, toValue } from "vue";
 import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import {LucideBrush, LucideCommand, LucideFileCode, LucideInfo, LucideLanguages, LucideSettings} from "lucide-vue-next";
+import {
+  LucideBraces,
+  LucideCommand,
+  LucideFileCode,
+  LucideInfo,
+  LucideLanguages,
+  LucideSettings, LucideSettings2
+} from "lucide-vue-next";
 import {
   Sidebar,
   SidebarContent,
@@ -13,7 +20,7 @@ import {
 } from "@/components/ui/sidebar";
 import {
   SettingsMenuAbout,
-  SettingsMenuAppearance,
+  SettingsMenuGeneral, SettingsMenuDevelopers,
   SettingsMenuKeybindings, SettingsMenuLanguages,
   SettingsMenuTemplates
 } from "@/components/pages/settings/menus";
@@ -25,26 +32,31 @@ import {
   BreadcrumbSeparator
 } from "@/components/ui/breadcrumb";
 import { useI18n } from "vue-i18n";
+import { useAppSettings } from "@/composables/useAppSettings.ts";
+import type { MaybeRefOrGetter } from "@vueuse/core";
+import { logicNot } from "@vueuse/math";
 
 defineOptions({
   inheritAttrs: false,
 });
 
 const { t } = useI18n();
+const developerMode = useAppSettings("developerMode");
 
 type SettingsMenu = {
   id: string
+  hidden?: MaybeRefOrGetter<boolean>
   icon?: Component
-  label: () => string
+  label: MaybeRefOrGetter<string>
   component: Component
 }
 
 const menus: SettingsMenu[] = [
   {
     id: "appearance",
-    icon: LucideBrush,
-    label: () => t('settings.appearance.label'),
-    component: SettingsMenuAppearance,
+    icon: LucideSettings2,
+    label: () => t('settings.general.label'),
+    component: SettingsMenuGeneral,
   },
   {
     id: "languages",
@@ -69,7 +81,14 @@ const menus: SettingsMenu[] = [
     icon: LucideInfo,
     label: () => t('settings.about.label'),
     component: SettingsMenuAbout,
-  }
+  },
+  {
+    id: "developers",
+    hidden: logicNot(developerMode),
+    icon: LucideBraces,
+    label: () => t("settings.developers.label"),
+    component: SettingsMenuDevelopers,
+  },
 ];
 
 const open = ref(false);
@@ -97,6 +116,7 @@ const activeMenu = computed(() => menus.find(menu => menu.id === activeMenuId.va
                 <SidebarMenu>
                   <SidebarMenuItem v-for="menuItem in menus" :key="menuItem.id">
                     <SidebarMenuButton
+                        v-if="!toValue(menuItem.hidden)"
                         as-child
                         :is-active="activeMenuId === menuItem.id"
                         @click="activeMenuId = menuItem.id"
@@ -105,7 +125,7 @@ const activeMenu = computed(() => menus.find(menu => menu.id === activeMenuId.va
                         <component v-if="menuItem.icon" :is="menuItem.icon" />
                         <div v-else class="size-4"  />
                         <span class="select-none">
-                          {{ menuItem.label() }}
+                          {{ toValue(menuItem.label) }}
                         </span>
                       </div>
                     </SidebarMenuButton>
@@ -126,7 +146,7 @@ const activeMenu = computed(() => menus.find(menu => menu.id === activeMenuId.va
                   <BreadcrumbSeparator class="hidden md:block" />
                   <BreadcrumbItem class="select-none">
                     <BreadcrumbPage>
-                      {{ activeMenu?.label() }}
+                      {{ toValue(activeMenu?.label) }}
                     </BreadcrumbPage>
                   </BreadcrumbItem>
                 </BreadcrumbList>

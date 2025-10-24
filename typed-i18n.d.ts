@@ -62,13 +62,20 @@ declare module "vue-i18n" {
     }
     "settings": {
       "label": string
-      "appearance": {
+      "general": {
         "label": string
-        "theme": {
-          "label": string
-          "system": string
-          "light": string
-          "dark": string
+        "appearance": {
+          "heading": string
+          "theme": {
+            "label": string
+            "system": string
+            "light": string
+            "dark": string
+          }
+        }
+        "additional-settings": {
+          "heading": string
+          "developer-mode": string
         }
       }
       "languages": {
@@ -93,6 +100,18 @@ declare module "vue-i18n" {
         "report-bug": string
         "suggest-feature": string
         "copyright": string
+      }
+      "developers": {
+        "label": string
+        "runtime-info": {
+          "heading": string
+          "os": string
+          "install": string
+          "arch": string
+        }
+        "update": {
+          "heading": string
+        }
       }
     }
   }

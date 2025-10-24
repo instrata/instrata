@@ -4,11 +4,11 @@ import { BaseDirectory, exists, readTextFile, writeTextFile } from "@tauri-apps/
 
 
 export type AppSettings = {
-
+  developerMode: boolean;
 }
 
 const DEFAULTS: AppSettings = {
-
+  developerMode: import.meta.env.DEV,
 }
 
 

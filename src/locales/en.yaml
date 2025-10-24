@@ -43,13 +43,18 @@ app:
     toggle-formatting-marks: "Toggle Formatting Marks"
 settings:
   label: "Settings"
-  appearance:
-    label: "Appearance"
-    theme:
-      label: "Color theme"
-      system: "System"
-      light: "Light"
-      dark: "Dark"
+  general:
+    label: "General"
+    appearance:
+      heading: "Appearance"
+      theme:
+        label: "Color Theme"
+        system: "System"
+        light: "Light"
+        dark: "Dark"
+    additional-settings:
+      heading: "Additional Settings"
+      developer-mode: "Developer Mode"
   languages:
     label: "Languages"
     locale: "English"
@@ -68,3 +73,12 @@ settings:
     report-bug: "Report a Bug!"
     suggest-feature: "Suggest a Feature!"
     copyright: "Copyright © {year} Instrata"
+  developers:
+    label: "Developers"
+    runtime-info:
+      heading: "Runtime-Info"
+      os: "OS:"
+      install: "Install:"
+      arch: "Architecture:"
+    update:
+      heading: "Update"

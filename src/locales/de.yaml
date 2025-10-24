@@ -43,13 +43,18 @@ app:
     toggle-formatting-marks: "Formatierungszeichen umschalten"
 settings:
   label: "Einstellungen"
-  appearance:
-    label: "Erscheinungsbild"
-    theme:
-      label: "Farbschema"
-      system: "System"
-      light: "Hell"
-      dark: "Dunkel"
+  general:
+    label: "Allgemein"
+    appearance:
+      heading: "Erscheinung"
+      theme:
+        label: "Farbschema"
+        system: "System"
+        light: "Hell"
+        dark: "Dunkel"
+    additional-settings:
+      heading: "Additional Settings"
+      developer-mode: "Developer Mode"
   languages:
     label: "Sprachen"
     locale: "Deutsch"
@@ -68,3 +73,12 @@ settings:
     report-bug: "Fehler melden!"
     suggest-feature: "Funktion vorschlagen!"
     copyright: "Copyright © {year} Instrata"
+  developers:
+    label: "Entwickler"
+    runtime-info:
+      heading: "Laufzeit-Info"
+      os: "OS:"
+      install: "Install:"
+      arch: "Architecture:"
+    update:
+      heading: "Update"
