@@ -1,19 +1,12 @@
 name: Build & Release
 
 on:
-  workflow_dispatch:
   push:
-    branches:
-      - main
-    paths-ignore:
-      - .github
-      - README.assets
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
 
 permissions:
   contents: write
-
-env:
-  APP_VERSION: 0.0.${{ github.run_number }}
 
 jobs:
   preflight:
@@ -115,11 +108,6 @@ jobs:
           sudo apt-get install -y \
               pkg-config libclang-dev libxcb1-dev libxrandr-dev libdbus-1-dev libpipewire-0.3-dev libwayland-dev libegl-dev libgbm-dev
 
-      - name: Update Tauri Version
-        run: node scripts/update-tauri-version.cjs
-        env:
-          VERSION: ${{ env.APP_VERSION }}
-
       - name: Build (Tauri)
         run: npm run tauri build
         env:
@@ -169,14 +157,14 @@ jobs:
       - name: Generate updater.json
         run: node scripts/generate-updater.cjs
         env:
-          VERSION: ${{ env.APP_VERSION }}
+          VERSION: ${{ github.ref_name }}
           REPO: ${{ github.repository }}
 
       - name: Create GitHub Release
         uses: ncipollo/release-action@v1
         with:
-          tag: v${{ env.APP_VERSION }}
-          name: "Instrata Build ${{ env.APP_VERSION }}"
+          tag: v${{ github.ref_name }}
+          name: "Instrata ${{ github.ref_name }}"
           generateReleaseNotes: true
           token: ${{ secrets.GITHUB_TOKEN }}
           artifacts: |

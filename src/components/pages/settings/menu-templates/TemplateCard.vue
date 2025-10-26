@@ -55,7 +55,7 @@ const unknownSocialFallback: IconifyIcon = {
 
       <div class="flex items-center gap-x-1 gap-y-0.5 flex-wrap">
         <template v-for="format in metadata.formats" :key="format">
-          <Badge variant="secondary" class="uppercase select-none font-mono break-all whitespace-normal">
+          <Badge variant="secondary" class="uppercase select-none font-mono whitespace-normal break-all">
             {{ format }}
           </Badge>
         </template>

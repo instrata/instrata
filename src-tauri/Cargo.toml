@@ -1,6 +1,5 @@
 [package]
 name = "instrata"
-version = "0.0.0"
 description = "Instrata is a tool for creating step-by-step guides from automatic screenshots."
 authors = ["instrata"]
 edition = "2021"

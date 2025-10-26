@@ -51,13 +51,17 @@ provideAppContext({
       <router-link :to="{ name: '/' }">
         <Button variant="ghost">
           <LucideHome />
-          {{ $t('app.header.home') }}
+          <span class="hidden lg:inline-block">
+            {{ $t('app.header.home') }}
+          </span>
         </Button>
       </router-link>
       <SettingsDialog>
         <Button variant="ghost">
           <LucideSettings />
-          {{ $t('settings.label') }}
+          <span class="hidden lg:inline-block">
+            {{ $t('settings.label') }}
+          </span>
         </Button>
       </SettingsDialog>
     </div>
