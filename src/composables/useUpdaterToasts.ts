@@ -8,16 +8,8 @@ import { getRuntimeInfo } from "@/api/commands";
 const isChecking = ref(false);
 const update = ref<Update | null>(null);
 
+// todo: i18n
 export function useUpdaterToasts() {
-    async function checkCanAutoUpdate(): Promise<boolean> {
-        const runtimeInfo = await getRuntimeInfo();
-        return (
-            runtimeInfo.os === "windows" && runtimeInfo.install === "exe"
-            || runtimeInfo.os === "linux" && runtimeInfo.install === "appimage"
-            || runtimeInfo.os === "macos" && runtimeInfo.install === "dmg"
-        )
-    }
-
     async function checkForUpdate(): Promise<void> {
         if (isChecking.value) return;
         await handleCheckForUpdate();
@@ -26,9 +18,15 @@ export function useUpdaterToasts() {
     async function handleCheckForUpdate(): Promise<void> {
         isChecking.value = true;
         try {
-            update.value = await check();
+            const runtimeInfo = await getRuntimeInfo();
+            update.value = await check({
+              target: `${runtimeInfo.os}-${runtimeInfo.arch}-${runtimeInfo.install}`,
+            });
+          console.info("update", runtimeInfo, update.value);
+        } catch (e) {
+          console.error("update-check failed", e);
         } finally {
-            isChecking.value = false;
+          isChecking.value = false;
         }
 
         if (update.value) {
@@ -136,5 +134,5 @@ export function useUpdaterToasts() {
         await relaunch();
     }
 
-    return { checkCanAutoUpdate, isChecking, checkForUpdate, update };
+    return { isChecking, checkForUpdate, update };
 }

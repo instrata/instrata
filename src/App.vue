@@ -2,16 +2,14 @@
 import { useUpdaterToasts } from "@/composables/useUpdaterToasts.ts";
 import { onMounted } from "vue";
 
-const { checkCanAutoUpdate, checkForUpdate } = useUpdaterToasts();
+const { checkForUpdate } = useUpdaterToasts();
 
 onMounted(async () => {
   if (import.meta.env.PROD) {
-    if (await checkCanAutoUpdate()) {
-      try {
-        await checkForUpdate();
-      } catch (error) {
-        console.log("failed to check for updates", error);
-      }
+    try {
+      await checkForUpdate();
+    } catch (error) {
+      console.error("failed to check for updates", error);
     }
   }
 });

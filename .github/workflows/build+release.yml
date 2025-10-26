@@ -114,19 +114,54 @@ jobs:
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ""
 
+      - name: Collect Artifacts (Windows)
+        if: matrix.os == 'windows-latest'
+        shell: bash
+        run: |
+          set -e; shopt -s nullglob
+          mkdir -p release-artifacts
+          
+          mv src-tauri/target/release/bundle/msi/*.msi release-artifacts/instrata-x86_64.msi
+          mv src-tauri/target/release/bundle/msi/*.msi.sig release-artifacts/instrata-x86_64.msi.sig
+          
+          mv src-tauri/target/release/bundle/nsis/*-setup.exe release-artifacts/instrata-x86_64-setup.exe
+          mv src-tauri/target/release/bundle/nsis/*-setup.exe.sig release-artifacts/instrata-x86_64-setup.exe.sig
+
+      - name: Collect Artifacts (Linux)
+        if: matrix.os == 'ubuntu-latest'
+        shell: bash
+        run: |
+          set -e; shopt -s nullglob
+          mkdir -p release-artifacts
+          
+          mv src-tauri/target/release/bundle/appimage/*.AppImage release-artifacts/instrata-x86_64.AppImage
+          mv src-tauri/target/release/bundle/appimage/*.AppImage.sig release-artifacts/instrata-x86_64.AppImage.sig
+          
+          mv src-tauri/target/release/bundle/deb/*.deb release-artifacts/instrata-x86_64.deb
+          mv src-tauri/target/release/bundle/deb/*.deb.sig release-artifacts/instrata-x86_64.deb.sig
+          
+          mv src-tauri/target/release/bundle/rpm/*.rpm release-artifacts/instrata-x86_64.rpm
+          mv src-tauri/target/release/bundle/rpm/*.rpm.sig release-artifacts/instrata-x86_64.rpm.sig
+
+      - name: Collect Artifacts (macOS)
+        if: matrix.os == 'macos-latest'
+        shell: bash
+        run: |
+          set -e; shopt -s nullglob
+          mkdir -p release-artifacts
+          
+          mv src-tauri/target/release/bundle/dmg/*.dmg release-artifacts/instrata-arm64.dmg
+          mv src-tauri/target/release/bundle/dmg/*.dmg.sig release-artifacts/instrata-arm64.dmg.sig
+          
+          mv src-tauri/target/release/bundle/macos/*.app.tar.gz release-artifacts/instrata-arm64.app.tar.gz
+          mv src-tauri/target/release/bundle/macos/*.app.tar.gz.sig release-artifacts/instrata-arm64.app.tar.gz.sig
+
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: instrata-${{ matrix.os }}
           path: |
-            src-tauri/target/release/bundle/msi/*.msi
-            src-tauri/target/release/bundle/nsis/*-setup.exe
-            src-tauri/target/release/bundle/appimage/*.AppImage
-            src-tauri/target/release/bundle/deb/*.deb
-            src-tauri/target/release/bundle/rpm/*.rpm
-            src-tauri/target/release/bundle/dmg/*.dmg
-            src-tauri/target/release/bundle/macos/*.app.tar.gz
-            src-tauri/target/release/bundle/*/*.sig
+            release-artifacts/*
           if-no-files-found: error
 
       - name: Bundle Cleanup
@@ -168,11 +203,11 @@ jobs:
           generateReleaseNotes: true
           token: ${{ secrets.GITHUB_TOKEN }}
           artifacts: |
-            release-artifacts/instrata-windows-latest/msi/*.msi
-            release-artifacts/instrata-windows-latest/nsis/*-setup.exe
-            release-artifacts/instrata-ubuntu-latest/appimage/*.AppImage
-            release-artifacts/instrata-ubuntu-latest/deb/*.deb
-            release-artifacts/instrata-ubuntu-latest/rpm/*.rpm
-            release-artifacts/instrata-macos-latest/dmg/*.dmg
-            release-artifacts/instrata-macos-latest/macos/*.app.tar.gz
+            release-artifacts/instrata-windows-latest/instrata-x86_64.msi
+            release-artifacts/instrata-windows-latest/instrata-x86_64-setup.exe
+            release-artifacts/instrata-ubuntu-latest/instrata-x86_64.AppImage
+            release-artifacts/instrata-ubuntu-latest/instrata-x86_64.deb
+            release-artifacts/instrata-ubuntu-latest/instrata-x86_64.rpm
+            release-artifacts/instrata-macos-latest/instrata-arm64.dmg
+            release-artifacts/instrata-macos-latest/instrata-arm64.app.tar.gz
             release-artifacts/updater.json
