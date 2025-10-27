@@ -1,36 +1,16 @@
 <script setup lang="ts">
-import type { TemplateMeta } from "@/api/storage/templates.ts";
+import type { TemplateMetadata } from "@/types/templates.ts";
+import { normalizeMaybeI18nString, } from "@/api/storage/templates.ts";
 import { Badge } from "@/components/ui/badge";
 import { LucideFileCode } from "lucide-vue-next";
 import { ExternalLink } from "@/components/ui2/external-link";
 import { Icon, type IconifyIcon } from "@iconify/vue";
 import { getIconData } from "@iconify/utils";
 import { icons as SOCIAL_ICONS } from "@iconify-json/simple-icons";
-import { computed } from "vue";
-import { useI18n } from "vue-i18n";
 
-const props = defineProps<{
-  metadata: TemplateMeta,
+defineProps<{
+  metadata: TemplateMetadata,
 }>();
-const { locale } = useI18n();
-
-const displayName = computed(() => {
-  const displayName = props.metadata.displayName;
-  const fallback = props.metadata.id;
-  if (typeof displayName === "string")
-    return displayName || fallback;
-  if (typeof displayName === "object" && displayName !== null && displayName !== undefined)
-    return (displayName[locale.value] ?? displayName["en"]) || fallback;
-  return fallback;
-});
-const description = computed(() => {
-  const description = props.metadata.description;
-  if (typeof description === "string")
-    return description;
-  if (typeof description === "object" && description !== null && description !== undefined)
-    return (description[locale.value] ?? description["en"]);
-  return undefined;
-});
 
 // material-symbols:error-outline
 const unknownSocialFallback: IconifyIcon = {
@@ -46,7 +26,7 @@ const unknownSocialFallback: IconifyIcon = {
       <div class="flex items-center gap-2 font-semibold text-lg leading-tight">
         <LucideFileCode class="shrink-0" />
         <span class="min-w-0 line-clamp-1">
-          {{ displayName }}
+          {{ normalizeMaybeI18nString(metadata.displayName, $i18n.locale, metadata.id) }}
         </span>
         <Badge v-if="metadata.version" variant="secondary">
           {{ metadata.version }}
@@ -61,8 +41,8 @@ const unknownSocialFallback: IconifyIcon = {
         </template>
       </div>
 
-      <div v-if="description" class="text-sm text-muted-foreground whitespace-normal break-words">
-        {{ description }}
+      <div v-if="metadata.description" class="text-sm text-muted-foreground whitespace-normal break-words">
+        {{ normalizeMaybeI18nString(metadata.description, $i18n.locale) }}
       </div>
 
       <div v-if="metadata.author" class="text-xs text-muted-foreground break-words">

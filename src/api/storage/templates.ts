@@ -1,19 +1,6 @@
 import { appConfigDir, join, resourceDir } from "@tauri-apps/api/path";
 import { exists, readDir, readTextFile } from "@tauri-apps/plugin-fs";
-
-export type TemplateMeta = {
-    id: string
-    displayName: string | Record<string, string>
-    description?: string | Record<string, string>
-    version?: string
-    author?: string
-    formats: string[]
-    links?: Array<{
-        social: string
-        tooltip?: string
-        url: string
-    }>
-}
+import type { MaybeI18nString, TemplateMetadata } from "@/types/templates.ts";
 
 
 async function getBuiltinTemplatesLocation(): Promise<string> {
@@ -26,43 +13,37 @@ export async function getCustomTemplatesLocation(): Promise<string> {
 }
 
 
-export async function findTemplates(): Promise<TemplateMeta[]> {
+export async function findTemplates(): Promise<TemplateMetadata[]> {
     return (await Promise.all([
         findBuiltinTemplates(),
         findCustomTemplates(),
     ]))
         .flat()
         .sort((a, b) => {
-            const aName = (typeof a.displayName === "string"
-                ? a.displayName
-                : a.displayName["en"])
-                || a.id;
-            const bName = (typeof b.displayName === "string"
-                ? b.displayName
-                : b.displayName["en"])
-                || a.id;
+            const aName = normalizeMaybeI18nString(a.displayName, "en", a.id);
+            const bName = normalizeMaybeI18nString(b.displayName, "en", b.id);
             return aName.localeCompare(bName);
         });
 }
 
-async function findBuiltinTemplates(): Promise<TemplateMeta[]> {
+async function findBuiltinTemplates(): Promise<TemplateMetadata[]> {
     const dir = await getBuiltinTemplatesLocation();
     return await findWithinDirectory(dir);
 }
 
-async function findCustomTemplates(): Promise<TemplateMeta[]> {
+async function findCustomTemplates(): Promise<TemplateMetadata[]> {
     const dir = await getCustomTemplatesLocation();
     if (!await exists(dir)) return [];
     return await findWithinDirectory(dir);
 }
 
-async function findWithinDirectory(dir: string): Promise<TemplateMeta[]> {
+async function findWithinDirectory(dir: string): Promise<TemplateMetadata[]> {
     const entries = await readDir(dir);
     return await Promise.all(
         entries
             .filter(entry => entry.isDirectory)
             .map(async entry => {
-                const fallbackMeta: TemplateMeta = {
+                const fallbackMeta: TemplateMetadata = {
                     id: entry.name,
                     displayName: entry.name,
                     formats: [],
@@ -73,7 +54,7 @@ async function findWithinDirectory(dir: string): Promise<TemplateMeta[]> {
                     return {
                         ...fallbackMeta,
                         description: "missing template metadata",
-                    } as TemplateMeta;
+                    } as TemplateMetadata;
                 }
                 const content = await readTextFile(metadataFile);
                 let parsed;
@@ -83,7 +64,7 @@ async function findWithinDirectory(dir: string): Promise<TemplateMeta[]> {
                     return {
                         ...fallbackMeta,
                         description: (error instanceof Error) ? `${error.name}: ${error.message}` : `${error}`,
-                    } as TemplateMeta;
+                    } as TemplateMetadata;
                 }
                 return {
                     // ensure some default value exist
@@ -92,7 +73,17 @@ async function findWithinDirectory(dir: string): Promise<TemplateMeta[]> {
                     ...parsed,
                     // and ensure this is correct
                     id: entry.name,
-                } as TemplateMeta;
+                } as TemplateMetadata;
             })
     );
+}
+
+export function normalizeMaybeI18nString(string: MaybeI18nString, locale: string, fallback?: never): undefined | string;
+export function normalizeMaybeI18nString(string: MaybeI18nString, locale: string, fallback: string): string;
+export function normalizeMaybeI18nString(string: MaybeI18nString, locale: string, fallback?: string): undefined | string {
+  if (typeof string === "string")
+    return string || fallback;
+  if (typeof string === "object" && string !== null && string !== undefined)
+    return (string[locale] ?? string["en"]) || fallback;
+  return fallback;
 }
