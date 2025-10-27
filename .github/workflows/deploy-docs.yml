@@ -33,6 +33,7 @@ jobs:
       - name: Build VitePress site
         run: |
           npm run docs:build
+          touch .vitepress/dist/.nojekyll
 
       - name: Deploy to instrata.github.io
         env:
