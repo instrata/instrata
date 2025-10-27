@@ -21,7 +21,7 @@ const exportTab = useLocalStorage<"pdf" | "markdown">("app-export-tab", "pdf");
 </script>
 
 <template>
-  <Dialog :default-open="true">
+  <Dialog>
     <DialogTrigger as-child>
       <Button variant="secondary" v-bind="$attrs">
         <LucideFileDown/>
@@ -47,10 +47,10 @@ const exportTab = useLocalStorage<"pdf" | "markdown">("app-export-tab", "pdf");
             </DialogClose>
           </TabsList>
         </template>
-        <TabsContent value="pdf">
+        <TabsContent value="pdf" class="grid gap-4">
           <ExportDialogInnerPdf />
         </TabsContent>
-        <TabsContent value="markdown">
+        <TabsContent value="markdown" class="grid gap-4">
           <ExportDialogInnerMarkdown />
         </TabsContent>
       </ExportDialogCustomContent>

@@ -42,11 +42,23 @@ declare module "vue-i18n" {
           "label": string
           "title": string
           "description": string
+          "fields": {
+            "template": {
+              "label": string
+              "description": string
+            }
+          }
         }
         "markdown": {
           "label": string
           "title": string
           "description": string
+          "fields": {
+            "template": {
+              "label": string
+              "description": string
+            }
+          }
         }
       }
       "placeholder": {

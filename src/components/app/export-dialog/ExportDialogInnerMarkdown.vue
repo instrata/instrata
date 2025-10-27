@@ -6,8 +6,13 @@ import { toRaw } from "vue";
 import { DialogFooter, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { IconMarkdown } from "@/components/icons";
+import { useLocalStorage } from "@vueuse/core";
+import ExportDialogTemplateSelect from "./ExportDialogTemplateSelect.vue";
+import { Field, FieldDescription, FieldGroup, FieldLabel, FieldSet } from "@/components/ui/field";
 
 const appContext = injectAppContext();
+
+const templateId = useLocalStorage("export-markdown-template-id", "default");
 
 async function handleExportToMarkdown() {
   const toastId = toast.loading("Exporting to markdown archive");
@@ -30,6 +35,19 @@ async function handleExportToMarkdown() {
       {{ $t('app.export-dialog.markdown.description') }}
     </DialogDescription>
   </DialogHeader>
+  <FieldGroup>
+    <FieldSet>
+      <Field>
+        <FieldLabel>
+          {{ $t('app.export-dialog.markdown.fields.template.label') }}
+        </FieldLabel>
+        <ExportDialogTemplateSelect v-model="templateId" format-filter="pdf" />
+        <FieldDescription>
+          {{ $t('app.export-dialog.markdown.fields.template.description') }}
+        </FieldDescription>
+      </Field>
+    </FieldSet>
+  </FieldGroup>
   <DialogFooter>
     <Button @click="handleExportToMarkdown">
       <IconMarkdown />

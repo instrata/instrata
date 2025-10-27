@@ -26,10 +26,18 @@ app:
       label: "PDF"
       title: "In eine PDF-Datei exportieren"
       description: "Hiermit wird eine PDF-Datei mit all Ihren Texten und Bildern erstellt. Bereit zum Teilen."
+      fields:
+        template:
+          label: "Rendering-Vorlage"
+          description: "Wählen Sie aus, welche Vorlage zum Rendern der Anleitung verwendet werden soll."
     markdown:
       label: "Markdown"
       title: "In ein Markdown-Archiv exportieren"
       description: "Hiermit wird ein Archiv mit einer README.md-Datei und einem assets/ Ordner erstellt. Bereit zum Einfügen in Ihre Codebasis oder Dokumentation."
+      fields:
+        template:
+          label: "Rendering-Vorlage"
+          description: "Wählen Sie aus, welche Vorlage zum Rendern der Anleitung verwendet werden soll."
   placeholder:
     title: "Titel..."
     abstract: "Zusammenfassung..."
