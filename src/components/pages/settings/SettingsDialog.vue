@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type Component, computed, ref, toValue } from "vue";
+import { type Component, type MaybeRefOrGetter, computed, ref, toValue } from "vue";
 import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import {
@@ -33,7 +33,6 @@ import {
 } from "@/components/ui/breadcrumb";
 import { useI18n } from "vue-i18n";
 import { useAppSettings } from "@/composables/useAppSettings.ts";
-import type { MaybeRefOrGetter } from "@vueuse/core";
 import { logicNot } from "@vueuse/math";
 
 defineOptions({
