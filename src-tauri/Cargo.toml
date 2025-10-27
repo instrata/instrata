@@ -13,6 +13,11 @@ edition = "2021"
 name = "instrata_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
+[profile.release]
+lto = "thin"
+opt-level = "s"
+strip = true
+
 [build-dependencies]
 tauri-build = { version = "2", features = [] }
 
