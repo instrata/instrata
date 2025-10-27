@@ -12,6 +12,9 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: docs/
     steps:
       - name: Checkout source repo
         uses: actions/checkout@v4
@@ -24,17 +27,14 @@ jobs:
           cache-dependency-path: docs/package-lock.json
 
       - name: Install dependencies
-        working-directory: docs/
         run: |
           npm clean-install
 
       - name: Build VitePress site
-        working-directory: docs/
         run: |
           npm run docs:build
 
       - name: Deploy to instrata.github.io
-        working-directory: docs/
         env:
           DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
         run: |
@@ -51,7 +51,7 @@ jobs:
           fi
           
           rm -rf *
-          cp -r ../.vitepress/dist/* deploy/
+          cp -r .vitepress/dist/* deploy/
           
           git add .
           git commit -m "Deploy docs from main repo"

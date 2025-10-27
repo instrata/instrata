@@ -1,0 +1,9 @@
+{
+  "extends": [],
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Node"
+  },
+  "include": [".vitepress/**/*"]
+}
