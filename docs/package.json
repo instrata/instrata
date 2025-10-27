@@ -1,0 +1,15 @@
+{
+  "type": "module",
+  "scripts": {
+    "docs:dev": "vitepress dev",
+    "docs:build": "vitepress build",
+    "docs:preview": "vitepress preview"
+  },
+  "devDependencies": {
+    "@iconify-json/lucide": "^1.2.70",
+    "@iconify-json/simple-icons": "^1.2.55",
+    "markdown-it-task-checkbox": "^1.0.6",
+    "mdit-plugin-iconify": "^0.2.0",
+    "vitepress": "^1.6.4"
+  }
+}
