@@ -51,7 +51,7 @@ jobs:
           fi
           
           rm -rf *
-          cp -r .vitepress/dist/* deploy/
+          cp -r ../.vitepress/dist/* ./
           
           git add .
           git commit -m "Deploy docs from main repo"
