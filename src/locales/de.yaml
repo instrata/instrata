@@ -15,11 +15,21 @@ home:
     export: "Anleitung exportieren"
     delete: "Anleitung löschen"
 app:
-  header:
+  controls:
     home: "Startseite"
     take-screenshot: "Screenshot machen"
-    export-markdown: "Exportieren als Markdown Archiv"
-    export-pdf: "Exportieren als PDF"
+  export-dialog:
+    label: "Anleitung Exportieren"
+    common:
+      export: "Exportieren"
+    pdf:
+      label: "PDF"
+      title: "In eine PDF-Datei exportieren"
+      description: "Hiermit wird eine PDF-Datei mit all Ihren Texten und Bildern erstellt. Bereit zum Teilen."
+    markdown:
+      label: "Markdown"
+      title: "In ein Markdown-Archiv exportieren"
+      description: "Hiermit wird ein Archiv mit einer README.md-Datei und einem assets/ Ordner erstellt. Bereit zum Einfügen in Ihre Codebasis oder Dokumentation."
   placeholder:
     title: "Titel..."
     abstract: "Zusammenfassung..."

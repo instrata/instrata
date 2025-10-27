@@ -15,11 +15,21 @@ home:
     export: "Export Guide"
     delete: "Delete Guide"
 app:
-  header:
+  controls:
     home: "Home"
     take-screenshot: "Take a Screenshot"
-    export-markdown: "Export to Markdown Archive"
-    export-pdf: "Export to PDF"
+  export-dialog:
+    label: "Export Guide"
+    common:
+      export: "Export"
+    pdf:
+      label: "PDF"
+      title: "Export to a PDF file"
+      description: "This generates a pdf with all your texts and images included. Ready to be shared."
+    markdown:
+      label: "Markdown"
+      title: "Export to a markdown archive"
+      description: "This generates an archive with a README.md and a assets/ directory. Ready to be included into your code-base or documentation."
   placeholder:
     title: "Title..."
     abstract: "Abstract..."

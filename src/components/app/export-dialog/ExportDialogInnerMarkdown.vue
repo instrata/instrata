@@ -1,9 +1,10 @@
 <script setup lang="ts">
+import { injectAppContext } from "@/components/app/app-context.ts";
 import { toast } from "vue-sonner";
 import { exportGuideToMarkdown } from "@/lib/export";
-import { Button } from "@/components/ui/button";
-import { injectAppContext } from "@/components/app/app-context.ts";
 import { toRaw } from "vue";
+import { DialogFooter, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 import { IconMarkdown } from "@/components/icons";
 
 const appContext = injectAppContext();
@@ -21,8 +22,18 @@ async function handleExportToMarkdown() {
 </script>
 
 <template>
-  <Button variant="secondary" @click="handleExportToMarkdown">
-    <IconMarkdown />
-    {{ $t('app.header.export-markdown') }}
-  </Button>
+  <DialogHeader>
+    <DialogTitle>
+      {{ $t('app.export-dialog.markdown.title') }}
+    </DialogTitle>
+    <DialogDescription>
+      {{ $t('app.export-dialog.markdown.description') }}
+    </DialogDescription>
+  </DialogHeader>
+  <DialogFooter>
+    <Button @click="handleExportToMarkdown">
+      <IconMarkdown />
+      {{ $t('app.export-dialog.common.export') }}
+    </Button>
+  </DialogFooter>
 </template>

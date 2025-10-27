@@ -22,6 +22,6 @@ async function handleTakeScreenshot() {
 <template>
   <Button variant="secondary" @click="handleTakeScreenshot">
     <LucideCamera />
-    {{ $t('app.header.take-screenshot') }}
+    {{ $t('app.controls.take-screenshot') }}
   </Button>
 </template>

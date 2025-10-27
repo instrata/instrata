@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { toast } from "vue-sonner";
-import { Button } from "@/components/ui/button";
 import { injectAppContext } from "@/components/app/app-context.ts";
+import { toast } from "vue-sonner";
 import { exportGuideToPdf } from "@/lib/export";
 import { toRaw } from "vue";
+import { DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { IconPdfFile } from "@/components/icons";
+import { Button } from "@/components/ui/button";
 
 const appContext = injectAppContext();
 
@@ -21,8 +22,18 @@ async function handleExportToPdf() {
 </script>
 
 <template>
-  <Button variant="secondary" @click="handleExportToPdf">
-    <IconPdfFile />
-    {{ $t('app.header.export-pdf') }}
-  </Button>
+  <DialogHeader>
+    <DialogTitle>
+      {{ $t('app.export-dialog.pdf.title') }}
+    </DialogTitle>
+    <DialogDescription>
+      {{ $t('app.export-dialog.pdf.description') }}
+    </DialogDescription>
+  </DialogHeader>
+  <DialogFooter>
+    <Button @click="handleExportToPdf">
+      <IconPdfFile />
+      {{ $t('app.export-dialog.common.export') }}
+    </Button>
+  </DialogFooter>
 </template>

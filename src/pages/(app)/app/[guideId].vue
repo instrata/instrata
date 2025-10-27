@@ -7,7 +7,8 @@ import { Separator } from "@/components/ui/separator";
 import { TextEditor } from "@/components/app/text-editor";
 import { provideAppContext } from "@/components/app/app-context.ts";
 import InsertNodeHiddenFlexMenu from "@/components/app/InsertNodeHiddenFlexMenu.vue";
-import { TakeScreenshotButton, ExportToMarkdownButton, ExportToPdfButton } from "@/components/app/controls/";
+import { TakeScreenshotButton } from "@/components/app/controls";
+import { ExportDialog } from "@/components/app/export-dialog";
 import AutoNode from "@/components/app/nodes/AutoNode.vue";
 import { existsGuide, loadGuide, saveGuide } from "@/api/storage/guides.ts";
 import { useRoute } from "vue-router";
@@ -45,14 +46,13 @@ provideAppContext({
   <main class="min-h-svh max-w-5xl mx-auto p-2 space-y-2">
     <div class="flex gap-4">
       <TakeScreenshotButton />
-      <ExportToMarkdownButton />
-      <ExportToPdfButton />
+      <ExportDialog />
       <div class="flex-1" />
       <router-link :to="{ name: '/' }">
         <Button variant="ghost">
           <LucideHome />
           <span class="hidden lg:inline-block">
-            {{ $t('app.header.home') }}
+            {{ $t('app.controls.home') }}
           </span>
         </Button>
       </router-link>

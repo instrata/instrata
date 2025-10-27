@@ -29,11 +29,25 @@ declare module "vue-i18n" {
       }
     }
     "app": {
-      "header": {
+      "controls": {
         "home": string
         "take-screenshot": string
-        "export-markdown": string
-        "export-pdf": string
+      }
+      "export-dialog": {
+        "label": string
+        "common": {
+          "export": string
+        }
+        "pdf": {
+          "label": string
+          "title": string
+          "description": string
+        }
+        "markdown": {
+          "label": string
+          "title": string
+          "description": string
+        }
       }
       "placeholder": {
         "title": string
