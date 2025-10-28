@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import type { Guide } from "@/types/data.ts";
+import type { Guide } from "@/types/storage.ts";
 import { LucideHome, LucideSettings } from "lucide-vue-next";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";

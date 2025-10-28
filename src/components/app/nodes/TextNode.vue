@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { TextEditor } from "@/components/app/text-editor";
-import type { TextNode } from "@/types/data.ts";
+import type { TextNode } from "@/types/storage.ts";
 
 defineProps<{
   node: TextNode,

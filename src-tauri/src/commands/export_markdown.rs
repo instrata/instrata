@@ -8,10 +8,10 @@ pub async fn export_markdown(
     app_handle: tauri::AppHandle,
     template_id: String,
     guide_id: String,
-    params: serde_json::Value,
+    context: serde_json::Value,
 ) -> Result<Vec<u8>, String> {
     tokio::task::spawn_blocking(move || {
-        blocking_export_markdown(app_handle, template_id, guide_id, params)
+        blocking_export_markdown(app_handle, template_id, guide_id, context)
     })
     .await
     .map_err(|e| e.to_string())?
@@ -21,14 +21,14 @@ fn blocking_export_markdown(
     app_handle: tauri::AppHandle,
     template_id: String,
     guide_id: String,
-    params: serde_json::Value,
+    context_raw: serde_json::Value,
 ) -> Result<Vec<u8>, String> {
     let template_dir = utils::resolve_template_dir(&app_handle, &template_id)?;
 
     let template_src =
         std::fs::read_to_string(&template_dir.join("template.md.j2")).map_err(|e| e.to_string())?;
 
-    let context = utils::serde_to_tera_context(params);
+    let context = utils::serde_to_tera_context(context_raw);
     let rendered: String = tera::Tera::default()
         .render_str(&template_src, &context)
         .map_err(|e| e.to_string())?;
@@ -47,18 +47,18 @@ fn blocking_export_markdown(
             .map_err(|e| e.to_string())?;
     }
 
-    let screenshots_dir = app_handle
+    let images = app_handle
         .path()
         .app_data_dir()
         .map_err(|e| e.to_string())?
         .join("guides")
         .join(guide_id)
-        .join("screenshots");
-    if screenshots_dir.is_dir() {
+        .join("images");
+    if images.is_dir() {
         write_dir_recursive(
             &mut zip,
-            &screenshots_dir,
-            PathBuf::from("screenshots").as_path(),
+            &images,
+            PathBuf::from("images").as_path(),
         )
         .map_err(|e| e.to_string())?;
     }

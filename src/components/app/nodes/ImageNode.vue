@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { computedAsync } from "@vueuse/core";
-import { appDataDir, join } from "@tauri-apps/api/path";
 import { convertFileSrc } from "@tauri-apps/api/core";
-import type { ImageNode } from "@/types/data.ts";
+import type { ImageNode } from "@/types/storage.ts";
 import { injectAppContext } from "@/components/app/app-context.ts";
+import { getGuideImageFileSrc } from "@/api/storage/guides.ts";
 
 const props = defineProps<{
   node: ImageNode,
@@ -12,7 +12,7 @@ const props = defineProps<{
 const appContext = injectAppContext();
 
 const imageUrl = computedAsync(async () => {
-  const filePath = await join(await appDataDir(), "guides", appContext.guide.value.id, "screenshots", `${props.node.screenshotId}.png`);
+  const filePath = await getGuideImageFileSrc(appContext.guide.value.id, props.node.imageId);
   return convertFileSrc(filePath);
 });
 </script>

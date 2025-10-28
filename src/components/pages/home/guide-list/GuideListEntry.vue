@@ -7,7 +7,7 @@ import {
 } from "lucide-vue-next";
 import { useGuideIds } from "@/composables/storage/useGuideIds.ts";
 import { Button } from "@/components/ui/button";
-import type { Guide, GuideInfo } from "@/types/data.ts";
+import type { Guide, GuideInfo } from "@/types/storage.ts";
 import { htmlToText } from "@/lib/utils.ts";
 
 const props = defineProps<{

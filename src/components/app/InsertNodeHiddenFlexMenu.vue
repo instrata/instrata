@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { LucideImageUp, LucideTypeOutline, LucideWallpaper } from "lucide-vue-next";
 import { injectAppContext } from "@/components/app/app-context.ts";
-import type { ImageNode, Node, TextNode } from "@/types/data.ts";
+import type { ImageNode, Node, TextNode } from "@/types/storage.ts";
 import { nanoid } from "nanoid";
 import { captureScreen } from "@/api/commands";
 import { HiddenFlexMenu, HiddenFlexMenuContainer, HiddenFlexMenuItem, HiddenFlexMenuSeparator } from "@/components/ui2/hidden-flex-menu";
@@ -33,7 +33,7 @@ async function handleTakeScreenshot() {
   const imageNode: ImageNode = {
     id: nanoid(),
     type: "image",
-    screenshotId: screenshotId,
+    imageId: screenshotId,
   };
   insertNode(imageNode);
 }

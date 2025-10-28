@@ -24,7 +24,7 @@
 {%- if node.type == "text" %}
 {{ node.text }}
 {% elif node.type == "image" %}
-#image("screenshots/{{ node.screenshotId }}.png")
+#image("{{ node.path }}")
 {% else %}
 > ERROR: Unknown Node
 {% endif -%}

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computedAsync } from "@vueuse/core";
-import {cloneGuide, deleteGuide} from "@/api/storage/guides.ts";
-import { appDataDir, join } from "@tauri-apps/api/path";
+import { cloneGuide, deleteGuide, getGuideImageFileSrc } from "@/api/storage/guides.ts";
 import { convertFileSrc } from "@tauri-apps/api/core";
 import {
   LucideBookCopy,
@@ -13,7 +12,7 @@ import {
 } from "lucide-vue-next";
 import { useGuideIds } from "@/composables/storage/useGuideIds.ts";
 import { ExpandableIconMenuRoot, ExpandableIconMenuTrigger, ExpandableIconMenuContent, ExpandableIconMenuAction } from "@/components/ui2/expandable-icon-menu";
-import type { Guide, GuideInfo } from "@/types/data.ts";
+import type { Guide, GuideInfo } from "@/types/storage.ts";
 import { htmlToText } from "@/lib/utils.ts";
 
 const props = defineProps<{
@@ -23,10 +22,10 @@ const props = defineProps<{
 
 const { refresh: refreshGuideIds } = useGuideIds();
 
-const previewScreenshotSrc = computedAsync(async () => {
+const imagePreviewSrc = computedAsync(async () => {
   const imageNode = props.guide.nodes.find(node => node.type === "image");
   if (!imageNode) return null;
-  const filePath = await join(await appDataDir(), "guides", props.guide.id, "screenshots", `${imageNode.screenshotId}.png`);
+  const filePath = await getGuideImageFileSrc(props.guide.id, imageNode.imageId);
   return convertFileSrc(filePath);
 });
 
@@ -44,7 +43,7 @@ async function handleDelete() {
 <template>
   <div class="relative aspect-video border border-input rounded-lg shadow-md overflow-hidden isolate group/guide-card">
     <router-link :to="{ name: '/(app)/app/[guideId]', params: { guideId: guide.id } }" class="size-full">
-      <img v-if="previewScreenshotSrc" :src="previewScreenshotSrc" alt="preview" class="size-full object-cover group-hover/guide-card:scale-105 transition-[scale]" />
+      <img v-if="imagePreviewSrc" :src="imagePreviewSrc" alt="preview" class="size-full object-cover group-hover/guide-card:scale-105 transition-[scale]" />
       <div v-else class="size-full grid place-items-center">
         <LucideBookImage class="group-hover/guide-card:scale-105 transition-[scale]" />
       </div>

@@ -1,7 +1,11 @@
-import type { Guide, GuideInfo } from "@/types/data.ts";
+import type { Guide, GuideInfo } from "@/types/storage.ts";
 import { appDataDir, join } from "@tauri-apps/api/path";
 import {copyFile, exists, mkdir, readDir, readTextFile, remove, stat, writeTextFile} from "@tauri-apps/plugin-fs";
 import { nanoid } from "nanoid";
+
+
+const DATA_JSON = "data.json";
+const IMAGES_DIR = "images";
 
 
 export async function getGuidesRoot(): Promise<string> {
@@ -35,8 +39,8 @@ export async function createNewGuide(): Promise<Guide> {
     const guideDir = await join(rootDir, guide.id);
     await mkdir(guideDir, { recursive: true });
     const jsonString = JSON.stringify(guide, null, 2);
-    await writeTextFile(await join(guideDir, "data.json"), jsonString, { createNew: true });
-    await mkdir(await join(guideDir, "screenshots"));
+    await writeTextFile(await join(guideDir, DATA_JSON), jsonString, { createNew: true });
+    await mkdir(await join(guideDir, IMAGES_DIR));
     return guide;
 }
 
@@ -54,9 +58,9 @@ export async function cloneGuide(source: Guide): Promise<Guide> {
     await cloneDirectory(sourceDir, guideDir);
 
     const jsonString = JSON.stringify(guide, null, 2);
-    await writeTextFile(await join(guideDir, "data.json"), jsonString);
+    await writeTextFile(await join(guideDir, DATA_JSON), jsonString);
 
-    await mkdir(await join(guideDir, "screenshots"), { recursive: true });
+    await mkdir(await join(guideDir, IMAGES_DIR), { recursive: true });
 
     return guide;
 }
@@ -81,14 +85,14 @@ async function cloneDirectory(src: string, dest: string): Promise<void> {
 
 export async function loadGuide(guideId: string): Promise<Guide> {
     const rootDir = await getGuidesRoot();
-    const guideDataFile = await join(rootDir, guideId, "data.json");
+    const guideDataFile = await join(rootDir, guideId, DATA_JSON);
     const jsonString = await readTextFile(guideDataFile);
     return JSON.parse(jsonString);
 }
 
 export async function loadGuideInfo(guideId: string): Promise<GuideInfo> {
     const rootDir = await getGuidesRoot();
-    const guideDataFile = await join(rootDir, guideId, "data.json");
+    const guideDataFile = await join(rootDir, guideId, DATA_JSON);
     const fileInfo = await stat(guideDataFile);
     return {
         mtime: fileInfo.mtime,
@@ -98,7 +102,7 @@ export async function loadGuideInfo(guideId: string): Promise<GuideInfo> {
 
 export async function saveGuide(guide: Guide): Promise<void> {
     const rootDir = await getGuidesRoot();
-    const guideDataFile = await join(rootDir, guide.id, "data.json");
+    const guideDataFile = await join(rootDir, guide.id, DATA_JSON);
     const jsonString = JSON.stringify(guide, null, 2);
     await writeTextFile(guideDataFile, jsonString);
 }
@@ -107,4 +111,8 @@ export async function deleteGuide(guideId: string): Promise<void> {
     const rootDir = await getGuidesRoot();
     const guideDir = await join(rootDir, guideId);
     await remove(guideDir, { recursive: true });
+}
+
+export async function getGuideImageFileSrc(guideId: string, imageId: string): Promise<string> {
+  return await join(await getGuidesRoot(), guideId, IMAGES_DIR, `${imageId}.png`);
 }

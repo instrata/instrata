@@ -2,9 +2,10 @@
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 import { computedAsync } from "@vueuse/core";
 import { findTemplates, normalizeMaybeI18nString } from "@/api/storage/templates.ts";
+import type { ExportFormat } from "@/types/templates.ts";
 
 const props = defineProps<{
-  formatFilter: string
+  formatFilter: ExportFormat
 }>();
 
 const templates = computedAsync(async () => {

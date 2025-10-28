@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Node } from "@/types/data.ts";
+import type { Node } from "@/types/storage.ts";
 import TextNode from "@/components/app/nodes/TextNode.vue";
 import ImageNode from "@/components/app/nodes/ImageNode.vue";
 

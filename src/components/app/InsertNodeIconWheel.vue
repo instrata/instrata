@@ -2,7 +2,7 @@
 import { LucideImageUp, LucidePlus, LucideType, LucideWallpaper } from "lucide-vue-next";
 import { IconWheelAction, IconWheelActions, IconWheelRoot, IconWheelTrigger } from "@/components/ui2/icon-wheel";
 import { injectAppContext } from "@/components/app/app-context.ts";
-import type { ImageNode, Node, TextNode } from "@/types/data.ts";
+import type { ImageNode, Node, TextNode } from "@/types/storage.ts";
 import { nanoid } from "nanoid";
 import { captureScreen } from "@/api/commands";
 
@@ -33,7 +33,7 @@ async function handleTakeScreenshot() {
   const imageNode: ImageNode = {
     id: nanoid(),
     type: "image",
-    screenshotId: screenshotId,
+    imageId: screenshotId,
   };
   insertNode(imageNode);
 }

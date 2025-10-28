@@ -28,6 +28,6 @@ export type TextNode = {
 export type ImageNode = {
     id: string
     type: "image"
-    /** id of the screenshot file */
-    screenshotId: string
+    /** id of the image file */
+    imageId: string
 }

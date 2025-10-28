@@ -4,7 +4,7 @@ import { LucideCamera } from "lucide-vue-next";
 import { captureScreen } from "@/api/commands";
 import { nanoid } from "nanoid";
 import { injectAppContext } from "@/components/app/app-context.ts";
-import type { ImageNode } from "@/types/data.ts";
+import type { ImageNode } from "@/types/storage.ts";
 
 const appContext = injectAppContext();
 
@@ -13,7 +13,7 @@ async function handleTakeScreenshot() {
   const imageNode: ImageNode = {
     id: nanoid(),
     type: "image",
-    screenshotId: screenshotId,
+    imageId: screenshotId,
   };
   appContext.guide.value.nodes.push(imageNode);
 }
