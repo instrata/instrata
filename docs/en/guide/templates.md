@@ -93,7 +93,7 @@ You can use these fields to dynamically insert content into your templates.
 ### Template Engine
 
 Instrata uses [tera](https://keats.github.io/tera/), a template engine similar to [::social/jinja:: Jinja2](https://jinja.palletsprojects.com/en/stable/) and [::social/django:: Django Templates](https://docs.djangoproject.com/en/5.2/topics/templates/).  
-Tera supports variables, loops, conditionals, and filters for flexible layouts.
+Tera supports variables, loops, conditionals, and filters for flexible layouts. See the [tera documentation about template syntax](https://keats.github.io/tera/docs/#templates)
 
 ## About Markdown Templates
 
