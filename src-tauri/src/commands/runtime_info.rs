@@ -44,7 +44,11 @@ fn detect_windows_install(exe_path: &Option<PathBuf>) -> String {
     }
 
     if let Some(path) = exe_path {
-        if path.extension().and_then(|s| s.to_str()).map_or(false, |ext| ext.eq_ignore_ascii_case("exe")) {
+        if path
+            .extension()
+            .and_then(|s| s.to_str())
+            .map_or(false, |ext| ext.eq_ignore_ascii_case("exe"))
+        {
             return "exe".into();
         }
     }
@@ -57,7 +61,11 @@ fn detect_linux_install(exe_path: &Option<PathBuf>) -> String {
         return "dev".into();
     }
 
-    if std::env::var("APPIMAGE").ok().filter(|v| !v.is_empty()).is_some() {
+    if std::env::var("APPIMAGE")
+        .ok()
+        .filter(|v| !v.is_empty())
+        .is_some()
+    {
         return "appimage".into();
     }
 
