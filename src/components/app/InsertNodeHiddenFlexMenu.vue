@@ -5,6 +5,8 @@ import type { ImageNode, Node, TextNode } from "@/types/storage.ts";
 import { nanoid } from "nanoid";
 import { captureScreen } from "@/api/commands";
 import { HiddenFlexMenu, HiddenFlexMenuContainer, HiddenFlexMenuItem, HiddenFlexMenuSeparator } from "@/components/ui2/hidden-flex-menu";
+import { open as openFileDialog } from "@tauri-apps/plugin-dialog";
+import { importImageToGuide } from "@/api/storage/guides.ts";
 
 const props = defineProps<{
   before?: string
@@ -39,7 +41,24 @@ async function handleTakeScreenshot() {
 }
 
 async function handleUploadImage() {
-
+  const files = await openFileDialog({
+    multiple: true,
+    directory: false,
+    filters: [{
+      name: "Images",
+      extensions: ["png"],
+    }],
+  });
+  if (files === null) return;
+  for (const file of files) {
+    const imageId = await importImageToGuide(file, appContext.guide.value.id);
+    const imageNode: ImageNode = {
+      id: nanoid(),
+      type: "image",
+      imageId,
+    };
+    insertNode(imageNode);
+  }
 }
 </script>
 
@@ -56,7 +75,7 @@ async function handleUploadImage() {
         Screenshot
       </HiddenFlexMenuItem>
       <HiddenFlexMenuSeparator />
-      <HiddenFlexMenuItem disabled @click="handleUploadImage">
+      <HiddenFlexMenuItem @click="handleUploadImage">
         <LucideImageUp />
         Image
       </HiddenFlexMenuItem>
