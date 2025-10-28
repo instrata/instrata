@@ -40,6 +40,7 @@ export default defineConfig({
     ['meta', { property: 'og:image', content: 'https://instrata.github.io/og-image.png' }],
     ['meta', { property: 'og:image:type', content: 'image/png' }],
     ['meta', { property: 'og:url', content: 'https://instrata.github.io/' }],
+    ['meta', { name: "google-site-verification", content: "s-RFUyj8uPAfBi5liG2lNJMYw9dg6QuM2EPSH7DDKgc" }],
   ],
 
   sitemap: {
