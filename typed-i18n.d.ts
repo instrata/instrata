@@ -129,6 +129,11 @@ declare module "vue-i18n" {
       }
       "developers": {
         "label": string
+        "locations": {
+          "heading": string
+          "app-config": string
+          "app-data": string
+        }
         "runtime-info": {
           "heading": string
           "os": string
