@@ -12,6 +12,11 @@ const iconRenderer = createIconRenderer({
     social: simpleIcons,
   },
   defaultCollection: "lucide",
+  iconResolver(collection, name) {
+    if (collection === undefined && name === "empty") {
+      return { body: ``, attributes: {} };
+    }
+  },
 });
 
 
