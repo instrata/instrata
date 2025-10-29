@@ -54,11 +54,8 @@ fn blocking_export_pdf(
         .join(guide_id)
         .join("images");
     if images_dir.is_dir() {
-        copy_dir_recursive(
-            &images_dir,
-            workdir.path().join("images").as_path(),
-        )
-        .map_err(|e| e.to_string())?;
+        copy_dir_recursive(&images_dir, workdir.path().join("images").as_path())
+            .map_err(|e| e.to_string())?;
     }
 
     let pdf_bytes = run_typst_compile(workdir.path())?;

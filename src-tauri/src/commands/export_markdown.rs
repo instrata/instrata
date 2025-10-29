@@ -55,12 +55,8 @@ fn blocking_export_markdown(
         .join(guide_id)
         .join("images");
     if images.is_dir() {
-        write_dir_recursive(
-            &mut zip,
-            &images,
-            PathBuf::from("images").as_path(),
-        )
-        .map_err(|e| e.to_string())?;
+        write_dir_recursive(&mut zip, &images, PathBuf::from("images").as_path())
+            .map_err(|e| e.to_string())?;
     }
 
     zip.finish().map_err(|e| e.to_string())?;

@@ -18,5 +18,5 @@ const imageUrl = computedAsync(async () => {
 </script>
 
 <template>
-  <img v-if="imageUrl" :src="imageUrl" alt="" />
+  <img v-if="imageUrl" :src="imageUrl" alt="" class="mx-auto" />
 </template>

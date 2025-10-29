@@ -11,6 +11,7 @@
     "global-shortcut:allow-register",
     "global-shortcut:allow-unregister",
     "opener:default",
+    "dialog:default",
     "fs:default",
     "fs:allow-appconfig-read-recursive",
     "fs:allow-appconfig-write-recursive",
