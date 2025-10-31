@@ -1,7 +1,7 @@
 import { onBeforeUnmount, onMounted, ref } from "vue";
-import { type UnwatchFn, watch as watchFs } from "@tauri-apps/plugin-fs";
+import { exists, type UnwatchFn, watch as watchFs } from "@tauri-apps/plugin-fs";
 import { getGuidesRoot, listGuidesIds } from "@/api/storage/guides.ts";
-import { createSharedComposable } from "@vueuse/core";
+import { createSharedComposable, useEventListener } from "@vueuse/core";
 
 export const useGuideIds = createSharedComposable(function () {
     const guideIds = ref<string[]>([]);
@@ -13,13 +13,20 @@ export const useGuideIds = createSharedComposable(function () {
     onMounted(async () => {
         await refresh();
         unwatchFn?.();
-        unwatchFn = await watchFs(await getGuidesRoot(), async () => {
-            await refresh();
-        });
+        const guideRoot = await getGuidesRoot();
+        if (await exists(guideRoot)) {
+            unwatchFn = await watchFs(guideRoot, async () => {
+                await refresh();
+            });
+        }
     });
 
     onBeforeUnmount(() => {
         unwatchFn?.();
+    });
+
+    useEventListener("focus", async () => {
+        await refresh();
     });
 
     return {
