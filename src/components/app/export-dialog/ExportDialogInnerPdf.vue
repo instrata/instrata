@@ -12,6 +12,7 @@ import { Field, FieldDescription, FieldGroup, FieldLabel, FieldSet } from "@/com
 
 const appContext = injectAppContext();
 
+// todo: handle if saved template was removed
 const templateId = useLocalStorage("export-pdf-template-id", "default");
 
 async function handleExportToPdf() {
