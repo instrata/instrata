@@ -29,7 +29,10 @@ const guidesAndInfos = computedAsync(async () => {
 const filteredGuidesAndInfos = computed(() => {
   if (!guidesAndInfos.value) return [];
   const term = searchString.value.toLocaleLowerCase();
-  return guidesAndInfos.value.filter(([guide]) => htmlToText(guide.title).toLocaleLowerCase().includes(term));
+  return guidesAndInfos.value.filter(([guide]) => {
+    const title = htmlToText(guide.title);
+    return (title ? title : guide.id).toLocaleLowerCase().includes(term);
+  });
 });
 
 const sortedAndFilteredGuidesAndInfos = computed(() => {
