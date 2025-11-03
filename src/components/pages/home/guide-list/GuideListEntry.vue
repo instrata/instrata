@@ -9,6 +9,7 @@ import { useGuideIds } from "@/composables/storage/useGuideIds.ts";
 import { Button } from "@/components/ui/button";
 import type { Guide, GuideInfo } from "@/types/storage.ts";
 import { htmlToText } from "@/lib/utils.ts";
+import { exportGuideToArchive } from "@/lib/export/archive.ts";
 
 const props = defineProps<{
   guide: Guide
@@ -19,6 +20,10 @@ const { refresh: refreshGuideIds } = useGuideIds();
 async function handleClone() {
   await cloneGuide(props.guide);
   await refreshGuideIds();
+}
+
+async function handleGuideExport() {
+  await exportGuideToArchive(props.guide.id);
 }
 
 async function handleDelete() {
@@ -40,7 +45,7 @@ async function handleDelete() {
     <Button variant="ghost" size="icon" @click="handleClone" :title="$t('home.card-actions.duplicate')">
       <LucideBookCopy />
     </Button>
-    <Button variant="ghost" size="icon" disabled :title="$t('home.card-actions.export')">
+    <Button variant="ghost" size="icon" @click="handleGuideExport" :title="$t('home.card-actions.export')">
       <LucideFolderDown />
     </Button>
     <Button variant="ghost" size="icon" @click="handleDelete" :title="$t('home.card-actions.delete')">

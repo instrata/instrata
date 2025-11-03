@@ -2,6 +2,9 @@
 import { createNewGuide } from "@/api/storage/guides.ts";
 import { LucidePlus } from "lucide-vue-next";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 async function handleNewGuide() {
   const guide = await createNewGuide();

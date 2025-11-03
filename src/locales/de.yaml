@@ -9,6 +9,9 @@ home:
   your-guides: "Deine Anleitungen"
   display-as-list: "Anleitungen als Liste anzeigen"
   display-as-grid: "Anleitungen als Gitter anzeigen"
+  import-dropzone:
+    title: "Ziehen Sie Ihr Projekt hierher"
+    description: "Legen Sie ein geteiltes Projekt hier ab, um es zu importieren."
   card-actions:
     view: "Anleitung ansehen"
     duplicate: "Anleitung duplizieren"

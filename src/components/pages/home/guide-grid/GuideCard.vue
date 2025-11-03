@@ -14,6 +14,7 @@ import { useGuideIds } from "@/composables/storage/useGuideIds.ts";
 import { ExpandableIconMenuRoot, ExpandableIconMenuTrigger, ExpandableIconMenuContent, ExpandableIconMenuAction } from "@/components/ui2/expandable-icon-menu";
 import type { Guide, GuideInfo } from "@/types/storage.ts";
 import { htmlToText } from "@/lib/utils.ts";
+import { exportGuideToArchive } from "@/lib/export/archive.ts";
 
 const props = defineProps<{
   guide: Guide
@@ -32,6 +33,10 @@ const imagePreviewSrc = computedAsync(async () => {
 async function handleClone() {
   await cloneGuide(props.guide);
   await refreshGuideIds();
+}
+
+async function handleGuideExport() {
+  await exportGuideToArchive(props.guide.id);
 }
 
 async function handleDelete() {
@@ -60,7 +65,7 @@ async function handleDelete() {
         <ExpandableIconMenuAction @click="handleClone" :title="$t('home.card-actions.duplicate')">
           <LucideBookCopy />
         </ExpandableIconMenuAction>
-        <ExpandableIconMenuAction disabled :title="$t('home.card-actions.export')">
+        <ExpandableIconMenuAction @click="handleGuideExport" :title="$t('home.card-actions.export')">
           <LucideFolderDown />
         </ExpandableIconMenuAction>
         <ExpandableIconMenuAction @click="handleDelete" class="hover:text-destructive" :title="$t('home.card-actions.delete')">

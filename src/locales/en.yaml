@@ -9,6 +9,9 @@ home:
   your-guides: "Your Guides"
   display-as-list: "Display Guides as List"
   display-as-grid: "Display Guides as Grid"
+  import-dropzone:
+    title: "Drag & Drop your project here"
+    description: "Drop a shared project here to import it."
   card-actions:
     view: "View Guide"
     duplicate: "Duplicate Guide"
