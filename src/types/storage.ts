@@ -12,8 +12,9 @@ export type Guide = {
 }
 
 export type GuideInfo = {
-    mtime: Date | null
-    birthTime: Date | null
+  lastModifiedTime: Date | null
+  birthTime: Date | null
+  // isExternal: boolean
 }
 
 export type Node = TextNode | ImageNode;

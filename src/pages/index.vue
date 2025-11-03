@@ -37,11 +37,11 @@ const filteredGuidesAndInfos = computed(() => {
 
 const sortedAndFilteredGuidesAndInfos = computed(() => {
   return filteredGuidesAndInfos.value.sort(([_g1, i1], [_g2, i2]) => {
-    if (i1.mtime !== null && i2.mtime !== null) {
-      return i2.mtime.getTime() - i1.mtime.getTime();
-    } else if (i1.mtime === null) {
+    if (i1.lastModifiedTime !== null && i2.lastModifiedTime !== null) {
+      return i2.lastModifiedTime.getTime() - i1.lastModifiedTime.getTime();
+    } else if (i1.lastModifiedTime === null) {
       return 1;
-    } else if (i2.mtime === null) {
+    } else if (i2.lastModifiedTime === null) {
       return -1;
     } else {
       return 0;

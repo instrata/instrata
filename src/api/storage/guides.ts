@@ -4,6 +4,7 @@ import {copyFile, exists, mkdir, readDir, readTextFile, remove, stat, writeTextF
 import { nanoid } from "nanoid";
 
 
+const MARKER_FILE = ".instrata";
 const DATA_JSON = "data.json";
 const IMAGES_DIR = "images";
 
@@ -18,6 +19,7 @@ export async function listGuidesIds(): Promise<string[]> {
     const rootDir = await getGuidesRoot();
     return (await readDir(rootDir))
         .filter(e => e.isDirectory)
+        // .filter(e => e.isDirectory || e.isSymlink)
         .map(e => e.name);
 }
 
@@ -38,8 +40,12 @@ export async function createNewGuide(): Promise<Guide> {
     const rootDir = await getGuidesRoot();
     const guideDir = await join(rootDir, guide.id);
     await mkdir(guideDir, { recursive: true });
+    // create marker
+    await writeTextFile(await join(guideDir, MARKER_FILE), "", { createNew: true });
+    // create data-file
     const jsonString = JSON.stringify(guide, null, 2);
     await writeTextFile(await join(guideDir, DATA_JSON), jsonString, { createNew: true });
+    // create directory for images
     await mkdir(await join(guideDir, IMAGES_DIR));
     return guide;
 }
@@ -87,17 +93,23 @@ export async function loadGuide(guideId: string): Promise<Guide> {
     const rootDir = await getGuidesRoot();
     const guideDataFile = await join(rootDir, guideId, DATA_JSON);
     const jsonString = await readTextFile(guideDataFile);
-    return JSON.parse(jsonString);
+    return {
+      ...JSON.parse(jsonString),
+      id: guideId,
+    };
 }
 
 export async function loadGuideInfo(guideId: string): Promise<GuideInfo> {
-    const rootDir = await getGuidesRoot();
-    const guideDataFile = await join(rootDir, guideId, DATA_JSON);
-    const fileInfo = await stat(guideDataFile);
-    return {
-        mtime: fileInfo.mtime,
-        birthTime: fileInfo.birthtime,
-    };
+  const rootDir = await getGuidesRoot();
+  const guideDir = await join(rootDir, guideId);
+  // const dirInfo = await lstat(guideDir);
+  const guideDataFile = await join(guideDir, DATA_JSON);
+  const fileInfo = await stat(guideDataFile);
+  return {
+    lastModifiedTime: fileInfo.mtime,
+    birthTime: fileInfo.birthtime,
+    // isExternal: dirInfo.isSymlink,
+  };
 }
 
 export async function saveGuide(guide: Guide): Promise<void> {

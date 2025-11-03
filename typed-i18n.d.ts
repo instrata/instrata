@@ -21,6 +21,10 @@ declare module "vue-i18n" {
       "your-guides": string
       "display-as-list": string
       "display-as-grid": string
+      "import-dropzone": {
+        "title": string
+        "description": string
+      }
       "card-actions": {
         "view": string
         "duplicate": string
