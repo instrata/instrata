@@ -95,17 +95,21 @@ declare module "vue-i18n" {
       "general": {
         "label": string
         "appearance": {
-          "heading": string
+          "title": string
+          "description": string
           "theme": {
-            "label": string
             "system": string
             "light": string
             "dark": string
           }
         }
-        "additional-settings": {
-          "heading": string
-          "developer-mode": string
+        "updates": {
+          "title": string
+          "description": string
+        }
+        "developer-mode": {
+          "title": string
+          "description": string
         }
       }
       "languages": {

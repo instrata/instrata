@@ -67,15 +67,18 @@ settings:
   general:
     label: "Allgemein"
     appearance:
-      heading: "Erscheinung"
+      title: "Erscheinung"
+      description: "Steuern Sie das Farbschema der Anwendung"
       theme:
-        label: "Farbschema"
         system: "System"
         light: "Hell"
         dark: "Dunkel"
-    additional-settings:
-      heading: "Additional Settings"
-      developer-mode: "Developer Mode"
+    updates:
+      title: "Updates-Check"
+      description: "Beim Start automatisch nach Updates suchen"
+    developer-mode:
+      title: "Entwickler Modus"
+      description: "Aktiviert einige zusätzliche Funktionen in der Anwendung."
   languages:
     label: "Sprachen"
     locale: "Deutsch"
