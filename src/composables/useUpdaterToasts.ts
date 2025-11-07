@@ -4,136 +4,148 @@ import { toast } from "vue-sonner";
 import { relaunch } from "@tauri-apps/plugin-process";
 import { Progress } from "@/components/ui/progress";
 import { getRuntimeInfo } from "@/api/commands";
+import { useI18n } from "vue-i18n";
+import { createSharedComposable } from "@vueuse/core";
 
-const isChecking = ref(false);
-const update = ref<Update | null>(null);
 
-// todo: i18n
-// todo: refactor to createSharedComposable
-export function useUpdaterToasts() {
-    async function checkForUpdate(): Promise<void> {
-        if (isChecking.value) return;
-        await handleCheckForUpdate();
+export const useUpdaterToasts = createSharedComposable(() => {
+  const { t } = useI18n();
+
+  const isChecking = ref(false);
+  const update = ref<Update | null>(null);
+
+  async function checkForUpdate(): Promise<void> {
+    if (isChecking.value) return;
+    await handleCheckForUpdate();
+  }
+
+  async function handleCheckForUpdate(): Promise<void> {
+    isChecking.value = true;
+    try {
+      const runtimeInfo = await getRuntimeInfo();
+      update.value = await check({
+        target: `${runtimeInfo.os}-${runtimeInfo.arch}-${runtimeInfo.install}`,
+      });
+      console.info("update", runtimeInfo, update.value);
+    } catch (e) {
+      console.error("update-check failed", e);
+    } finally {
+      isChecking.value = false;
     }
 
-    async function handleCheckForUpdate(): Promise<void> {
-        isChecking.value = true;
-        try {
-            const runtimeInfo = await getRuntimeInfo();
-            update.value = await check({
-              target: `${runtimeInfo.os}-${runtimeInfo.arch}-${runtimeInfo.install}`,
-            });
-          console.info("update", runtimeInfo, update.value);
-        } catch (e) {
-          console.error("update-check failed", e);
-        } finally {
-          isChecking.value = false;
-        }
-
-        if (update.value) {
-            toast.info(`Update available: version ${update.value.version}`, {
-                description: `You are on ${update.value.currentVersion}. Click Download to start.`,
-                dismissible: true,
-                closeButton: true,
-                duration: Infinity,
-                action: {
-                    label: "Download",
-                    onClick: () => handleDownloadUpdate(),
-                },
-            });
-        }
-    }
-
-    async function handleDownloadUpdate(): Promise<void> {
-        if (!update.value) return;
-
-        let downloaded = 0;
-        let contentLength = 0;
-        let toastId: string | number | undefined = undefined;
-
-        function progressToast() {
-            toastId = toast.loading("Downloading update...", {
-                id: toastId,
-                dismissible: false,
-                duration: Infinity,
-                description: () => {
-                    const modelValue = (100 * downloaded / contentLength);
-                    return !isNaN(modelValue) ? h(Progress, { modelValue, class: "w-full" }) : null;
-                },
-            });
-        }
-        progressToast();
-
-        try {
-            // required work around. otherwise we get an TypeError
-            const downloadFn = update.value.download.bind(toRaw(update.value));
-            await downloadFn((event) => {
-                switch (event.event) {
-                    case "Started":
-                        contentLength = event.data.contentLength ?? 0;
-                        progressToast();
-                        console.log(`Download started with ${contentLength}`);
-                        break;
-                    case "Progress":
-                        downloaded += event.data.chunkLength;
-                        progressToast();
-                        break;
-                    case "Finished":
-                        console.log("Download finished");
-                        break;
-                    default:
-                        console.log("Unknown Download Event", event);
-                }
-            });
-        } catch (error) {
-            toast.error("Download failed", {
-                id: toastId,
-                description: "Check your internet connection and try again."
-            });
-            throw error;
-        }
-
-        toast.info("Update ready to install", {
-            description: `Version ${update.value.version} is downloaded. Click Install to proceed.`,
-            id: toastId,
-            dismissible: false,
-            duration: Infinity,
-            action: {
-                label: "Install",
-                onClick: () => handleInstallUpdate(),
-            },
-        });
-    }
-
-    async function handleInstallUpdate(): Promise<void> {
-        if (!update.value) return;
-
-        try {
-            // required work around. otherwise we get an TypeError
-            const installFn = update.value.install.bind(toRaw(update.value));
-            await installFn();
-        } catch (error) {
-            toast.error("Installation failed", {
-                description: "Please restart and try again. If the issue persists, reinstall manually.",
-            });
-            throw error;
-        }
-
-        toast.info("Update installed", {
-            description: `Version ${update.value.version} is ready. Relaunch the app to apply the update.`,
+    if (update.value) {
+      toast.info(
+          t("updater.update-available.title", { version: update.value.version }),
+          {
+            description: t("updater.update-available.description", {
+              currentVersion: update.value.currentVersion,
+            }),
             dismissible: true,
             closeButton: true,
             duration: Infinity,
             action: {
-                label: "Restart now",
-                onClick: () => handleRelaunchApp(),
+              label: t("updater.update-available.action"),
+              onClick: () => handleDownloadUpdate(),
             },
-        });
+          },
+      );
+    }
+  }
+
+  async function handleDownloadUpdate(): Promise<void> {
+    if (!update.value) return;
+
+    let downloaded = 0;
+    let contentLength = 0;
+    let toastId: string | number | undefined = undefined;
+
+    function progressToast() {
+      toastId = toast.loading(t("updater.downloading.title"), {
+        id: toastId,
+        dismissible: false,
+        duration: Infinity,
+        description: () => {
+          const modelValue = (100 * downloaded) / contentLength;
+          return !isNaN(modelValue) ? h(Progress, { modelValue, class: "w-full" }) : null;
+        },
+      });
     }
 
-    async function handleRelaunchApp(): Promise<void> {
-        await relaunch();
+    progressToast();
+
+    try {
+      // Required work around. Otherwise, we get an TypeError
+      const downloadFn = update.value.download.bind(toRaw(update.value));
+      await downloadFn((event) => {
+        switch (event.event) {
+          case "Started":
+            contentLength = event.data.contentLength ?? 0;
+            progressToast();
+            console.info(`Download started with ${contentLength}`);
+            break;
+          case "Progress":
+            downloaded += event.data.chunkLength;
+            progressToast();
+            break;
+          case "Finished":
+            console.info("Download finished");
+            break;
+        }
+      });
+    } catch (error) {
+      toast.error(t("updater.download-failed.title"), {
+        id: toastId,
+        description: t("updater.download-failed.description"),
+        dismissible: true,
+      });
+      throw error;
     }
 
-    return { isChecking, checkForUpdate, update };
-}
+    toast.info(t("updater.ready-to-install.title"), {
+      description: t("updater.ready-to-install.description", {
+        version: update.value.version,
+      }),
+      id: toastId,
+      dismissible: false,
+      duration: Infinity,
+      action: {
+        label: t("updater.ready-to-install.action"),
+        onClick: () => handleInstallUpdate(),
+      },
+    });
+  }
+
+  async function handleInstallUpdate(): Promise<void> {
+    if (!update.value) return;
+
+    try {
+      // Required work around. Otherwise, we get an TypeError
+      const installFn = update.value.install.bind(toRaw(update.value));
+      await installFn();
+    } catch (error) {
+      toast.error(t("updater.install-failed.title"), {
+        description: t("updater.install-failed.description"),
+      });
+      throw error;
+    }
+
+    toast.info(t("updater.installed.title"), {
+      description: t("updater.installed.description", {
+        version: update.value.version,
+      }),
+      dismissible: true,
+      closeButton: true,
+      duration: Infinity,
+      action: {
+        label: t("updater.installed.action"),
+        onClick: () => handleRelaunchApp(),
+      },
+    });
+  }
+
+  async function handleRelaunchApp(): Promise<void> {
+    await relaunch();
+  }
+
+  return {isChecking, checkForUpdate, update};
+});

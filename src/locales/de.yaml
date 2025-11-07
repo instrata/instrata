@@ -112,3 +112,27 @@ settings:
       app-data: "App-Data"
     update:
       heading: "Update"
+updater:
+  no-update-available:
+    title: "Keine Updates verfügbar"
+    description: "Sie verwenden bereits die neueste Version."
+  update-available:
+    title: "Update verfügbar: Version {version}"
+    description: "Sie verwenden derzeit {currentVersion}. Klicken Sie auf Herunterladen, um zu starten."
+    action: "Herunterladen"
+  downloading:
+    title: "Update wird heruntergeladen..."
+  download-failed:
+    title: "Download fehlgeschlagen"
+    description: "Überprüfen Sie Ihre Internetverbindung und versuchen Sie es erneut."
+  ready-to-install:
+    title: "Update bereit zur Installation"
+    description: "Version {version} wurde heruntergeladen. Klicken Sie auf Installieren, um fortzufahren."
+    action: "Installieren"
+  install-failed:
+    title: "Installation fehlgeschlagen"
+    description: "Bitte starten Sie neu und versuchen Sie es erneut. Wenn das Problem weiterhin besteht, installieren Sie manuell neu."
+  installed:
+    title: "Update installiert"
+    description: "Version {version} ist bereit. Starten Sie die App neu, um das Update anzuwenden."
+    action: "Jetzt neu starten"

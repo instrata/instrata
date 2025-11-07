@@ -112,3 +112,27 @@ settings:
       app-data: "App-Data"
     update:
       heading: "Update"
+updater:
+  no-update-available:
+    title: "No updates available"
+    description: "You are already using the latest version."
+  update-available:
+    title: "Update available: version {version}"
+    description: "You are on {currentVersion}. Click Download to start."
+    action: "Download"
+  downloading:
+    title: "Downloading update..."
+  download-failed:
+    title: "Download failed"
+    description: "Check your internet connection and try again."
+  ready-to-install:
+    title: "Update ready to install"
+    description: "Version {version} is downloaded. Click Install to proceed."
+    action: "Install"
+  install-failed:
+    title: "Installation failed"
+    description: "Please restart and try again. If the issue persists, reinstall manually."
+  installed:
+    title: "Update installed"
+    description: "Version {version} is ready. Relaunch the app to apply the update."
+    action: "Restart now"

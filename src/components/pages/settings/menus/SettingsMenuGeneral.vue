@@ -9,7 +9,9 @@ import { Item, ItemActions, ItemContent, ItemDescription, ItemTitle } from "@/co
 import { Button } from "@/components/ui/button";
 import { useUpdaterToasts } from "@/composables/useUpdaterToasts.ts";
 import { toast } from "vue-sonner";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const { update, checkForUpdate, isChecking } = useUpdaterToasts();
 const colorMode = useColorMode();
 const appSettings = useAppSettings();
@@ -17,7 +19,9 @@ const appSettings = useAppSettings();
 async function handleCheckForUpdate() {
   await checkForUpdate();
   if (!update.value) {
-    toast.info("No updates available");
+    toast.info(t('updater.no-update-available.title'), {
+      description: t('updater.no-update-available.description'),
+    });
   }
 }
 </script>
