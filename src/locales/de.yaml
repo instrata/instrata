@@ -99,14 +99,16 @@ settings:
     copyright: "Copyright © {year} Instrata"
   developers:
     label: "Entwickler"
-    locations:
-      heading: "Dateispeicherorte"
-      app-config: "App-Config"
-      app-data: "App-Data"
     runtime-info:
       heading: "Laufzeit-Info"
       os: "OS:"
       install: "Install:"
       arch: "Architecture:"
+    app-settings:
+      heading: "App-Einstellungen"
+    locations:
+      heading: "Dateispeicherorte"
+      app-config: "App-Config"
+      app-data: "App-Data"
     update:
       heading: "Update"

@@ -9,6 +9,7 @@ const isChecking = ref(false);
 const update = ref<Update | null>(null);
 
 // todo: i18n
+// todo: refactor to createSharedComposable
 export function useUpdaterToasts() {
     async function checkForUpdate(): Promise<void> {
         if (isChecking.value) return;
