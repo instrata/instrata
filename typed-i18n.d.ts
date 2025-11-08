@@ -141,8 +141,9 @@ declare module "vue-i18n" {
         "runtime-info": {
           "heading": string
           "os": string
-          "install": string
           "arch": string
+          "install": string
+          "bundle-type": string
         }
         "app-settings": {
           "heading": string

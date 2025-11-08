@@ -12,11 +12,13 @@ import { useI18n } from "vue-i18n";
 import { revealItemInDir } from "@tauri-apps/plugin-opener";
 import { getAppSettingsFileLocation, useAppSettings } from "@/composables/useAppSettings.ts";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { getBundleType } from "@tauri-apps/api/app";
 
 const { t } = useI18n();
 const appSettings = useAppSettings();
 const { isChecking: isCheckingForUpdate, checkForUpdate, update } = useUpdaterToasts();
 const runtimeInfo = computedAsync(getRuntimeInfo);
+const bundleType = computedAsync(getBundleType);
 
 onMounted(async () => {
   if (appSettings.value.autoCheckForUpdates) {
@@ -57,6 +59,8 @@ const locations: Location[] = [
     <div>{{ runtimeInfo?.arch }}</div>
     <span>{{ $t('settings.developers.runtime-info.install') }}</span>
     <div>{{ runtimeInfo?.install }}</div>
+    <span>{{ $t('settings.developers.runtime-info.bundle-type') }}</span>
+    <div>{{ bundleType ?? "-" }}</div>
   </div>
   <Separator />
   <h2 class="text-lg font-bold">

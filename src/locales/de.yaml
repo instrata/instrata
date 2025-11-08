@@ -102,8 +102,9 @@ settings:
     runtime-info:
       heading: "Laufzeit-Info"
       os: "OS:"
-      install: "Install:"
       arch: "Architecture:"
+      install: "Install:"
+      bundle-type: "Bundle Type:"
     app-settings:
       heading: "App-Einstellungen"
     locations:
