@@ -11,20 +11,24 @@ const host = process.env.TAURI_DEV_HOST;
 // https://vite.dev/config/
 export default defineConfig(async () => ({
   plugins: [
-      VueRouter(),
-      Vue(),
-      VueI18nPlugin({
-          include: ["src/locales/*"],
-      }),
-      TailwindCSS(),
-      YamlDtsPlugin({
-          source: "src/locales/en.yaml",
-          output: "typed-i18n.d.ts",
-      }),
+    VueRouter({
+      routesFolder: [
+        { src: "src/main/pages" },
+      ],
+    }),
+    Vue(),
+    VueI18nPlugin({
+        include: ["src/locales/*"],
+    }),
+    TailwindCSS(),
+    YamlDtsPlugin({
+        source: "src/locales/en.yaml",
+        output: "typed-i18n.d.ts",
+    }),
   ],
-resolve: {
+  resolve: {
     alias: {
-        '@': path.resolve(__dirname, './src'),
+      '@': path.resolve(__dirname, './src'),
     },
 },
 
