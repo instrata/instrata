@@ -6,7 +6,7 @@ import { Separator } from "@/components/ui/separator";
 import { type MaybeRefOrGetter, onMounted, type Ref, toValue } from "vue";
 import { Button } from "@/components/ui/button";
 import { LucideFolderInput, LucidePen, LucideRefreshCw } from "lucide-vue-next";
-import { appConfigDir, appDataDir } from "@tauri-apps/api/path";
+import { appConfigDir, appDataDir, appLogDir } from "@tauri-apps/api/path";
 import { Item, ItemActions, ItemContent, ItemDescription, ItemTitle } from "@/components/ui/item";
 import { useI18n } from "vue-i18n";
 import { revealItemInDir } from "@tauri-apps/plugin-opener";
@@ -44,6 +44,10 @@ const locations: Location[] = [
   {
     title: () => t('settings.developers.locations.app-data'),
     path: computedAsync(async () => await appDataDir()),
+  },
+  {
+    title: () => t('settings.developers.locations.app-logs'),
+    path: computedAsync(async () => await appLogDir()),
   },
 ];
 </script>

@@ -111,6 +111,7 @@ settings:
       heading: "Dateispeicherorte"
       app-config: "App-Config"
       app-data: "App-Data"
+      app-logs: "App-Logs"
     update:
       heading: "Update"
 updater:

@@ -152,6 +152,7 @@ declare module "vue-i18n" {
           "heading": string
           "app-config": string
           "app-data": string
+          "app-logs": string
         }
         "update": {
           "heading": string
