@@ -1,5 +1,6 @@
 import "@/index.css";
 import "vue-sonner/style.css";
+import "@/forward-console.ts";
 
 import { createApp } from "vue";
 import { router } from "./router.ts";
