@@ -30,8 +30,8 @@ declare module 'vue-router/auto-routes' {
       Record<never, never>,
       | never
     >,
-    '/(app)/app/[guideId]': RouteRecordInfo<
-      '/(app)/app/[guideId]',
+    '/app/[guideId]': RouteRecordInfo<
+      '/app/[guideId]',
       '/app/:guideId',
       { guideId: ParamValue<true> },
       { guideId: ParamValue<false> },
@@ -50,15 +50,15 @@ declare module 'vue-router/auto-routes' {
    * @internal
    */
   export interface _RouteFileInfoMap {
-    'src/pages/index.vue': {
+    'src/main/pages/index.vue': {
       routes:
         | '/'
       views:
         | never
     }
-    'src/pages/(app)/app/[guideId].vue': {
+    'src/main/pages/app/[guideId].vue': {
       routes:
-        | '/(app)/app/[guideId]'
+        | '/app/[guideId]'
       views:
         | never
     }

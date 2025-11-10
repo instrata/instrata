@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { useUpdaterToasts } from "@/composables/useUpdaterToasts.ts";
 import { onMounted } from "vue";
+import { useAppSettings } from "@/composables/useAppSettings.ts";
 
+const autoCheckForUpdates = useAppSettings("autoCheckForUpdates");
 const { checkForUpdate } = useUpdaterToasts();
 
 onMounted(async () => {
-  if (import.meta.env.PROD) {
+  if (autoCheckForUpdates.value) {
     try {
       await checkForUpdate();
     } catch (error) {

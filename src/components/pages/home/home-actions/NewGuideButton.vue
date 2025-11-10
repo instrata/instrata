@@ -8,7 +8,7 @@ const router = useRouter();
 
 async function handleNewGuide() {
   const guide = await createNewGuide();
-  await router.push({ name: "/(app)/app/[guideId]", params: { guideId: guide.id } });
+  await router.push({ name: "/app/[guideId]", params: { guideId: guide.id } });
 }
 </script>
 

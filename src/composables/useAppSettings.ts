@@ -1,34 +1,37 @@
 import { computed, ref, type Ref } from "vue";
 import { watchDebounced } from "@vueuse/core";
-import { BaseDirectory, exists, readTextFile, writeTextFile } from "@tauri-apps/plugin-fs";
+import { exists, readTextFile, writeTextFile } from "@tauri-apps/plugin-fs";
+import { appConfigDir, join } from "@tauri-apps/api/path";
 
 
 export type AppSettings = {
-  developerMode: boolean;
+  autoCheckForUpdates: boolean
+  developerMode: boolean
 }
 
 const DEFAULTS: AppSettings = {
+  autoCheckForUpdates: import.meta.env.PROD,
   developerMode: import.meta.env.DEV,
 }
 
 
-const FILENAME = "settings.json";
+export async function getAppSettingsFileLocation(): Promise<string> {
+  return await join(await appConfigDir(), "settings.json");
+}
 
 
 async function loadSettings(): Promise<AppSettings> {
-    if (!await exists(FILENAME, { baseDir: BaseDirectory.AppConfig })) {
+  const fp = await getAppSettingsFileLocation();
+    if (!await exists(fp)) {
         return DEFAULTS;
     }
-    const stored = await readTextFile(FILENAME, {
-        baseDir: BaseDirectory.AppConfig,
-    })
+    const stored = await readTextFile(fp);
     const loaded = JSON.parse(stored);
     return { ...DEFAULTS, ...loaded };
 }
 async function saveSettings(settings: AppSettings) {
-    await writeTextFile(FILENAME, JSON.stringify(settings), {
-        baseDir: BaseDirectory.AppConfig,
-    });
+  const fp = await getAppSettingsFileLocation();
+  await writeTextFile(fp, JSON.stringify(settings, null, 2));
 }
 
 

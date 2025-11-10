@@ -6,7 +6,7 @@ import { LucideFileCode } from "lucide-vue-next";
 import { ExternalLink } from "@/components/ui2/external-link";
 import { Icon, type IconifyIcon } from "@iconify/vue";
 import { getIconData } from "@iconify/utils";
-import { icons as SOCIAL_ICONS } from "@iconify-json/simple-icons";
+import { icons as SOCIAL_ICONS } from "@iconify-json/simple-icons";  // todo: lazy import
 
 defineProps<{
   metadata: TemplateMetadata,

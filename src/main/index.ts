@@ -1,10 +1,11 @@
-import "./index.css";
+import "@/index.css";
 import "vue-sonner/style.css";
+import "@/forward-console.ts";
 
 import { createApp } from "vue";
-import AppWrapper from "./AppWrapper.vue";
-import { router } from "@/router.ts";
+import { router } from "./router.ts";
 import { i18n } from "@/i18n";
+import AppWrapper from "./AppWrapper.vue";
 
 createApp(AppWrapper)
     .use(router)

@@ -29,7 +29,7 @@ definePage({
   },
 });
 
-const route = useRoute("/(app)/app/[guideId]");
+const route = useRoute("/app/[guideId]");
 
 const guide = ref<Guide>(await loadGuide(route.params.guideId));
 

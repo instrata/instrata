@@ -33,11 +33,11 @@ async function handleDelete() {
 </script>
 
 <template>
-  <router-link :to="{ name: '/(app)/app/[guideId]', params: { guideId: guide.id } }" class="size-full break-words truncate">
+  <router-link :to="{ name: '/app/[guideId]', params: { guideId: guide.id } }" class="size-full break-words truncate">
     {{ htmlToText(guide.title) || guide.id }}
   </router-link>
   <div class="flex items-center justify-center gap-1">
-    <router-link tabindex="-1" :to="{ name: '/(app)/app/[guideId]', params: { guideId: guide.id } }" class="size-full">
+    <router-link tabindex="-1" :to="{ name: '/app/[guideId]', params: { guideId: guide.id } }" class="size-full">
       <Button variant="ghost" size="icon" :title="$t('home.card-actions.view')">
         <LucideEye />
       </Button>

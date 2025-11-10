@@ -67,15 +67,18 @@ settings:
   general:
     label: "General"
     appearance:
-      heading: "Appearance"
+      title: "Appearance"
+      description: "Control the color-scheme of the application"
       theme:
-        label: "Color Theme"
         system: "System"
         light: "Light"
         dark: "Dark"
-    additional-settings:
-      heading: "Additional Settings"
-      developer-mode: "Developer Mode"
+    updates:
+      title: "Updates-Check"
+      description: "Automatically check for updates on startup"
+    developer-mode:
+      title: "Developer Mode"
+      description: "Enables some additional features in the application"
   languages:
     label: "Languages"
     locale: "English"
@@ -96,14 +99,42 @@ settings:
     copyright: "Copyright © {year} Instrata"
   developers:
     label: "Developers"
+    runtime-info:
+      heading: "Runtime-Info"
+      os: "OS:"
+      arch: "Architecture:"
+      install: "Install:"
+      bundle-type: "Bundle Type:"
+    app-settings:
+      heading: "App-Settings"
     locations:
       heading: "File Locations"
       app-config: "App-Config"
       app-data: "App-Data"
-    runtime-info:
-      heading: "Runtime-Info"
-      os: "OS:"
-      install: "Install:"
-      arch: "Architecture:"
+      app-logs: "App-Logs"
     update:
       heading: "Update"
+updater:
+  no-update-available:
+    title: "No updates available"
+    description: "You are already using the latest version."
+  update-available:
+    title: "Update available: version {version}"
+    description: "You are on {currentVersion}. Click Download to start."
+    action: "Download"
+  downloading:
+    title: "Downloading update..."
+  download-failed:
+    title: "Download failed"
+    description: "Check your internet connection and try again."
+  ready-to-install:
+    title: "Update ready to install"
+    description: "Version {version} is downloaded. Click Install to proceed."
+    action: "Install"
+  install-failed:
+    title: "Installation failed"
+    description: "Please restart and try again. If the issue persists, reinstall manually."
+  installed:
+    title: "Update installed"
+    description: "Version {version} is ready. Relaunch the app to apply the update."
+    action: "Restart now"

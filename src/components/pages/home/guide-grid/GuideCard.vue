@@ -47,7 +47,7 @@ async function handleDelete() {
 
 <template>
   <div class="relative aspect-video border border-input rounded-lg shadow-md overflow-hidden isolate group/guide-card">
-    <router-link :to="{ name: '/(app)/app/[guideId]', params: { guideId: guide.id } }" class="size-full">
+    <router-link :to="{ name: '/app/[guideId]', params: { guideId: guide.id } }" class="size-full">
       <img v-if="imagePreviewSrc" :src="imagePreviewSrc" alt="preview" class="size-full object-cover group-hover/guide-card:scale-105 transition-[scale]" />
       <div v-else class="size-full grid place-items-center">
         <LucideBookImage class="group-hover/guide-card:scale-105 transition-[scale]" />
