@@ -6,6 +6,10 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
+export function extractFilenameFromPath(path: string): string {
+  return path.match(/[\\\/]?([^\\\/]+)[\\\/]?$/)?.[1] ?? path;
+}
+
 export function htmlToText(html: string): string {
     const doc = new DOMParser().parseFromString(html, "text/html");
     return doc.documentElement.textContent!;

@@ -2,6 +2,7 @@ import { downloadDir, join } from "@tauri-apps/api/path";
 import { toast } from "vue-sonner";
 import { exists, writeFile } from "@tauri-apps/plugin-fs";
 import { revealItemInDir } from "@tauri-apps/plugin-opener";
+import { i18n } from "@/i18n.ts";
 
 
 async function findFreeFilename(filename: string): Promise<string> {
@@ -24,19 +25,22 @@ async function findFreeFilename(filename: string): Promise<string> {
 }
 
 export async function startBlobDownload(blob: Blob, filename: string): Promise<void> {
-    const downloadPath = await findFreeFilename(filename);
+  const downloadPath = await findFreeFilename(filename);
 
-    await writeFile(downloadPath, blob.stream(), { createNew: true });
+  await writeFile(downloadPath, blob.stream(), { createNew: true });
 
-    toast.success("File saved successfully.", {
+  toast.success(
+      i18n.global.t('components.blob-download.title'),
+      {
         description: downloadPath,
         action: {
-            label: "Show",
-            onClick: async () => {
-                await revealItemInDir(downloadPath);
-            },
+          label: i18n.global.t('components.blob-download.action'),
+          onClick: async () => {
+            await revealItemInDir(downloadPath);
+          },
         },
-    });
+      }
+  );
 }
 
 export async function startTextDownload(content: string, filename: string): Promise<void> {

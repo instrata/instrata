@@ -9,20 +9,30 @@ import { IconMarkdown } from "@/components/icons";
 import { useLocalStorage } from "@vueuse/core";
 import ExportDialogTemplateSelect from "./ExportDialogTemplateSelect.vue";
 import { Field, FieldDescription, FieldGroup, FieldLabel, FieldSet } from "@/components/ui/field";
+import { useI18n } from "vue-i18n";
 
 const appContext = injectAppContext();
+const { t } = useI18n();
 
 // todo: handle if saved template was removed
 const templateId = useLocalStorage("export-markdown-template-id", "default");
 
 async function handleExportToMarkdown() {
-  const toastId = toast.loading("Exporting to markdown archive");
+  const toastId = toast.loading(
+      t('app.export-dialog.markdown.toasts.exporting'),
+  );
   try {
-    await exportGuideToMarkdown("default", toRaw(appContext.guide.value));
-    toast.success("Guide successfully exported!", { id: toastId });
+    await exportGuideToMarkdown(templateId.value, toRaw(appContext.guide.value));
+    toast.success(
+        t('app.export-dialog.markdown.toasts.success'),
+        { id: toastId },
+    );
   } catch (error) {
     console.error(error);
-    toast.error("Export to markdown archive failed", { id: toastId, description: `${error}` });
+    toast.error(
+        t('app.export-dialog.markdown.toasts.error'),
+        { id: toastId, description: `${error}` },
+    );
   }
 }
 </script>

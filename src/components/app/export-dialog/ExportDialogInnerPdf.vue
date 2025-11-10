@@ -9,20 +9,30 @@ import { Button } from "@/components/ui/button";
 import { useLocalStorage } from "@vueuse/core";
 import ExportDialogTemplateSelect from "./ExportDialogTemplateSelect.vue";
 import { Field, FieldDescription, FieldGroup, FieldLabel, FieldSet } from "@/components/ui/field";
+import { useI18n } from "vue-i18n";
 
 const appContext = injectAppContext();
+const { t } = useI18n();
 
 // todo: handle if saved template was removed
 const templateId = useLocalStorage("export-pdf-template-id", "default");
 
 async function handleExportToPdf() {
-  const toastId = toast.loading("Exporting to pdf");
+  const toastId = toast.loading(
+      t('app.export-dialog.pdf.toasts.exporting'),
+  );
   try {
     await exportGuideToPdf(templateId.value, toRaw(appContext.guide.value));
-    toast.success("Guide successfully exported!", { id: toastId });
+    toast.success(
+        t('app.export-dialog.pdf.toasts.success'),
+        { id: toastId },
+    );
   } catch (error) {
     console.error(error);
-    toast.error("Export to pdf failed", { id: toastId, description: `${error}` })
+    toast.error(
+        t('app.export-dialog.pdf.toasts.error'),
+        { id: toastId, description: `${error}` },
+    );
   }
 }
 </script>

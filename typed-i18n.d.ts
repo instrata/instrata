@@ -14,6 +14,16 @@ declare module "vue-i18n" {
     "common": {
       "not-implemented": string
     }
+    "components": {
+      "blob-download": {
+        "title": string
+        "action": string
+      }
+      "import-helper": {
+        "import-failed": string
+        "unsupported-path": string
+      }
+    }
     "home": {
       "search-for-guides": string
       "clear-search": string
@@ -53,6 +63,11 @@ declare module "vue-i18n" {
               "description": string
             }
           }
+          "toasts": {
+            "exporting": string
+            "success": string
+            "error": string
+          }
         }
         "markdown": {
           "label": string
@@ -63,6 +78,11 @@ declare module "vue-i18n" {
               "label": string
               "description": string
             }
+          }
+          "toasts": {
+            "exporting": string
+            "success": string
+            "error": string
           }
         }
       }

@@ -1,6 +1,13 @@
 instrata: "Instrata"
 common:
   not-implemented: "Noch nicht implementiert"
+components:
+  blob-download:
+    title: "Datei erfolgreich gespeichert!"
+    action: "Anzeigen"
+  import-helper:
+    import-failed: "Import von '{fname}' fehlgeschlagen"
+    unsupported-path: "Nicht unterstützter Pfad für den Import"
 home:
   search-for-guides: "Nach Anleitungen suchen..."
   clear-search: "Suche leeren"
@@ -33,6 +40,10 @@ app:
         template:
           label: "Rendering-Vorlage"
           description: "Wählen Sie aus, welche Vorlage zum Rendern der Anleitung verwendet werden soll."
+      toasts:
+        exporting: "Exportieren in PDF..."
+        success: "Anleitung erfolgreich exportiert!"
+        error: "Export in PDF fehlgeschlagen!"
     markdown:
       label: "Markdown"
       title: "In ein Markdown-Archiv exportieren"
@@ -41,6 +52,10 @@ app:
         template:
           label: "Rendering-Vorlage"
           description: "Wählen Sie aus, welche Vorlage zum Rendern der Anleitung verwendet werden soll."
+      toasts:
+        exporting: "Exportieren in Markdown-Archiv..."
+        success: "Anleitung erfolgreich exportiert!"
+        error: "Export in Markdown-Archiv fehlgeschlagen!"
   placeholder:
     title: "Titel..."
     abstract: "Zusammenfassung..."

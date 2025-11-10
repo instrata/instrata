@@ -1,6 +1,13 @@
 instrata: "Instrata"
 common:
   not-implemented: "Not implemented yet"
+components:
+  blob-download:
+    title: "File saved successfully!"
+    action: "Show"
+  import-helper:
+    import-failed: "Failed to import '{fname}'"
+    unsupported-path: "Unsupported path for import"
 home:
   search-for-guides: "Search for guides..."
   clear-search: "Clear Search"
@@ -33,6 +40,10 @@ app:
         template:
           label: "Rendering Template"
           description: "Select which template is used to render the guide."
+      toasts:
+        exporting: "Exporting to pdf..."
+        success: "Guide successfully exported!"
+        error: "Export to pdf failed!"
     markdown:
       label: "Markdown"
       title: "Export to a markdown archive"
@@ -41,6 +52,10 @@ app:
         template:
           label: "Rendering Template"
           description: "Select which template is used to render the guide."
+      toasts:
+        exporting: "Exporting to markdown archive..."
+        success: "Guide successfully exported!"
+        error: "Export to markdown archive failed!"
   placeholder:
     title: "Title..."
     abstract: "Abstract..."

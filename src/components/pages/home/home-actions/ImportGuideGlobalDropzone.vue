@@ -3,33 +3,13 @@ import { useDropZone } from "@vueuse/core";
 import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/components/ui/empty";
 import { LucidePackageOpen } from "lucide-vue-next";
 import { useDropEvent } from "@/composables/useDropEvent.ts";
-import { toast } from "vue-sonner";
-import { stat } from "@tauri-apps/plugin-fs";
-import { invokeImportGuide } from "@/api/commands";
-import { useGuideIds } from "@/composables/storage/useGuideIds.ts";
+import { useImportHelper } from "@/composables/useImportHelper.ts";
 
-const { refresh } = useGuideIds();
 const { isOverDropZone } = useDropZone(document);
+const { importPaths } = useImportHelper();
 
 useDropEvent(async ({ paths }) => {
-  for (const path of paths) {
-    try {
-      const fileInfo = await stat(path)
-      if (fileInfo.isFile) {
-        await invokeImportGuide(path);
-      // } else if (fileInfo.isDirectory) {
-      //   await invokeLinkExternalGuide(path);
-      } else {
-        throw new Error("unsupported path");
-      }
-    } catch (e) {
-      const name = path.match(/[\\\/]?([^\\\/]+)[\\\/]?$/)?.[1] ?? path;
-      toast.error(`Failed to import '${name}'`, {
-        description: e instanceof Error ? `${e.name}: ${e.message}` : `${e}`,
-      });
-    }
-  }
-  await refresh();
+  await importPaths(paths);
 });
 </script>
 
