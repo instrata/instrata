@@ -7,7 +7,7 @@ function forwardConsole(
   const original = console[fnName];
   console[fnName] = (...args) => {
     original(...args);
-    logger(args.join(" "));
+    logger(args.map(v => typeof v === "string" ? v : JSON.stringify(v)).join(" "));
   };
 }
 
