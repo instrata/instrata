@@ -18,6 +18,7 @@
     "fs:allow-appdata-read-recursive",
     "fs:allow-appdata-write-recursive",
     "fs:allow-download-write",
-    "fs:allow-resource-read-recursive"
+    "fs:allow-resource-read-recursive",
+    "log:default"
   ]
 }
