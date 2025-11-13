@@ -23,6 +23,15 @@ declare module "vue-i18n" {
         "import-failed": string
         "unsupported-path": string
       }
+      "external-link": {
+        "title": string
+        "description": string
+        "actions": {
+          "stay": string
+          "copy": string
+          "open": string
+        }
+      }
     }
     "home": {
       "search-for-guides": string

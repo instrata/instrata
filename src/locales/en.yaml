@@ -8,6 +8,13 @@ components:
   import-helper:
     import-failed: "Failed to import '{fname}'"
     unsupported-path: "Unsupported path for import"
+  external-link:
+    title: "You're about to open an external link"
+    description: "This link will open in your default browser:"
+    actions:
+      stay: "Stay here"
+      copy: "Copy Link"
+      open: "Open link"
 home:
   search-for-guides: "Search for guides..."
   clear-search: "Clear Search"
