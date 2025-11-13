@@ -31,6 +31,10 @@ home:
     duplicate: "Duplicate Guide"
     export: "Export Guide"
     delete: "Delete Guide"
+  empty:
+    title: "No Guides Yet"
+    description: "You haven't created any guides yet. Get started by creating your first guide."
+    learn-more: "Learn More"
 app:
   controls:
     home: "Home"

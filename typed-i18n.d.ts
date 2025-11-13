@@ -51,6 +51,11 @@ declare module "vue-i18n" {
         "export": string
         "delete": string
       }
+      "empty": {
+        "title": string
+        "description": string
+        "learn-more": string
+      }
     }
     "app": {
       "controls": {

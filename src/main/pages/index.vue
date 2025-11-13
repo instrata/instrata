@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useGuideIds } from "@/composables/storage/useGuideIds.ts";
-import { GuideGrid, GuideList, HomeActions, HomeDisplayControls, HomeHeader } from "@/components/pages/home";
+import { GuideGrid, GuideList, HomeActions, HomeDisplayControls, HomeEmpty, HomeHeader } from "@/components/pages/home";
 import { loadGuide, loadGuideInfo } from "@/api/storage/guides.ts";
 import { computedAsync, useLocalStorage } from "@vueuse/core";
 import { provideHomeContext } from "@/components/pages/home/context.ts";
@@ -63,5 +63,6 @@ provideHomeContext({
     <HomeDisplayControls />
     <GuideGrid v-if="displayMode === 'grid'" />
     <GuideList v-else-if="displayMode === 'list'" />
+    <HomeEmpty v-if="!guidesAndInfos?.length" />
   </main>
 </template>

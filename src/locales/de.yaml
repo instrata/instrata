@@ -31,6 +31,10 @@ home:
     duplicate: "Anleitung duplizieren"
     export: "Anleitung exportieren"
     delete: "Anleitung löschen"
+  empty:
+    title: "Noch keine Anleitungen"
+    description: "Sie haben noch keine Anleitungen erstellt. Beginnen Sie mit der Erstellung Ihrer ersten Anleitung."
+    learn-more: "Weitere Informationen"
 app:
   controls:
     home: "Startseite"
