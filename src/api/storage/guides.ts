@@ -1,7 +1,8 @@
 import type { Guide, GuideInfo } from "@/types/storage.ts";
 import { appDataDir, join } from "@tauri-apps/api/path";
-import {copyFile, exists, mkdir, readDir, readTextFile, remove, stat, writeTextFile} from "@tauri-apps/plugin-fs";
+import { copyFile, exists, mkdir, readDir, readTextFile, remove, stat, writeTextFile } from "@tauri-apps/plugin-fs";
 import { nanoid } from "nanoid";
+import { AsyncArray } from "@/lib/async-array.ts";
 
 
 const MARKER_FILE = ".instrata";
@@ -17,16 +18,16 @@ export async function getGuidesRoot(): Promise<string> {
 
 export async function listGuidesIds(): Promise<string[]> {
     const rootDir = await getGuidesRoot();
-    return (await readDir(rootDir))
-        .filter(e => e.isDirectory)
-        // .filter(e => e.isDirectory || e.isSymlink)
+    return new AsyncArray(await readDir(rootDir))
+        .filter(async (e) => e.isDirectory && (await exists(await join(rootDir, e.name, MARKER_FILE))))
         .map(e => e.name);
 }
 
 export async function existsGuide(guideId: string): Promise<boolean> {
     const rootDir = await getGuidesRoot();
     const guideDir = await join(rootDir, guideId);
-    return await exists(guideDir);
+    const markerFile = await join(guideDir, MARKER_FILE);
+    return await exists(guideDir) && await exists(markerFile);
 }
 
 export async function createNewGuide(): Promise<Guide> {
