@@ -126,6 +126,12 @@ export async function deleteGuide(guideId: string): Promise<void> {
     await remove(guideDir, { recursive: true });
 }
 
+export async function deleteImageFromGuide(guideId: string, imageId: string): Promise<void> {
+  const rootDir = await getGuidesRoot();
+  const filePath = await join(rootDir, guideId, IMAGES_DIR, `${imageId}.png`);
+  await remove(filePath);
+}
+
 export async function importImageToGuide(file: string, guideId: string): Promise<string> {
   const imageId = nanoid();
   const dist = await join(await getGuidesRoot(), guideId, IMAGES_DIR, `${imageId}.png`);

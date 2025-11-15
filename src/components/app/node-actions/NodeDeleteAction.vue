@@ -4,15 +4,20 @@ import { ExpandableIconMenuAction } from "@/components/ui2/expandable-icon-menu"
 import { LucideTrash2 } from "lucide-vue-next";
 import { injectAppContext } from "@/components/app/app-context.ts";
 import { computed } from "vue";
+import { deleteImageFromGuide } from "@/api/storage/guides.ts";
 
-const appContext = injectAppContext();
+const { guide } = injectAppContext();
 const rootContext = injectNodeActionsContext();
 
-const nodeIndex = computed(() => appContext.guide.value.nodes.findIndex(node => node.id === rootContext.nodeId));
+const nodeIndex = computed(() => guide.value.nodes.findIndex(node => node.id === rootContext.nodeId));
 
-function handleDelete() {
-  appContext.guide.value.nodes.splice(nodeIndex.value, 1);
-  // todo: respect node type to e.g. delete images
+async function handleDelete() {
+  const deleted = guide.value.nodes.splice(nodeIndex.value, 1);
+  for (const node of deleted) {
+    if (node.type === "image") {
+      await deleteImageFromGuide(guide.value.id, node.imageId);
+    }
+  }
 }
 </script>
 
