@@ -46,6 +46,10 @@ fn write_directory_recursive<W: Write + std::io::Seek>(
             continue
         } else if path.is_dir() {
             let sub_dest_dir = dest_dir.join(path.file_name().unwrap());
+            zip.add_directory(
+                sub_dest_dir.as_path().to_string_lossy().replace("\\", "/"),
+                zip::write::SimpleFileOptions::default(),
+            )?;
             write_directory_recursive(zip, &path, sub_dest_dir.as_path())?;
         } else if path.is_file() {
             let dest_file = dest_dir.join(path.file_name().unwrap());
