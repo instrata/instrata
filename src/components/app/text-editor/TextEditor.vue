@@ -16,6 +16,7 @@ import { Separator } from "@/components/ui/separator";
 import { Popover, PopoverAnchor, PopoverContent } from "@/components/ui/popover";
 import InvisibleCharacters from "@tiptap/extension-invisible-characters";
 import { Placeholder } from "@tiptap/extensions";
+import { TipTapSingleLineExtension } from "@/lib/tiptap";
 
 declare module "@tiptap/core" {
   // @tiptap/extension-invisible-characters is somehow not typed for the storage
@@ -26,10 +27,23 @@ declare module "@tiptap/core" {
   }
 }
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   class?: HTMLAttributes['class'],
   placeholder?: string
-}>();
+  multiline?: boolean
+  //
+  codeBlock?: boolean
+  blockquote?: boolean
+  orderedList?: boolean
+  bulletList?: boolean
+}>(), {
+  multiline: true,
+  //
+  codeBlock: true,
+  blockquote: true,
+  orderedList: true,
+  bulletList: true,
+});
 const modelValue = defineModel<string>({ required: true });
 
 watch(modelValue, (value) => {
@@ -43,8 +57,20 @@ const hasFocus = ref<boolean>(false);
 
 const editor = useEditor({
   content: modelValue.value,
+  onBeforeCreate(opts) {
+    if (!props.multiline) {
+      opts.editor.extensionManager.extensions.push(
+          TipTapSingleLineExtension.configure({}),
+      );
+    }
+  },
   extensions: [
     StarterKit.configure({
+      codeBlock: props.codeBlock && undefined,
+      blockquote: props.blockquote && undefined,
+      orderedList: props.orderedList && undefined,
+      bulletList: props.bulletList && undefined,
+      //
       strike: false,
       underline: false,
       link: {
@@ -113,22 +139,25 @@ const editor = useEditor({
       >
         <LucideCode />
       </Toggle>
-      <Separator orientation="vertical" />
+      <Separator v-if="codeBlock || blockquote || bulletList || orderedList" orientation="vertical" />
       <Toggle
-          :model-value="editor?.isActive('codeblock')"
+          v-if="codeBlock"
+          :model-value="editor?.isActive('codeBlock')"
           @click="editor?.chain().focus().toggleCodeBlock().run()"
           :title="$t('app.text-editor.toggle-code-block')"
       >
         <LucideBraces />
       </Toggle>
       <Toggle
-          :model-value="editor?.isActive('blockquote')"
+          v-if="blockquote"
+          :model-value="editor?.isActive('blockQuote')"
           @click="editor?.chain().focus().toggleBlockquote().run()"
           :title="$t('app.text-editor.toggle-blockquote')"
       >
         <LucideQuote />
       </Toggle>
       <Toggle
+          v-if="bulletList"
           :model-value="editor?.isActive('bulletList')"
           @click="editor?.chain().focus().toggleBulletList().run()"
           :title="$t('app.text-editor.toggle-unordered-list')"
@@ -136,6 +165,7 @@ const editor = useEditor({
         <LucideList />
       </Toggle>
       <Toggle
+          v-if="orderedList"
           :model-value="editor?.isActive('orderedList')"
           @click="editor?.chain().focus().toggleOrderedList().run()"
           :title="$t('app.text-editor.toggle-ordered-list')"
