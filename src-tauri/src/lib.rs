@@ -19,15 +19,20 @@ pub fn run() {
             }
         }))
         .plugin(tauri_plugin_global_shortcut::Builder::new().build())
-        .plugin(tauri_plugin_window_state::Builder::new().build())
+        .plugin(tauri_plugin_window_state::Builder::new()
+            .with_filter(|label| label != "screenshot-overlay")
+            .build())
         .plugin(tauri_plugin_log::Builder::new().build())
         .invoke_handler(tauri::generate_handler![
+            commands::capture_monitor::capture_monitor,
+            commands::capture_region::capture_region,
+            commands::capture_window::capture_window,
             commands::export_guide::export_guide,
             commands::export_markdown::export_markdown,
             commands::export_pdf::export_pdf,
             commands::import_guide::import_guide,
             commands::link_external_guide::link_external_guide,
-            commands::screencap::capture_screen,
+            commands::list_windows::list_windows,
             commands::runtime_info::get_runtime_info,
         ])
         .run(tauri::generate_context!())

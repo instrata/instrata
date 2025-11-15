@@ -1,10 +1,22 @@
 import { invoke } from "@tauri-apps/api/core";
-import type { RuntimeInfo } from "@/types/commands.ts";
+import type { RuntimeInfo, WindowInfo } from "@/types/commands.ts";
 import type { TemplateContext } from "@/types/templates.ts";
+import type { BBox, ImageId } from "@/types/common.ts";
 
 
-export async function captureScreen(guideId: string, screenIndex: number = 0): Promise<string> {
-    return await invoke<string>("capture_screen", { guideId, screenIndex });
+
+export async function invokeCaptureRegion(guideId: string, region: BBox): Promise<ImageId> {
+  return await invoke<ImageId>("capture_region", { guideId, region });
+}
+
+
+export async function invokeCaptureMonitor(guideId: string, monitorName: string): Promise<ImageId> {
+  return await invoke<ImageId>("capture_monitor", { guideId, monitorName });
+}
+
+
+export async function invokeCaptureWindow(guideId: string, windowId: number): Promise<ImageId> {
+  return await invoke<ImageId>("capture_window", { guideId, windowId });
 }
 
 
@@ -46,6 +58,14 @@ export async function invokeImportGuide(archivePath: string): Promise<string> {
  */
 export async function invokeLinkExternalGuide(externalPath: string): Promise<string> {
   return await invoke<string>("link_external_guide", { externalPath });
+}
+
+
+/**
+ * @return information about all windows available
+ */
+export async function invokeListWindows(): Promise<WindowInfo[]> {
+  return await invoke<WindowInfo[]>("list_windows");
 }
 
 export async function getRuntimeInfo(): Promise<RuntimeInfo> {

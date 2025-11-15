@@ -30,7 +30,16 @@ export default defineConfig(async () => ({
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
-},
+  },
+  build: {
+    emptyOutDir: true,
+    rollupOptions: {
+      input: [
+          path.resolve(__dirname, "index.html"),
+          path.resolve(__dirname, "screenshot-overlay.html"),
+      ],
+    },
+  },
 
   // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`
   //

@@ -129,6 +129,9 @@
   body:has([data-app="main"]) {
     @apply bg-background text-foreground;
   }
+  body:has([data-app="screenshot-overlay"]) {
+    @apply w-screen h-screen bg-transparent text-foreground;
+  }
 }
 
 @layer components {

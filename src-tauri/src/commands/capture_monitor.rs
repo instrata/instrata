@@ -1,22 +1,21 @@
-use image::{DynamicImage, RgbImage, RgbaImage};
 use tauri::Manager;
 use xcap::Monitor;
 
 #[tauri::command]
-pub async fn capture_screen(
+pub async fn capture_monitor(
     app_handle: tauri::AppHandle,
     guide_id: String,
-    screen_index: usize,
+    monitor_name: String,
 ) -> Result<String, String> {
-    tokio::task::spawn_blocking(move || blocking_capture_screen(app_handle, guide_id, screen_index))
+    tokio::task::spawn_blocking(move || blocking_capture_monitor(app_handle, guide_id, monitor_name))
         .await
         .map_err(|e| e.to_string())?
 }
 
-fn blocking_capture_screen(
+fn blocking_capture_monitor(
     app_handle: tauri::AppHandle,
     guide_id: String,
-    screen_index: usize,
+    monitor_name: String,
 ) -> Result<String, String> {
     let screenshot_id = nanoid::nanoid!();
 
@@ -33,17 +32,15 @@ fn blocking_capture_screen(
     // Get all monitors
     let monitors = Monitor::all().map_err(|e| e.to_string())?;
 
-    // Select monitor
-    let monitor = monitors.get(screen_index).ok_or("Invalid monitor index")?;
+    // Find monitor by name
+    let monitor = monitors.iter().find(|w| w.name().unwrap() == monitor_name).ok_or("Unknown monitor name")?;
 
     // Capture image
-    let image: RgbaImage = monitor.capture_image().map_err(|e| e.to_string())?;
-
-    // Convert RGBA to RGB
-    let rgb_image: RgbImage = DynamicImage::ImageRgba8(image).into_rgb8();
-
-    // Encode image to PNG
-    rgb_image.save(&file_path).map_err(|e| e.to_string())?;
+    monitor
+        .capture_image()
+        .map_err(|e| e.to_string())?
+        .save(&file_path)
+        .map_err(|e| e.to_string())?;
 
     Ok(screenshot_id)
 }

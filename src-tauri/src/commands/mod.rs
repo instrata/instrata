@@ -1,8 +1,11 @@
+pub mod capture_monitor;
+pub mod capture_region;
+pub mod capture_window;
 pub mod export_guide;
 pub mod export_markdown;
 pub mod export_pdf;
 pub mod import_guide;
 pub mod link_external_guide;
+pub mod list_windows;
 pub mod runtime_info;
-pub mod screencap;
 mod utils;

@@ -1,26 +1,13 @@
 <script setup lang="ts">
 import { Button } from "@/components/ui/button";
 import { LucideCamera } from "lucide-vue-next";
-import { captureScreen } from "@/api/commands";
-import { nanoid } from "nanoid";
-import { injectAppContext } from "@/components/app/app-context.ts";
-import type { ImageNode } from "@/types/storage.ts";
+import { useScreenshotManager } from "@/composables/app/useScreenshotManager.ts";
 
-const appContext = injectAppContext();
-
-async function handleTakeScreenshot() {
-  const screenshotId = await captureScreen(appContext.guide.value.id);
-  const imageNode: ImageNode = {
-    id: nanoid(),
-    type: "image",
-    imageId: screenshotId,
-  };
-  appContext.guide.value.nodes.push(imageNode);
-}
+const { show } = useScreenshotManager({});
 </script>
 
 <template>
-  <Button variant="secondary" @click="handleTakeScreenshot">
+  <Button variant="secondary" @click="show">
     <LucideCamera />
     {{ $t('app.controls.take-screenshot') }}
   </Button>

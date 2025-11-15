@@ -23,3 +23,7 @@ export function sortByKey<T>(array: T[], key: (e: T) => string, ascending = true
       .sort(([_a, a], [_b, b]) => sign * a.localeCompare(b))
       .map(([e]) => e)
 }
+
+export async function sleep(ms: number): Promise<void> {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}

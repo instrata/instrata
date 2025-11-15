@@ -10,13 +10,35 @@
     "frontendDist": "../dist"
   },
   "app": {
+    "enableGTKAppId": false,
+    "macOSPrivateApi": false,
+    "withGlobalTauri": false,
     "windows": [
       {
+        "label": "main",
         "title": "Instrata",
         "width": 800,
         "height": 600,
         "minWidth": 768,
         "minHeight": 512
+      },
+      {
+        "label": "screenshot-overlay",
+        "url": "/screenshot-overlay.html",
+        "alwaysOnTop": true,
+        "backgroundColor": [0, 0, 0, 150],
+        "closable": true,
+        "create": true,
+        "decorations": false,
+        "focus": false,
+        "maximizable": false,
+        "parent": "main",
+        "resizable": false,
+        "shadow": false,
+        "skipTaskbar": true,
+        "title": "Instrata Screenshot-Overlay",
+        "transparent": true,
+        "visible": false
       }
     ],
     "security": {
