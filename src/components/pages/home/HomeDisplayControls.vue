@@ -8,7 +8,7 @@ const { displayMode } = injectHomeContext();
 
 <template>
   <div class="flex items-center gap-4">
-    <div class="font-bold text-lg">
+    <div class="font-semibold text-lg">
       {{ $t('home.your-guides') }}
     </div>
     <div class="grow" />

@@ -43,7 +43,7 @@ provideAppContext({
 </script>
 
 <template>
-  <main class="min-h-svh max-w-5xl mx-auto p-2 space-y-2">
+  <main class="min-h-svh max-w-5xl mx-auto p-4 space-y-2">
     <div class="flex gap-4">
       <TakeScreenshotButton />
       <ExportDialog />
@@ -51,7 +51,7 @@ provideAppContext({
       <router-link :to="{ name: '/' }">
         <Button variant="ghost">
           <LucideHome />
-          <span class="hidden lg:inline-block">
+          <span class="hidden lg:block">
             {{ $t('app.controls.home') }}
           </span>
         </Button>
@@ -59,22 +59,25 @@ provideAppContext({
       <SettingsDialog>
         <Button variant="ghost">
           <LucideSettings />
-          <span class="hidden lg:inline-block">
+          <span class="hidden lg:block">
             {{ $t('settings.label') }}
           </span>
         </Button>
       </SettingsDialog>
     </div>
     <Separator />
-    <TextEditor
-        v-model="guide.title"
-        class="text-2xl"
-        :placeholder="$t('app.placeholder.title')"
-    />
     <div class="space-y-1">
+      <TextEditor
+          v-model="guide.title"
+          class="text-2xl"
+          :placeholder="$t('app.placeholder.title')"
+          :multiline="false"
+          :code-block="false" :blockquote="false" :ordered-list="false" :bullet-list="false"
+      />
       <TextEditor
           v-model="guide.abstract"
           :placeholder="$t('app.placeholder.abstract')"
+          :blockquote="true"
       />
       <template v-for="node in guide.nodes" :key="node.id">
         <InsertNodeHiddenFlexMenu :before="node.id" />
@@ -87,10 +90,10 @@ data-[state=open]:pointer-events-auto data-[state=open]:opacity-100" />
         </div>
       </template>
       <InsertNodeHiddenFlexMenu />
+      <TextEditor
+          v-model="guide.footnote"
+          :placeholder="$t('app.placeholder.footnote')"
+      />
     </div>
-    <TextEditor
-        v-model="guide.footnote"
-        :placeholder="$t('app.placeholder.footnote')"
-    />
   </main>
 </template>
