@@ -6,22 +6,22 @@ import { i18n } from "@/i18n.ts";
 
 
 async function findFreeFilename(filename: string): Promise<string> {
-    const rootDir = await downloadDir();
+  const rootDir = await downloadDir();
 
-    let downloadPath = await join(rootDir, filename);
-    if (!await exists(downloadPath)) return downloadPath;
+  let downloadPath = await join(rootDir, filename);
+  if (!await exists(downloadPath)) return downloadPath;
 
-    const splitIndex = filename.lastIndexOf(".");
-    const [basename, suffix] = splitIndex > 0
-        ? [filename.substring(0, splitIndex), filename.substring(splitIndex)]
-        : [filename, ""];
-    let i = 1;
+  const splitIndex = filename.lastIndexOf(".");
+  const [basename, suffix] = splitIndex > 0
+      ? [filename.substring(0, splitIndex), filename.substring(splitIndex)]
+      : [filename, ""];
+  let i = 1;
 
-    while (await exists(downloadPath = await join(rootDir, `${basename}(${i})${suffix}`))) {
-        i++;
-    }
+  while (await exists(downloadPath = await join(rootDir, `${basename}(${i})${suffix}`))) {
+    i++;
+  }
 
-    return downloadPath;
+  return downloadPath;
 }
 
 export async function startBlobDownload(blob: Blob, filename: string): Promise<void> {
@@ -44,6 +44,6 @@ export async function startBlobDownload(blob: Blob, filename: string): Promise<v
 }
 
 export async function startTextDownload(content: string, filename: string): Promise<void> {
-    const blob = new Blob([content], { type: "text/plain" })
-    return await startBlobDownload(blob, filename);
+  const blob = new Blob([content], { type: "text/plain" })
+  return await startBlobDownload(blob, filename);
 }

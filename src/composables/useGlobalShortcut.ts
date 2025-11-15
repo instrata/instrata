@@ -2,13 +2,13 @@ import { register, type ShortcutHandler, unregister } from "@tauri-apps/plugin-g
 import { toValue, watch, type MaybeRefOrGetter } from "vue";
 
 export async function useGlobalShortcut(shortcut: MaybeRefOrGetter<string>, handler: ShortcutHandler) {
-    watch(() => toValue(shortcut), async (shortcut, _, onCleanup) => {
-        if (!shortcut) return;
+  watch(() => toValue(shortcut), async (shortcut, _, onCleanup) => {
+    if (!shortcut) return;
 
-        await register(shortcut, handler);
+    await register(shortcut, handler);
 
-        onCleanup(async () => {
-            await unregister(shortcut);
-        });
-    }, { immediate: true });
+    onCleanup(async () => {
+      await unregister(shortcut);
+    });
+  }, { immediate: true });
 }

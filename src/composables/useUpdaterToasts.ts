@@ -3,7 +3,7 @@ import { check, type Update } from "@tauri-apps/plugin-updater";
 import { toast } from "vue-sonner";
 import { relaunch } from "@tauri-apps/plugin-process";
 import { Progress } from "@/components/ui/progress";
-import { getRuntimeInfo } from "@/api/commands";
+import { invokeGetRuntimeInfo } from "@/api/commands";
 import { useI18n } from "vue-i18n";
 import { createSharedComposable } from "@vueuse/core";
 
@@ -22,7 +22,7 @@ export const useUpdaterToasts = createSharedComposable(() => {
   async function handleCheckForUpdate(): Promise<void> {
     isChecking.value = true;
     try {
-      const runtimeInfo = await getRuntimeInfo();
+      const runtimeInfo = await invokeGetRuntimeInfo();
       update.value = await check({
         target: `${runtimeInfo.os}-${runtimeInfo.arch}-${runtimeInfo.install}`,
       });

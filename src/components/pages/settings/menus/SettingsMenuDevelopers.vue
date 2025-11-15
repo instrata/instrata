@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useUpdaterToasts } from "@/composables/useUpdaterToasts.ts";
 import { computedAsync } from "@vueuse/core";
-import { getRuntimeInfo } from "@/api/commands";
+import { invokeGetRuntimeInfo } from "@/api/commands";
 import { Separator } from "@/components/ui/separator";
 import { type MaybeRefOrGetter, onMounted, type Ref, toValue } from "vue";
 import { Button } from "@/components/ui/button";
@@ -17,7 +17,7 @@ import { getBundleType } from "@tauri-apps/api/app";
 const { t } = useI18n();
 const appSettings = useAppSettings();
 const { isChecking: isCheckingForUpdate, checkForUpdate, update } = useUpdaterToasts();
-const runtimeInfo = computedAsync(getRuntimeInfo);
+const runtimeInfo = computedAsync(invokeGetRuntimeInfo);
 const bundleType = computedAsync(getBundleType);
 
 onMounted(async () => {

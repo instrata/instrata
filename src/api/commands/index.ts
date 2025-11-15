@@ -3,22 +3,34 @@ import type { RuntimeInfo } from "@/types/commands.ts";
 import type { TemplateContext } from "@/types/templates.ts";
 
 
-export async function captureScreen(guideId: string, screenIndex: number = 0): Promise<string> {
-    return await invoke<string>("capture_screen", { guideId, screenIndex });
+/**
+ * @param guideId guide into which the screenshot should be saved
+ * @param screenIndex index of the screen
+ */
+export async function invokeCaptureScreen(guideId: string, screenIndex: number = 0): Promise<string> {
+  return await invoke<string>("capture_screen", { guideId, screenIndex });
 }
 
-
-export async function exportMarkdown(templateId: string, guideId: string, context: TemplateContext): Promise<Blob> {
-    const zip_bytes = await invoke<number[]>("export_markdown", { templateId, guideId, context });
-    const buffer = new Uint8Array(zip_bytes);
-    return new Blob([buffer], { type: "application/zip" });
+/**
+ * @param templateId id of the template to use
+ * @param guideId guide whose assets should be used
+ * @param context additional context used when rendering the template
+ */
+export async function invokeExportMarkdown(templateId: string, guideId: string, context: TemplateContext): Promise<Blob> {
+  const zip_bytes = await invoke<number[]>("export_markdown", { templateId, guideId, context });
+  const buffer = new Uint8Array(zip_bytes);
+  return new Blob([buffer], { type: "application/zip" });
 }
 
-
-export async function exportPdf(templateId: string, guideId: string, context: TemplateContext): Promise<Blob> {
-    const pdf_bytes = await invoke<number[]>("export_pdf", { templateId, guideId, context });
-    const buffer = new Uint8Array(pdf_bytes);
-    return new Blob([buffer], { type: "application/pdf" });
+/**
+ * @param templateId id of the template to use
+ * @param guideId guide whose assets should be used
+ * @param context additional context used when rendering the template
+ */
+export async function invokeExportPdf(templateId: string, guideId: string, context: TemplateContext): Promise<Blob> {
+  const pdf_bytes = await invoke<number[]>("export_pdf", { templateId, guideId, context });
+  const buffer = new Uint8Array(pdf_bytes);
+  return new Blob([buffer], { type: "application/pdf" });
 }
 
 /**
@@ -40,7 +52,6 @@ export async function invokeImportGuide(archivePath: string): Promise<string> {
 }
 
 /**
- * todo: implement
  * @param externalPath absolute path to an external guide directory
  * @return guideId new internal identifier which links to the external guide
  */
@@ -48,6 +59,9 @@ export async function invokeLinkExternalGuide(externalPath: string): Promise<str
   return await invoke<string>("link_external_guide", { externalPath });
 }
 
-export async function getRuntimeInfo(): Promise<RuntimeInfo> {
+/**
+ * @return get runtime information such as os, arch, or install-method
+ */
+export async function invokeGetRuntimeInfo(): Promise<RuntimeInfo> {
     return await invoke<RuntimeInfo>("get_runtime_info");
 }

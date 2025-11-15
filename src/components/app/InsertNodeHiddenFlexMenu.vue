@@ -3,7 +3,7 @@ import { LucideImageUp, LucideTypeOutline, LucideWallpaper } from "lucide-vue-ne
 import { injectAppContext } from "@/components/app/app-context.ts";
 import type { ImageNode, Node, TextNode } from "@/types/storage.ts";
 import { nanoid } from "nanoid";
-import { captureScreen } from "@/api/commands";
+import { invokeCaptureScreen } from "@/api/commands";
 import { HiddenFlexMenu, HiddenFlexMenuContainer, HiddenFlexMenuItem, HiddenFlexMenuSeparator } from "@/components/ui2/hidden-flex-menu";
 import { open as openFileDialog } from "@tauri-apps/plugin-dialog";
 import { importImageToGuide } from "@/api/storage/guides.ts";
@@ -31,7 +31,7 @@ async function handleInsertTextNode() {
 }
 
 async function handleTakeScreenshot() {
-  const screenshotId = await captureScreen(appContext.guide.value.id);
+  const screenshotId = await invokeCaptureScreen(appContext.guide.value.id);
   const imageNode: ImageNode = {
     id: nanoid(),
     type: "image",

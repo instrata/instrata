@@ -3,7 +3,7 @@ import type { Ref } from "vue";
 import type { Guide } from "@/types/storage.ts";
 
 export interface AppContext {
-    guide: Ref<Guide>
+  guide: Ref<Guide>
 }
 
 export const [injectAppContext, provideAppContext]

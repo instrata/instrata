@@ -1,5 +1,5 @@
 import type { Guide } from "@/types/storage.ts";
-import { exportMarkdown } from "@/api/commands";
+import { invokeExportMarkdown } from "@/api/commands";
 import { startBlobDownload } from "@/lib/export/utils.ts";
 import { htmlConverter } from "@/lib/html-conv";
 import { MARKDOWN_ESCAPES, MARKDOWN_RULES } from "@/lib/html-conv/rules";
@@ -34,7 +34,7 @@ export async function exportGuideToMarkdown(templateId: string, guide: Guide): P
         footnote: htmlToMarkdown(guide.footnote),
     };
 
-    const zipBlob = await exportMarkdown(templateId, guide.id, context);
+    const zipBlob = await invokeExportMarkdown(templateId, guide.id, context);
 
     await startBlobDownload(zipBlob, "guide.zip");
 }

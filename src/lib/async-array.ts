@@ -5,10 +5,10 @@ type Action = {
 }
 
 export class AsyncArray<T> implements PromiseLike<T[]> {
-  private readonly original: T[];
+  private readonly original: T[] | Promise<T>[];
   private readonly actions: Action[];
 
-  constructor(array: T[]) {
+  constructor(array: Promise<T>[] | T[]) {
     this.original = array;
     this.actions = [];
   }
@@ -43,6 +43,16 @@ export class AsyncArray<T> implements PromiseLike<T[]> {
     return this;
   }
 
+  flat<D extends number = 1>(
+      depth?: number,
+  ): AsyncArray<FlatArray<T, D>> {
+    this.actions.push({
+      method: asyncFlat,
+      params: [depth],
+    })
+    return forceCast<AsyncArray<FlatArray<T, D>>>(this);
+  }
+
   flatMap<U>(
       callback: (value: T, index: number, array: T[]) => U[] | Promise<U[]>
   ): AsyncArray<U> {
@@ -54,7 +64,7 @@ export class AsyncArray<T> implements PromiseLike<T[]> {
   }
 
   reduce<U>(
-      reducer: (acc: U, value: T, index: number, array: T[]) => U | Promise<U>,
+      reducer: (acc: U, value: T, index: number, array: T[]) => (U | Promise<U>),
       initial: U
   ): AsyncArray<U> {
     this.actions.push({
@@ -65,38 +75,39 @@ export class AsyncArray<T> implements PromiseLike<T[]> {
   }
 
   async forEach(
-      callback: (value: T, index: number, array: T[]) => void | Promise<void>
+      callback: (value: T, index: number, array: T[]) => (void | Promise<void>)
   ): Promise<void> {
     const array = await this.toArray();
     await asyncForEach(array, callback);
   }
 
   async some(
-      predicate: (value: T, index: number, array: T[]) => boolean | Promise<boolean>
+      predicate: (value: T, index: number, array: T[]) => (boolean | Promise<boolean>)
   ): Promise<boolean> {
     const array = await this.toArray();
     return await asyncSome(array, predicate);
   }
 
   async every(
-      predicate: (value: T, index: number, array: T[]) => boolean | Promise<boolean>
+      predicate: (value: T, index: number, array: T[]) => (boolean | Promise<boolean>)
   ): Promise<boolean> {
     const array = await this.toArray();
     return await asyncEvery(array, predicate);
   }
 
   sortBy<K>(
-      selector: (value: T, index: number, array: T[]) => K | Promise<K>
+      selector: (value: T, index: number, array: T[]) => (K | Promise<K>),
+      compareFn?: (a: K, b: K) => number,
   ): AsyncArray<T> {
     this.actions.push({
       method: asyncSortBy,
-      params: [selector],
+      params: [selector, compareFn],
     });
     return this;
   }
 
   async toArray(): Promise<T[]> {
-    let array: unknown[] = this.original;
+    let array: unknown[] = await Promise.all(this.original.map(v => Promise.resolve(v)));
 
     for (const action of this.actions) {
       array = await action.method(array, ...action.params);
@@ -119,16 +130,16 @@ function forceCast<T>(v: unknown): T {
   return v as T;
 }
 
-export async function asyncMap<U, T>(
+async function asyncMap<U, T>(
     array: T[],
-    callback: (value: T, index: number, array: T[]) => (Promise<U> | U)
+    callback: (value: T, index: number, array: T[]) => (Promise<U> | U),
 ): Promise<U[]> {
   return Promise.all(array.map((v, i, a) => Promise.resolve(callback(v, i, a))));
 }
 
-export async function asyncMapSeries<U, T>(
+async function asyncMapSeries<U, T>(
     array: T[],
-    callback: (value: T, index: number, array: T[]) => (Promise<U> | U)
+    callback: (value: T, index: number, array: T[]) => (Promise<U> | U),
 ): Promise<U[]> {
   const result: U[] = [];
   for (let i = 0; i < array.length; i++) {
@@ -137,9 +148,9 @@ export async function asyncMapSeries<U, T>(
   return result;
 }
 
-export async function asyncFilter<T>(
+async function asyncFilter<T>(
     array: T[],
-    predicate: (value: T, index: number, array: T[]) => (Promise<boolean> | boolean)
+    predicate: (value: T, index: number, array: T[]) => (Promise<boolean> | boolean),
 ): Promise<T[]> {
   const results = await Promise.all(
       array.map(async (v, i, a) => [v, await Promise.resolve(predicate(v, i, a))] as const)
@@ -147,17 +158,24 @@ export async function asyncFilter<T>(
   return results.filter(([_, keep]) => keep).map(([v]) => v);
 }
 
-export async function asyncFlatMap<U, T>(
+async function asyncFlat<A extends Array<unknown>, D extends number = 1>(
+    array: A,
+    depth?: D,
+): Promise<FlatArray<A, D>[]> {
+  return array.flat(depth);
+}
+
+async function asyncFlatMap<U, T>(
     array: T[],
     callback: (value: T, index: number, array: T[]) => (Promise<U[]> | U[]),
 ): Promise<U[]> {
   return (await asyncMap(array, callback)).flat();
 }
 
-export async function asyncReduce<T, U>(
+async function asyncReduce<T, U>(
     array: T[],
-    reducer: (acc: U, value: T, index: number, array: T[]) => Promise<U> | U,
-    initial: U
+    reducer: (acc: U, value: T, index: number, array: T[]) => (Promise<U> | U),
+    initial: U,
 ): Promise<U> {
   let acc = initial;
   for (let i = 0; i < array.length; i++) {
@@ -166,18 +184,18 @@ export async function asyncReduce<T, U>(
   return acc;
 }
 
-export async function asyncForEach<T>(
+async function asyncForEach<T>(
     array: T[],
-    callback: (value: T, index: number, array: T[]) => Promise<void> | void
+    callback: (value: T, index: number, array: T[]) => (Promise<void> | void),
 ): Promise<void> {
   await Promise.all(
       array.map((v, i, a) => Promise.resolve(callback(v, i, a)))
   );
 }
 
-export async function asyncSome<T>(
+async function asyncSome<T>(
     array: T[],
-    predicate: (value: T, index: number, array: T[]) => Promise<boolean> | boolean
+    predicate: (value: T, index: number, array: T[]) => (Promise<boolean> | boolean),
 ): Promise<boolean> {
   for (let i = 0; i < array.length; i++) {
     if (await Promise.resolve(predicate(array[i]!, i, array))) return true;
@@ -185,9 +203,9 @@ export async function asyncSome<T>(
   return false;
 }
 
-export async function asyncEvery<T>(
+async function asyncEvery<T>(
     array: T[],
-    predicate: (value: T, index: number, array: T[]) => Promise<boolean> | boolean
+    predicate: (value: T, index: number, array: T[]) => (Promise<boolean> | boolean),
 ): Promise<boolean> {
   for (let i = 0; i < array.length; i++) {
     if (!(await Promise.resolve(predicate(array[i]!, i, array)))) return false;
@@ -195,9 +213,10 @@ export async function asyncEvery<T>(
   return true;
 }
 
-export async function asyncSortBy<T, K>(
+async function asyncSortBy<T, K>(
     array: T[],
-    selector: (value: T, index: number, array: T[]) => Promise<K> | K
+    selector: (value: T, index: number, array: T[]) => (Promise<K> | K),
+    compareFn?: (a: K, b: K) => number,
 ): Promise<T[]> {
   const keys = await Promise.all(
       array.map((v, i, a) => Promise.resolve(selector(v, i, a)))
@@ -205,6 +224,9 @@ export async function asyncSortBy<T, K>(
 
   return array
       .map((v, i) => ({ v, k: keys[i]! }))
-      .sort((a, b) => (a.k < b.k ? -1 : a.k > b.k ? 1 : 0))
+      .sort(compareFn
+          ? (a, b) => compareFn(a.k, b.k)
+          : (a, b) => (a.k < b.k ? -1 : a.k > b.k ? 1 : 0)
+      )
       .map(e => e.v);
 }

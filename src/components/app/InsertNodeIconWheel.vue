@@ -4,7 +4,7 @@ import { IconWheelAction, IconWheelActions, IconWheelRoot, IconWheelTrigger } fr
 import { injectAppContext } from "@/components/app/app-context.ts";
 import type { ImageNode, Node, TextNode } from "@/types/storage.ts";
 import { nanoid } from "nanoid";
-import { captureScreen } from "@/api/commands";
+import { invokeCaptureScreen } from "@/api/commands";
 
 const props = defineProps<{
   before?: string
@@ -29,7 +29,7 @@ async function handleInsertTextNode() {
 }
 
 async function handleTakeScreenshot() {
-  const screenshotId = await captureScreen(appContext.guide.value.id);
+  const screenshotId = await invokeCaptureScreen(appContext.guide.value.id);
   const imageNode: ImageNode = {
     id: nanoid(),
     type: "image",

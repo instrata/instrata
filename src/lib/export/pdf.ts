@@ -1,5 +1,5 @@
 import type { Guide } from "@/types/storage.ts";
-import { exportPdf } from "@/api/commands";
+import { invokeExportPdf } from "@/api/commands";
 import { startBlobDownload } from "@/lib/export/utils.ts";
 import { htmlConverter } from "@/lib/html-conv";
 import { TYPST_ESCAPES, TYPST_RULES } from "@/lib/html-conv/rules";
@@ -33,7 +33,7 @@ export async function exportGuideToPdf(templateId: string, guide: Guide): Promis
         footnote: htmlToTypst(guide.footnote),
     }
 
-    const pdfBlob = await exportPdf(templateId, guide.id, context);
+    const pdfBlob = await invokeExportPdf(templateId, guide.id, context);
 
     await startBlobDownload(pdfBlob, "guide.pdf");
 }

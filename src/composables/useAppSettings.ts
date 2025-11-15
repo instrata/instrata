@@ -37,16 +37,16 @@ async function saveSettings(settings: AppSettings) {
 
 const settings = ref<AppSettings>(await loadSettings());
 watchDebounced(settings, async (value) => {
-    await saveSettings(value);
+  await saveSettings(value);
 }, { deep: true, debounce: 100 });
 
 
 export function useAppSettings(_?: never): Ref<AppSettings>;
 export function useAppSettings<K extends keyof AppSettings>(setting: K): Ref<AppSettings[K]>;
 
-export function useAppSettings<Option extends keyof AppSettings>(setting?: Option) {
-    return setting ? computed({
-        get: () => settings.value[setting],
-        set: (val: AppSettings[Option]) => settings.value[setting] = val,
-    }) : settings;
+export function useAppSettings<K extends keyof AppSettings>(setting?: K) {
+  return setting ? computed({
+    get: () => settings.value[setting],
+    set: (val: AppSettings[K]) => settings.value[setting] = val,
+  }) : settings;
 }
