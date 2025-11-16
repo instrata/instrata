@@ -18,7 +18,10 @@ components:
 home:
   search-for-guides: "Nach Anleitungen suchen..."
   clear-search: "Suche leeren"
-  import-guide: "Anleitung Importieren"
+  import-guide:
+    label: "Anleitung Importieren"
+    dialog-title: "Wählen Sie ein Instrata-Projektarchiv aus"
+    file-category-name: "Instrata Projekt"
   new-guide: "Neue Anleitung"
   your-guides: "Deine Anleitungen"
   display-as-list: "Anleitungen als Liste anzeigen"

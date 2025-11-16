@@ -36,7 +36,11 @@ declare module "vue-i18n" {
     "home": {
       "search-for-guides": string
       "clear-search": string
-      "import-guide": string
+      "import-guide": {
+        "label": string
+        "dialog-title": string
+        "file-category-name": string
+      }
       "new-guide": string
       "your-guides": string
       "display-as-list": string

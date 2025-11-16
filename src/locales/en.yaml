@@ -18,7 +18,10 @@ components:
 home:
   search-for-guides: "Search for guides..."
   clear-search: "Clear Search"
-  import-guide: "Import Guide"
+  import-guide:
+    label: "Import Guide"
+    dialog-title: "Select an Instrata Project Archive"
+    file-category-name: "Instrata Project"
   new-guide: "New Guide"
   your-guides: "Your Guides"
   display-as-list: "Display Guides as List"
