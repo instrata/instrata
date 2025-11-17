@@ -211,7 +211,7 @@ jobs:
       - name: Create GitHub Release
         uses: ncipollo/release-action@v1
         with:
-          tag: v${{ github.ref_name }}
+          tag: ${{ github.ref_name }}
           name: "Instrata ${{ github.ref_name }}"
           generateReleaseNotes: true
           token: ${{ secrets.GITHUB_TOKEN }}
