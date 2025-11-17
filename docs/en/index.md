@@ -41,21 +41,21 @@ features:
 downloads:
   windows:
     - title: "instrata-x86_64.msi"
-      link: "https://github.com/instrata/instrata/releases/latest/download/instata-x86_64.msi"
+      link: "https://github.com/instrata/instrata/releases/latest/download/instrata-x86_64.msi"
     - title: "instrata-x86_64-setup.exe"
-      link: "https://github.com/instrata/instrata/releases/latest/download/instata-x86_64-setup.exe"
+      link: "https://github.com/instrata/instrata/releases/latest/download/instrata-x86_64-setup.exe"
   linux:
     - title: "instrata-x86_64.AppImage"
-      link: "https://github.com/instrata/instrata/releases/latest/download/instata-x86_64.AppImage"
+      link: "https://github.com/instrata/instrata/releases/latest/download/instrata-x86_64.AppImage"
     - title: "instrata-x86_64.deb"
-      link: "https://github.com/instrata/instrata/releases/latest/download/instata-x86_64.deb"
+      link: "https://github.com/instrata/instrata/releases/latest/download/instrata-x86_64.deb"
     - title: "instrata-x86_64.rpm"
-      link: "https://github.com/instrata/instrata/releases/latest/download/instata-x86_64.rpm"
+      link: "https://github.com/instrata/instrata/releases/latest/download/instrata-x86_64.rpm"
   macos:
     - title: "instrata-arm64.dmg"
-      link: "https://github.com/instrata/instrata/releases/latest/download/instata-arm64.dmg"
+      link: "https://github.com/instrata/instrata/releases/latest/download/instrata-arm64.dmg"
     - title: "instrata-arm64.app.tar.gz"
-      link: "https://github.com/instrata/instrata/releases/latest/download/instata-arm64.app.tar.gz"
+      link: "https://github.com/instrata/instrata/releases/latest/download/instrata-arm64.app.tar.gz"
 ---
 
 <script setup>
