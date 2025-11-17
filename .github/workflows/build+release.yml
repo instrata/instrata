@@ -121,6 +121,10 @@ jobs:
           set -e; shopt -s nullglob
           mkdir -p release-artifacts
           
+          ls -alF src-tauri/target/release/bundle/
+          ls -alF src-tauri/target/release/bundle/msi/
+          ls -alF src-tauri/target/release/bundle/nsis/
+          
           mv src-tauri/target/release/bundle/msi/*.msi release-artifacts/instrata-x86_64.msi
           mv src-tauri/target/release/bundle/msi/*.msi.sig release-artifacts/instrata-x86_64.msi.sig
           
@@ -134,14 +138,19 @@ jobs:
           set -e; shopt -s nullglob
           mkdir -p release-artifacts
           
+          ls -alF src-tauri/target/release/bundle/
+          ls -alF src-tauri/target/release/bundle/appimage/
+          ls -alF src-tauri/target/release/bundle/deb/
+          ls -alF src-tauri/target/release/bundle/rpm/
+          
           mv src-tauri/target/release/bundle/appimage/*.AppImage release-artifacts/instrata-x86_64.AppImage
           mv src-tauri/target/release/bundle/appimage/*.AppImage.sig release-artifacts/instrata-x86_64.AppImage.sig
           
           mv src-tauri/target/release/bundle/deb/*.deb release-artifacts/instrata-x86_64.deb
-          mv src-tauri/target/release/bundle/deb/*.deb.sig release-artifacts/instrata-x86_64.deb.sig
-          
+#          mv src-tauri/target/release/bundle/deb/*.deb.sig release-artifacts/instrata-x86_64.deb.sig
+
           mv src-tauri/target/release/bundle/rpm/*.rpm release-artifacts/instrata-x86_64.rpm
-          mv src-tauri/target/release/bundle/rpm/*.rpm.sig release-artifacts/instrata-x86_64.rpm.sig
+#          mv src-tauri/target/release/bundle/rpm/*.rpm.sig release-artifacts/instrata-x86_64.rpm.sig
 
       - name: Collect Artifacts (macOS)
         if: matrix.os == 'macos-latest'
@@ -150,9 +159,13 @@ jobs:
           set -e; shopt -s nullglob
           mkdir -p release-artifacts
           
-          mv src-tauri/target/release/bundle/dmg/*.dmg release-artifacts/instrata-arm64.dmg
-          mv src-tauri/target/release/bundle/dmg/*.dmg.sig release-artifacts/instrata-arm64.dmg.sig
+          ls -alF src-tauri/target/release/bundle/
+          ls -alF src-tauri/target/release/bundle/dmg/
+          ls -alF src-tauri/target/release/bundle/macos/
           
+          mv src-tauri/target/release/bundle/dmg/*.dmg release-artifacts/instrata-arm64.dmg
+#          mv src-tauri/target/release/bundle/dmg/*.dmg.sig release-artifacts/instrata-arm64.dmg.sig
+
           mv src-tauri/target/release/bundle/macos/*.app.tar.gz release-artifacts/instrata-arm64.app.tar.gz
           mv src-tauri/target/release/bundle/macos/*.app.tar.gz.sig release-artifacts/instrata-arm64.app.tar.gz.sig
 
