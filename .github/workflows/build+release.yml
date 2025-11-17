@@ -147,10 +147,10 @@ jobs:
           mv src-tauri/target/release/bundle/appimage/*.AppImage.sig release-artifacts/instrata-x86_64.AppImage.sig
           
           mv src-tauri/target/release/bundle/deb/*.deb release-artifacts/instrata-x86_64.deb
-#          mv src-tauri/target/release/bundle/deb/*.deb.sig release-artifacts/instrata-x86_64.deb.sig
+          # mv src-tauri/target/release/bundle/deb/*.deb.sig release-artifacts/instrata-x86_64.deb.sig
 
           mv src-tauri/target/release/bundle/rpm/*.rpm release-artifacts/instrata-x86_64.rpm
-#          mv src-tauri/target/release/bundle/rpm/*.rpm.sig release-artifacts/instrata-x86_64.rpm.sig
+          # mv src-tauri/target/release/bundle/rpm/*.rpm.sig release-artifacts/instrata-x86_64.rpm.sig
 
       - name: Collect Artifacts (macOS)
         if: matrix.os == 'macos-latest'
@@ -164,7 +164,7 @@ jobs:
           ls -alF src-tauri/target/release/bundle/macos/
           
           mv src-tauri/target/release/bundle/dmg/*.dmg release-artifacts/instrata-arm64.dmg
-#          mv src-tauri/target/release/bundle/dmg/*.dmg.sig release-artifacts/instrata-arm64.dmg.sig
+          # mv src-tauri/target/release/bundle/dmg/*.dmg.sig release-artifacts/instrata-arm64.dmg.sig
 
           mv src-tauri/target/release/bundle/macos/*.app.tar.gz release-artifacts/instrata-arm64.app.tar.gz
           mv src-tauri/target/release/bundle/macos/*.app.tar.gz.sig release-artifacts/instrata-arm64.app.tar.gz.sig
