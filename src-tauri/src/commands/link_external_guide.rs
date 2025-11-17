@@ -53,16 +53,22 @@ fn create_symlink(
     {
         use std::os::unix::fs::symlink;
         symlink(&target, &link_path).map_err(|e| format!("symlink failed: {}", e))?;
+        return Ok(());
     }
 
     #[cfg(windows)]
     {
         use std::os::windows::fs::{symlink_dir, symlink_file};
-        if is_dir {
+        if target.is_dir() {
             symlink_dir(&target, &link_path).map_err(|e| format!("symlink_dir failed: {}", e))?;
         } else {
             symlink_file(&target, &link_path).map_err(|e| format!("symlink_file failed: {}", e))?;
         }
+        return Ok(());
     }
-    Ok(())
+
+    #[cfg(not(any(unix, windows)))]
+    {
+        Err("symlink not supported on this platform".into())
+    }
 }
