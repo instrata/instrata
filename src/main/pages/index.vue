@@ -4,8 +4,11 @@ import { GuideGrid, GuideList, HomeActions, HomeDisplayControls, HomeEmpty, Home
 import { loadGuide, loadGuideInfo } from "@/api/storage/guides.ts";
 import { computedAsync, useLocalStorage } from "@vueuse/core";
 import { provideHomeContext } from "@/components/pages/home/context.ts";
-import { computed, ref } from "vue";
+import { computed, ref, useTemplateRef } from "vue";
 import { htmlToText } from "@/lib/utils.ts";
+import { useDropZone } from "@/composables/useDropZone.ts";
+import { useImportHelper } from "@/composables/useImportHelper.ts";
+import HomeImportGuidesDropzoneOverlay from "@/components/pages/home/HomeImportGuidesDropzoneOverlay.vue";
 
 const { guideIds } = useGuideIds();
 const displayMode = useLocalStorage<"grid" | "list">("home-display-mode", "grid");
@@ -54,15 +57,24 @@ provideHomeContext({
   guidesAndInfos: sortedAndFilteredGuidesAndInfos,
   searchString,
 });
+
+const dropZoneEl = useTemplateRef("dropzone");
+const { importPaths } = useImportHelper();
+const { isOverDropZone } = useDropZone(dropZoneEl, {
+  onDrop: (paths) => importPaths(paths),
+});
 </script>
 
 <template>
-  <main class="min-h-svh max-w-5xl mx-auto p-4 space-y-4">
-    <HomeHeader />
-    <HomeActions />
-    <HomeDisplayControls />
-    <GuideGrid v-if="displayMode === 'grid'" />
-    <GuideList v-else-if="displayMode === 'list'" />
-    <HomeEmpty v-if="!guidesAndInfos?.length" />
-  </main>
+  <div ref="dropzone" class="min-h-svh">
+    <HomeImportGuidesDropzoneOverlay v-if="isOverDropZone" />
+    <main class="max-w-5xl mx-auto p-4 space-y-4">
+      <HomeHeader />
+      <HomeActions />
+      <HomeDisplayControls />
+      <GuideGrid v-if="displayMode === 'grid'" />
+      <GuideList v-else-if="displayMode === 'list'" />
+      <HomeEmpty v-if="!guidesAndInfos?.length" />
+    </main>
+  </div>
 </template>

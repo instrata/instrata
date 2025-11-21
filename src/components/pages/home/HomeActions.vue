@@ -2,7 +2,6 @@
 import {
   GuideSearchInput,
   ImportGuideButton,
-  ImportGuideGlobalDropzone,
   NewGuideButton
 } from "@/components/pages/home/home-actions";
 </script>
@@ -11,7 +10,6 @@ import {
   <div class="flex items-center gap-4">
     <GuideSearchInput class="w-full max-w-sm mr-auto" />
     <ImportGuideButton />
-    <ImportGuideGlobalDropzone />
     <NewGuideButton />
   </div>
 </template>
