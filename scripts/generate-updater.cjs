@@ -9,7 +9,7 @@ if (!version || !repo) {
     process.exit(1);
 }
 
-const baseUrl = `https://github.com/${repo}/releases/download/v${version}`;
+const baseUrl = `https://github.com/${repo}/releases/download/${version}`;
 const artefactsDir = path.join(__dirname, "..", "release-artifacts");
 
 function readSignature(...parts) {
