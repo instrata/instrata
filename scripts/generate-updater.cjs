@@ -10,10 +10,11 @@ if (!version || !repo) {
 }
 
 const baseUrl = `https://github.com/${repo}/releases/download/${version}`;
-const artefactsDir = path.join(__dirname, "..", "release-artifacts");
+const repoRootDir = path.join(__dirname, "..");
+const artifactsDir = path.join(repoRootDir, "release-artifacts");
 
 function readSignature(...parts) {
-    const sigPath = path.join(artefactsDir, ...parts);
+    const sigPath = path.join(artifactsDir, ...parts);
     try {
         return fs.readFileSync(sigPath, "utf-8").trim();
     } catch {
@@ -22,7 +23,7 @@ function readSignature(...parts) {
     }
 }
 
-const updater = {
+const updaterJson = {
     version,
     pub_date: new Date().toISOString(),
     platforms: {
@@ -49,6 +50,7 @@ const updater = {
     },
 };
 
-const outPath = path.join(artefactsDir, "updater.json");
-fs.writeFileSync(outPath, JSON.stringify(updater, null, 2) + "\n");
+const outPath = path.join(artifactsDir, "updater.json");
+fs.writeFileSync(outPath, JSON.stringify(updaterJson, null, 2) + "\n");
+
 console.log(`Generated updater.json for version ${version}`);
