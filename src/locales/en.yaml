@@ -95,19 +95,24 @@ settings:
   label: "Settings"
   general:
     label: "General"
-    appearance:
-      title: "Appearance"
-      description: "Control the color-scheme of the application"
-      theme:
-        system: "System"
-        light: "Light"
-        dark: "Dark"
-    updates:
-      title: "Updates-Check"
-      description: "Automatically check for updates on startup"
-    developer-mode:
-      title: "Developer Mode"
-      description: "Enables some additional features in the application"
+    general:
+      heading: "General Settings"
+      appearance:
+        title: "Appearance"
+        description: "Control the color-scheme of the application"
+        theme:
+          system: "System"
+          light: "Light"
+          dark: "Dark"
+      updates:
+        title: "Updates-Check"
+        description: "Automatically check for updates on startup"
+        check-tooltip: "Check for updates"
+    advanced:
+      heading: "Advanced Settings"
+      developer-mode:
+        title: "Developer Mode"
+        description: "Enables some additional features in the application"
   languages:
     label: "Languages"
     locale: "English"

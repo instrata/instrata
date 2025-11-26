@@ -16,33 +16,33 @@ const FEATURE_REQUEST_LINK = "https://github.com/instrata/instrata/issues/new?te
     {{ $t('instrata') }}
   </h2>
   <div class="grid grid-cols-[auto_1fr] gap-x-4 gap-y-2">
-    <span>
+    <b>
       {{ $t('settings.about.version') }}
-    </span>
-    <div>
+    </b>
+    <span>
       <a :href="`https://github.com/instrata/instrata/releases/tag/v${APP_VERSION}`" target="_blank" rel="noopener noreferrer" class="group inline-flex items-center justify-start gap-2 hover:underline">
         {{ APP_VERSION }}
         <LucideExternalLink class="size-4 self-start hidden group-hover:inline-block" />
       </a>
-    </div>
-    <span>
-      {{ $t('settings.about.organization') }}
     </span>
-    <div>
+    <b>
+      {{ $t('settings.about.organization') }}
+    </b>
+    <span>
       <a href="https://github.com/instrata/" target="_blank" rel="noopener noreferrer" class="group inline-flex items-center justify-start gap-2 hover:underline">
         https://github.com/instrata/
         <LucideExternalLink class="size-4 self-start hidden group-hover:inline-block" />
       </a>
-    </div>
-    <span>
-      {{ $t('settings.about.repository') }}
     </span>
-    <div>
+    <b>
+      {{ $t('settings.about.repository') }}
+    </b>
+    <span>
       <a href="https://github.com/instrata/instrata/" target="_blank" rel="noopener noreferrer" class="group inline-flex items-center justify-start gap-2 hover:underline">
         https://github.com/instrata/instrata/
         <LucideExternalLink class="size-4 self-start hidden group-hover:inline-block" />
       </a>
-    </div>
+    </span>
   </div>
   <div class="mt-auto" />
   <div class="grid grid-cols-2 place-content-center px-8 gap-8">

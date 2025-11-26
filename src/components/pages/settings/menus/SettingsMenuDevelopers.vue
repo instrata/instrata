@@ -13,6 +13,7 @@ import { revealItemInDir } from "@tauri-apps/plugin-opener";
 import { getAppSettingsFileLocation, useAppSettings } from "@/composables/useAppSettings.ts";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { getBundleType } from "@tauri-apps/api/app";
+import { Heading } from "@/components/ui2/heading";
 
 const { t } = useI18n();
 const appSettings = useAppSettings();
@@ -53,33 +54,31 @@ const locations: Location[] = [
 </script>
 
 <template>
-  <h2 class="text-lg font-bold">
+  <Heading variant="h2">
     {{ $t('settings.developers.runtime-info.heading') }}
-  </h2>
-  <div class="grid grid-cols-[auto_1fr] gap-x-4 gap-y-2">
-    <span>{{ $t('settings.developers.runtime-info.os') }}</span>
-    <div>{{ runtimeInfo?.os }}</div>
-    <span>{{ $t('settings.developers.runtime-info.arch') }}</span>
-    <div>{{ runtimeInfo?.arch }}</div>
-    <span>{{ $t('settings.developers.runtime-info.install') }}</span>
-    <div>{{ runtimeInfo?.install }}</div>
-    <span>{{ $t('settings.developers.runtime-info.bundle-type') }}</span>
-    <div>{{ bundleType ?? "-" }}</div>
+  </Heading>
+  <div class="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1">
+    <b>{{ $t('settings.developers.runtime-info.os') }}</b>
+    <span>{{ runtimeInfo?.os }}</span>
+    <b>{{ $t('settings.developers.runtime-info.arch') }}</b>
+    <span>{{ runtimeInfo?.arch }}</span>
+    <b>{{ $t('settings.developers.runtime-info.install') }}</b>
+    <span>{{ runtimeInfo?.install }}</span>
+    <b>{{ $t('settings.developers.runtime-info.bundle-type') }}</b>
+    <span>{{ bundleType ?? "-" }}</span>
   </div>
-  <Separator />
-  <h2 class="text-lg font-bold">
+  <Heading variant="h2">
     {{ $t('settings.developers.app-settings.heading') }}
-  </h2>
+  </Heading>
   <ScrollArea class="relative max-h-64 border bg-secondary text-secondary-foreground font-mono rounded-md p-0.5">
     <pre>{{ JSON.stringify(appSettings, null, 2) }}</pre>
     <Button variant="outline" size="icon-sm" class="absolute top-0 right-0" @click="handleEditSettingsRaw">
       <LucidePen />
     </Button>
   </ScrollArea>
-  <Separator />
-  <h2 class="text-lg font-bold">
+  <Heading variant="h2">
     {{ $t('settings.developers.locations.heading') }}
-  </h2>
+  </Heading>
   <div>
     <Item v-for="location in locations" size="slim">
       <ItemContent>
@@ -97,10 +96,9 @@ const locations: Location[] = [
       </ItemActions>
     </Item>
   </div>
-  <Separator />
-  <h2 class="text-lg font-bold">
+  <Heading variant="h2">
     {{ $t('settings.developers.update.heading') }}
-  </h2>
+  </Heading>
   <ScrollArea class="relative max-h-64 border bg-secondary text-secondary-foreground font-mono rounded-md p-0.5">
     <pre>{{ JSON.stringify(update, null, 2) }}</pre>
     <Button variant="outline" size="icon-sm" class="absolute top-0 right-0" :disabled="isCheckingForUpdate" @click="checkForUpdate">

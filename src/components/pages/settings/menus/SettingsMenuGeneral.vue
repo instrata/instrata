@@ -4,12 +4,12 @@ import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@
 import { LucideMoon, LucideRefreshCw, LucideSun, LucideSunMoon } from "lucide-vue-next";
 import { Switch } from "@/components/ui/switch";
 import { useAppSettings } from "@/composables/useAppSettings.ts";
-import { Separator } from "@/components/ui/separator";
 import { Item, ItemActions, ItemContent, ItemDescription, ItemTitle } from "@/components/ui/item";
 import { Button } from "@/components/ui/button";
 import { useUpdaterToasts } from "@/composables/useUpdaterToasts.ts";
 import { toast } from "vue-sonner";
 import { useI18n } from "vue-i18n";
+import { Heading } from "@/components/ui2/heading";
 
 const { t } = useI18n();
 const { update, checkForUpdate, isChecking } = useUpdaterToasts();
@@ -27,13 +27,16 @@ async function handleCheckForUpdate() {
 </script>
 
 <template>
+  <Heading variant="h2">
+    {{ $t('settings.general.general.heading') }}
+  </Heading>
   <Item size="slim">
     <ItemContent>
       <ItemTitle>
-        {{ $t('settings.general.appearance.title') }}
+        {{ $t('settings.general.general.appearance.title') }}
       </ItemTitle>
       <ItemDescription>
-        {{ $t('settings.general.appearance.description') }}
+        {{ $t('settings.general.general.appearance.description') }}
       </ItemDescription>
     </ItemContent>
     <ItemActions>
@@ -44,15 +47,15 @@ async function handleCheckForUpdate() {
         <SelectContent>
           <SelectItem value="system">
             <LucideSunMoon />
-            {{ $t('settings.general.appearance.theme.system') }}
+            {{ $t('settings.general.general.appearance.theme.system') }}
           </SelectItem>
           <SelectItem value="light">
             <LucideSun />
-            {{ $t('settings.general.appearance.theme.light') }}
+            {{ $t('settings.general.general.appearance.theme.light') }}
           </SelectItem>
           <SelectItem value="dark">
             <LucideMoon />
-            {{ $t('settings.general.appearance.theme.dark') }}
+            {{ $t('settings.general.general.appearance.theme.dark') }}
           </SelectItem>
         </SelectContent>
       </Select>
@@ -61,27 +64,30 @@ async function handleCheckForUpdate() {
   <Item size="slim">
     <ItemContent>
       <ItemTitle>
-        {{ $t('settings.general.updates.title') }}
+        {{ $t('settings.general.general.updates.title') }}
       </ItemTitle>
       <ItemDescription>
-        {{ $t('settings.general.updates.description') }}
+        {{ $t('settings.general.general.updates.description') }}
       </ItemDescription>
     </ItemContent>
     <ItemActions>
-      <Button variant="ghost" size="icon" :disabled="isChecking" @click="handleCheckForUpdate">
+      <Button variant="ghost" size="icon" :disabled="isChecking"
+              @click="handleCheckForUpdate" :title="$t('settings.general.general.updates.check-tooltip')">
         <LucideRefreshCw :class="{ 'animate-spin': isChecking }" />
       </Button>
       <Switch v-model="appSettings.autoCheckForUpdates" />
     </ItemActions>
   </Item>
-  <Separator />
+  <Heading variant="h2">
+    {{ $t('settings.general.advanced.heading') }}
+  </Heading>
   <Item size="slim">
     <ItemContent>
       <ItemTitle>
-        {{ $t('settings.general.developer-mode.title') }}
+        {{ $t('settings.general.advanced.developer-mode.title') }}
       </ItemTitle>
       <ItemDescription>
-        {{ $t('settings.general.developer-mode.description') }}
+        {{ $t('settings.general.advanced.developer-mode.description') }}
       </ItemDescription>
     </ItemContent>
     <ItemActions>

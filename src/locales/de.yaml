@@ -95,19 +95,24 @@ settings:
   label: "Einstellungen"
   general:
     label: "Allgemein"
-    appearance:
-      title: "Erscheinung"
-      description: "Steuern Sie das Farbschema der Anwendung"
-      theme:
-        system: "System"
-        light: "Hell"
-        dark: "Dunkel"
-    updates:
-      title: "Updates-Check"
-      description: "Beim Start automatisch nach Updates suchen"
-    developer-mode:
-      title: "Entwickler Modus"
-      description: "Aktiviert einige zusätzliche Funktionen in der Anwendung."
+    general:
+      heading: "Allgemeine Einstellungen"
+      appearance:
+        title: "Erscheinung"
+        description: "Steuern Sie das Farbschema der Anwendung"
+        theme:
+          system: "System"
+          light: "Hell"
+          dark: "Dunkel"
+      updates:
+        title: "Updates-Check"
+        description: "Beim Start automatisch nach Updates suchen"
+        check-tooltip: "Auf updates untersuchen"
+    advanced:
+      heading: "Erweiterte Einstellungen"
+      developer-mode:
+        title: "Entwickler Modus"
+        description: "Aktiviert einige zusätzliche Funktionen in der Anwendung."
   languages:
     label: "Sprachen"
     locale: "Deutsch"

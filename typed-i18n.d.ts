@@ -133,22 +133,29 @@ declare module "vue-i18n" {
       "label": string
       "general": {
         "label": string
-        "appearance": {
-          "title": string
-          "description": string
-          "theme": {
-            "system": string
-            "light": string
-            "dark": string
+        "general": {
+          "heading": string
+          "appearance": {
+            "title": string
+            "description": string
+            "theme": {
+              "system": string
+              "light": string
+              "dark": string
+            }
+          }
+          "updates": {
+            "title": string
+            "description": string
+            "check-tooltip": string
           }
         }
-        "updates": {
-          "title": string
-          "description": string
-        }
-        "developer-mode": {
-          "title": string
-          "description": string
+        "advanced": {
+          "heading": string
+          "developer-mode": {
+            "title": string
+            "description": string
+          }
         }
       }
       "languages": {
