@@ -93,12 +93,13 @@ export const useUpdaterToasts = createSharedComposable(() => {
         }
       });
     } catch (error) {
+      console.error(error);
       toast.error(t("updater.download-failed.title"), {
         id: toastId,
         description: t("updater.download-failed.description"),
         dismissible: true,
       });
-      throw error;
+      return;
     }
 
     toast.info(t("updater.ready-to-install.title"), {
