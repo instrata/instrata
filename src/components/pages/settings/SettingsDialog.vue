@@ -34,13 +34,14 @@ import {
 import { useI18n } from "vue-i18n";
 import { useAppSettings } from "@/composables/useAppSettings.ts";
 import { logicNot } from "@vueuse/math";
+import {useLocalStorage} from "@vueuse/core";
 
 defineOptions({
   inheritAttrs: false,
 });
 
 const { t } = useI18n();
-const developerMode = useAppSettings("developerMode");
+const isDeveloperMode = useAppSettings("developerMode");
 
 type SettingsMenu = {
   id: string
@@ -83,15 +84,15 @@ const menus: SettingsMenu[] = [
   },
   {
     id: "developers",
-    hidden: logicNot(developerMode),
+    hidden: logicNot(isDeveloperMode),
     icon: LucideBraces,
     label: () => t("settings.developers.label"),
     component: SettingsMenuDevelopers,
   },
 ];
 
-const open = ref(false);
-const activeMenuId = ref<string>(menus[0]!.id);
+const open = useLocalStorage<boolean>("settings-open", false);
+const activeMenuId = useLocalStorage<string>("settings-active-menu", menus[0]!.id);
 
 const activeMenu = computed(() => menus.find(menu => menu.id === activeMenuId.value));
 </script>
