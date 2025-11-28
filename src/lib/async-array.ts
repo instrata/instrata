@@ -44,7 +44,7 @@ export class AsyncArray<T> implements PromiseLike<T[]> {
   }
 
   flat<D extends number = 1>(
-      depth?: number,
+      depth: number = 1,
   ): AsyncArray<FlatArray<T, D>> {
     this.actions.push({
       method: asyncFlat,
