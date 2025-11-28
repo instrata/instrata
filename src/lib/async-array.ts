@@ -106,6 +106,14 @@ export class AsyncArray<T> implements PromiseLike<T[]> {
     return this;
   }
 
+  tap(callback: (array: T[]) => void | Promise<void>): AsyncArray<T> {
+    this.actions.push({
+        method: asyncTap,
+        params: [callback],
+    });
+    return this;
+  }
+
   async toArray(): Promise<T[]> {
     let array: unknown[] = await Promise.all(this.original.map(v => Promise.resolve(v)));
 
@@ -229,4 +237,12 @@ async function asyncSortBy<T, K>(
           : (a, b) => (a.k < b.k ? -1 : a.k > b.k ? 1 : 0)
       )
       .map(e => e.v);
+}
+
+async function asyncTap<T>(
+    array: T[],
+    callback: (array: T[]) => void | Promise<void>,
+): Promise<T[]> {
+    await Promise.resolve(callback(array));
+    return array;
 }
